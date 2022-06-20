@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Quizard.Data;
 using Quizard.Interfaces;
 using Quizard.Services;
 
@@ -6,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IStreamFileUploadService, StreamFileUploadLocalService>();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 var app = builder.Build();
 
