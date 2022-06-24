@@ -15,5 +15,7 @@ namespace Quizard.Models
         public Quiz Quiz { get; set; }
         public ICollection<Answer> QuestionAnswers { get; set; }
 
+        // TODO: maybe add QuestionOrder attribute
+
     }
 }

@@ -1,12 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Quizard.Data;
 using Quizard.Interfaces;
+using Quizard.Repository;
 using Quizard.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IQuizRepository, QuizRepository>();
 builder.Services.AddTransient<IStreamFileUploadService, StreamFileUploadLocalService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {

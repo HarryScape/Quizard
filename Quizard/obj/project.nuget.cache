@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "dABgWlxodRjtuzI0dHrnPug+LqNNzJPekBsTTajfF3KtwBUfBIPfiaRDKv6c7IFnSz7H7ExvfDA0ynTnkzG2PQ==",
+  "dgSpecHash": "epLnVjrshXBel9UZq7sCwkiNtuWbXeFV4NOPgPCksEffeRWtcJOWu6Zw87i5yW615Un+15dkpkG13rFfBXIJBw==",
   "success": true,
   "projectFilePath": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\Quizard.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\IvanU\\.nuget\\packages\\csvhelper\\27.2.1\\csvhelper.27.2.1.nupkg.sha512",
     "C:\\Users\\IvanU\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\IvanU\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\IvanU\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",

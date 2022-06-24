@@ -1,13 +1,6 @@
-﻿
-
-<h1> Upload your quiz! </h1>
-
-
-<hr />
-
-<div>
+﻿@*<div>
     <form asp-route="Quiz/Upload" enctype="multipart/form-data" method="POST">
-        <input type="file" name="file" multiple/> 
+        <input type="file" name="file" multiple/>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
 </div>
@@ -18,3 +11,32 @@
         @ViewBag.Message
     </div>
 }
+*@
+
+
+<h1>Test test test</h1>
+
+
+<div class="container">
+    <div class="mb-3 mt-3">
+        <p>
+            Upload your questions <br />
+            .XML .TXT .DOCX
+        </p>
+        <form method="post" enctype="multipart/form-data" asp-controller="Upload" asp-action="Upload">
+            <div class="mb-3">
+                <label class="form-label">Upload Quiz</label>
+                <input type="file" name="file" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@*<div class="form-group">
+        <span>@TempData["msg"]</span>
+    </div>
+</div>*@

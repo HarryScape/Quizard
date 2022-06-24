@@ -11,14 +11,16 @@ namespace Quizard.Models
         public DateTime DateCreated { get; set; }
 
 
-        // Quiz can only have one user
+        // Quiz can only have one user. ? NULLABLE FOR NOW. 
         [ForeignKey("User")]
-        public int UserId { get; set; }
-        public User User { get; set; }
+        public int? UserId { get; set; }
+        public User? User { get; set; }
 
 
         // Quiz can have many questions
         public ICollection<Question> QuizQuestions { get; set; }
+
+        // TODO: Add category maybe
 
     }
 }

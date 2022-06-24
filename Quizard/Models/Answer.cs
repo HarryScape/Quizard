@@ -7,10 +7,10 @@ namespace Quizard.Models
     {
         [Key]
         public string Id { get; set; }
-        public bool? isCorrect { get; set; }
-
-        [Required]
-        public string QuestionAnswer { get; set; }
+        // public bool? isCorrect { get; set; }
+        public string? isCorrect { get; set; }
+        // Add order attribute?
+        public string? QuestionAnswer { get; set; }
         [Required]
         [ForeignKey("Question")]
         public int QuestionId { get; set; }
