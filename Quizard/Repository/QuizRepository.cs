@@ -27,9 +27,12 @@ namespace Quizard.Repository
             return Save();
         }
 
-        public bool Add(Answer answer)
+        public bool Add(List<Answer> answers)
         {
-            _context.Add(answer);
+            foreach(Answer answer in answers)
+            {
+                _context.Add(answer);
+            }
             return Save();
         }
 

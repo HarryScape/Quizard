@@ -24,8 +24,11 @@ namespace Quizard.Migrations
 
             modelBuilder.Entity("Quizard.Models.Answer", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("QuestionAnswer")
                         .HasColumnType("nvarchar(max)");

@@ -12,8 +12,8 @@ using Quizard.Data;
 namespace Quizard.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220623231847_TweakDB")]
-    partial class TweakDB
+    [Migration("20220624122907_InitialBuild")]
+    partial class InitialBuild
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,8 +26,11 @@ namespace Quizard.Migrations
 
             modelBuilder.Entity("Quizard.Models.Answer", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("QuestionAnswer")
                         .HasColumnType("nvarchar(max)");

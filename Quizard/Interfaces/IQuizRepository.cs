@@ -12,7 +12,7 @@ namespace Quizard.Interfaces
         // CRUD's
         bool Add(Quiz quiz);
         bool Add(Question quiz);
-        bool Add(Answer quiz);
+        bool Add(List<Answer> answers);
         bool Update(Quiz quiz);
         bool Delete(Quiz quiz);
         bool Save();

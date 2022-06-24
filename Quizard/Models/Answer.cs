@@ -6,7 +6,7 @@ namespace Quizard.Models
     public class Answer
     {
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
         // public bool? isCorrect { get; set; }
         public string? isCorrect { get; set; }
         // Add order attribute?

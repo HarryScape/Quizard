@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Quizard.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialBuild : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,7 +34,7 @@ namespace Quizard.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     QuizName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,8 +43,7 @@ namespace Quizard.Migrations
                         name: "FK_Quizzes_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -72,9 +71,10 @@ namespace Quizard.Migrations
                 name: "Answers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    isCorrect = table.Column<bool>(type: "bit", nullable: true),
-                    QuestionAnswer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    isCorrect = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    QuestionAnswer = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     QuestionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

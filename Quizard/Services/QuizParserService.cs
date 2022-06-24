@@ -16,24 +16,7 @@ namespace Quizard.Services
         // need isValidQustion bools. 
         // public async Task<bool> isValidUpload()
         // public async Task<bool> isValidQuiz()
-        // .txt, xml,.zip. answers[] <= 100, must have correct questiontype.
-
-
-
-
-
-
-
-
-
-
-
-        // input file location
-        // list of correct answers
-        // list of wrong answers
-        // Q type
-        // Q title
-        // TODO: ParseXML()
+        // .txt, .csv, xml,.zip. answers[] <= 100, must have correct questiontype.
 
 
         public async Task<bool> ParseCSV()
