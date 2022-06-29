@@ -6,10 +6,17 @@ namespace Quizard.Interfaces
     {
         // GET commands
         Task<IEnumerable<Quiz>> GetAll();
+        Task<IEnumerable<Question>> GetAllQuestions();
+        Task<IEnumerable<Answer>> GetAllAns();
+
+
         //Task<Quiz> GetByIdAsync(int id);
+        Task<IEnumerable<Question>> GetQuestionByQuizID(int Quizid);
+        Task<IEnumerable<Answer>> GetAnswerByQuestionID(int QuestionId);
 
 
-        // CRUD's
+
+        // CRUD
         bool Add(Quiz quiz);
         bool Add(Question quiz);
         bool Add(List<Answer> answers);

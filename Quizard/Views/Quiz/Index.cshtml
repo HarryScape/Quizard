@@ -1,8 +1,45 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<Quiz>
 
 
 <h1> Test </h1>
+
+
+<div>
+    @foreach (var item in Model)
+            {
+        <p>@item.QuizName</p>
+        <p>@item.DateCreated <br /></p>
+        <br />
+    }
+</div>
+
+
+
+@{var i = 1;}
+
+<div class="bs-example">
+    <div class="panel-group" id="accordionY">
+        @{int ij = 1;}
+        @foreach (var item in Model)
+        {
+            <div class="row">
+                <div class="col">
+                    <div class="tabs">
+                        <div class="tab">
+                            <input type="checkbox" id=@ij>
+                            <label class="tab-label" for=@ij>Question @i: @item.QuizName</label>
+                            <div class="tab-content">
+                                @item.QuizName <br>
+                                
+                                @item.DateCreated
+                                @* add a foreach loop with answers in here*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ij++;
+            i++;
+        }
+    </div>
+</div>

@@ -21,6 +21,15 @@ namespace Quizard.Controllers
             return View();
         }
 
+
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<Quiz> quizzes = await _quizRepository.GetAll();
+            return View(quizzes);
+        }
+
+
+
         // TODO:
         // Create a method for for controlling different upload types:
         // public async Task<IActionResult> Upload(IFormFile file) {
@@ -32,7 +41,7 @@ namespace Quizard.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload(IFormFile file)
         {
-            // TODO: Put the whole thing in a try and catch
+            // TODO: try and catch
 
             Quiz quiz = new Quiz();
             quiz.QuizName = file.FileName;
@@ -68,7 +77,6 @@ namespace Quizard.Controllers
                 }
             }
             return View();
-            //return RedirectToAction("Upload");
         }
 
 

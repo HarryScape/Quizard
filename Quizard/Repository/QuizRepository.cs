@@ -15,6 +15,57 @@ namespace Quizard.Repository
             _context = context;
         }
 
+        public async Task<IEnumerable<Quiz>> GetAll()
+        {
+            return await _context.Quizzes.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Answer>> GetAllAns()
+        {
+            return await _context.Answers.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Question>> GetAllQuestions()
+        {
+            return await _context.Questions.ToListAsync();
+        }
+
+
+
+        public async Task<IEnumerable<Question>> GetQuestionByQuizID(int Quizid)
+        {
+            return await _context.Questions.Where(c => c.Quiz.Id.Equals(Quizid)).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Answer>> GetAnswerByQuestionID(int QuestionId)
+        {
+            return await _context.Answers.Where(c => c.Question.Id.Equals(QuestionId)).ToListAsync();
+        }
+
+
+
+
+        // TODO: Get by ID methods for joins.
+        public async Task<Quiz> GetByQuizIdAsync(int id)
+        {
+            //return await _context.Quizzes.Include(i => i.Id).FirstOrDefaultAsync();
+            return await _context.Quizzes.Include(i => i.Id).FirstOrDefaultAsync(i => i.Id == id);
+        }
+
+        public async Task<Quiz> GetByQuestionIdAsync(int id)
+        {
+            return await _context.Quizzes.Include(i => i.Id).FirstOrDefaultAsync(i => i.Id == id);
+        }
+
+
+
+
+
+
+
+
+        // CRUD
+
         public bool Add(Quiz quiz)
         {
             _context.Add(quiz);
@@ -29,7 +80,7 @@ namespace Quizard.Repository
 
         public bool Add(List<Answer> answers)
         {
-            foreach(Answer answer in answers)
+            foreach (Answer answer in answers)
             {
                 _context.Add(answer);
             }
@@ -41,16 +92,6 @@ namespace Quizard.Repository
             _context.Remove(quiz);
             return Save();
         }
-
-        public async Task<IEnumerable<Quiz>> GetAll()
-        {
-            return await _context.Quizzes.ToListAsync();
-        }
-
-        //public Task<Quiz> GetByIdAsync(int id)
-        //{
-        //    return await _context.Quizzes.Include(i => i.QuizQuestions).FirstOrDefaultAsync();
-        //}
 
         public bool Save()
         {
