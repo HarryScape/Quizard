@@ -2,7 +2,7 @@
 using Quizard.Data.Enum;
 using Quizard.Interfaces;
 using Quizard.Models;
-
+using Quizard.ViewModels;
 
 namespace Quizard.Controllers
 {
@@ -15,12 +15,13 @@ namespace Quizard.Controllers
             _quizRepository = quizRepository;
         }
 
+        // UPLOAD
+
         [HttpGet]
         public IActionResult Upload()
         {
             return View();
         }
-
 
         public async Task<IActionResult> Index()
         {
@@ -84,20 +85,39 @@ namespace Quizard.Controllers
 
 
 
+        // CREATE
+
+
+        public async Task<IActionResult> Create(int QuizId)
+        {
+            QuizId = 11;
 
 
 
+            // These dont have red lines...
+            //var quizViewModel = new CreateQuizViewModel();
+            //Quiz quiz = await _quizRepository.GetByQuizIdAsync(QuizId);
+            //IEnumerable<Question> Questions = await _quizRepository.GetQuestionByQuizID(QuizId);
+            //IEnumerable<Answer> Answers = await _quizRepository.GetAnswerByQuestionID(QuizId);
+
+            //var quizViewModel = new CreateQuizViewModel
+            //{
+            //    Quiz quiz = await _quizRepository.GetByQuizIdAsync(QuizId),
+            //    IEnumerable<Question> Questions = await _quizRepository.GetQuestionByQuizID(QuizId),
+            //    IEnumerable<Answer> Answers = await _quizRepository.GetAnswerByQuestionID(QuizId)
+            //};
 
 
+            var quizViewModel = new CreateQuizViewModel();
+            quizViewModel.Quiz = await _quizRepository.GetByQuizIdTwo(QuizId);
+            quizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(QuizId);
+            int QuestionID = 10;
+            quizViewModel.Answers = await _quizRepository.GetAnswerByQuestionID(QuestionID);
+            // todo: question type
+
+            return View(quizViewModel);
 
 
-
-
-
-
-
-
-
-
+        }
     }
 }

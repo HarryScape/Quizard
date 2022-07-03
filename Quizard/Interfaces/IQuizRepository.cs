@@ -9,8 +9,14 @@ namespace Quizard.Interfaces
         Task<IEnumerable<Question>> GetAllQuestions();
         Task<IEnumerable<Answer>> GetAllAns();
 
+        //test
+        //Task<Question> QuestionByQuizID(int id);
+        Task<Question> GetQuestionFromQuizIdAsync(int id);
+        Task<Quiz> GetFullQuizById(int id);
 
-        //Task<Quiz> GetByIdAsync(int id);
+
+        Task<Quiz> GetByQuizIdAsync(int id);
+        Task<Quiz> GetByQuizIdTwo(int id);
         Task<IEnumerable<Question>> GetQuestionByQuizID(int Quizid);
         Task<IEnumerable<Answer>> GetAnswerByQuestionID(int QuestionId);
 

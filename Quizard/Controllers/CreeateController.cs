@@ -16,14 +16,14 @@ namespace Quizard.Controllers
         }
 
 
-        public IActionResult Index()
+        public IActionResult Create()
         {
             return View();
         }
 
         //public async Task<IActionResult> Create(int QuizId)
         //{
-
+        //    return View();
         //}
 
 
@@ -31,9 +31,9 @@ namespace Quizard.Controllers
         //{
         //    CreateQuizViewModel createQuizViewModel = new CreateQuizViewModel()
         //    {
-        //        QuizVM = _quizRepository.GetAll(),
-        //        QuestionVM = _quizRepository.GetAllQuestions(1),
-        //        AnswerVM = _quizRepository.GetAllAns(1)
+        //        //QuizVM = _quizRepository.GetAll(),
+        //        //QuestionVM = _quizRepository.GetAllQuestions(1),
+        //        //AnswerVM = _quizRepository.GetAllAns(1)
         //    };
         //    return View(createQuizViewModel);
         //}

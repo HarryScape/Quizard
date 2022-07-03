@@ -5,8 +5,11 @@ namespace Quizard.ViewModels
 {
     public class CreateQuizViewModel
     {
-        public IEnumerable<Quiz> QuizVM { get; set; }
-        public IEnumerable<Question> QuestionVM { get; set; }
-        public IEnumerable<Answer> AnswerVM { get; set; }
+        // figure out which quiz to use...
+        // public IEnumerable<Quiz> Quizzes { get; set; }
+        public Quiz Quiz { get; set; }
+        public IEnumerable<Question> Questions { get; set; }
+        public IEnumerable<Answer> Answers { get; set; }
+        public QuestionType QuestionType { get; set; }
     }
 }

@@ -1,5 +1,37 @@
 ﻿@*using Quizard.Data.Enum;
-using Quizard.ViewModels;
-@model CreateQuizViewModel
+using Quizard.ViewModels;*@
+@model Quizard.ViewModels.CreateQuizViewModel
 
-*@
+<h1> @Model.Quiz.QuizName </h1>
+
+
+@{
+    var i = 1;
+}
+<div class="QuestionAccordian">
+    <div class="panel-group" id="accordionY">
+        @foreach (var question in Model.Questions)
+        {
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            <p>@question.QuestionTitle</p>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            @foreach(var answer in Model.Answers)
+                            {
+                                <p>@answer.QuestionAnswer</p>
+                            }
+
+                            Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.
+                            </div>
+                    </div>
+                </div>
+            </div>
+            i++;
+        }
+    </div>
+</div>
