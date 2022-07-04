@@ -69,7 +69,12 @@ namespace Quizard.Repository
         //{
         //    return await _context.Quizzes.Where(c => c.Id.Equals(Quizid)).ToListAsync();
         //}
-
+        public async Task<IEnumerable<Answer>> GetSpecificAnswers(int QuizId)
+        {
+            //return await _context.Answers.Where(i => i.QuestionId.Equals(Quizid)).ToListAsync();
+            // match a.qid to q.qid then match q.qid to quizid
+            return await _context.Answers.Where(i => i.QuestionId == i.Question.Id).Where(j => j.Question.QuizId == QuizId).ToListAsync();
+        }
 
 
 
@@ -86,9 +91,11 @@ namespace Quizard.Repository
         {
             return await _context.Answers.Include(i => i.Id).FirstOrDefaultAsync(i => i.Id == id);
         }
-
-
-
+        // sub list test
+        public async Task<IEnumerable<Answer>> AnswerTest(IEnumerable<Question> q)
+        {
+            return await _context.Answers.Where(c => c.Question.Id.Equals(q)).ToListAsync();
+        }
 
 
 

@@ -1,9 +1,7 @@
-﻿@*using Quizard.Data.Enum;
-using Quizard.ViewModels;*@
-@model Quizard.ViewModels.CreateQuizViewModel
+﻿@model Quizard.ViewModels.CreateQuizViewModel
 
 <h1> @Model.Quiz.QuizName </h1>
-
+<br />
 
 @{
     var i = 1;
@@ -21,12 +19,10 @@ using Quizard.ViewModels;*@
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
-                            @foreach(var answer in Model.Answers)
+                            @foreach(var answer in Model.Answers.Where(i => i.QuestionId.Equals(question.Id)))
                             {
                                 <p>@answer.QuestionAnswer</p>
                             }
-
-                            Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.
                             </div>
                     </div>
                 </div>

@@ -13,3 +13,4 @@ namespace Quizard.ViewModels
         public QuestionType QuestionType { get; set; }
     }
 }
+

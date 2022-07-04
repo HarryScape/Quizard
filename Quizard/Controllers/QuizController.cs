@@ -90,29 +90,18 @@ namespace Quizard.Controllers
 
         public async Task<IActionResult> Create(int QuizId)
         {
-            QuizId = 11;
-
-
-
-            // These dont have red lines...
-            //var quizViewModel = new CreateQuizViewModel();
-            //Quiz quiz = await _quizRepository.GetByQuizIdAsync(QuizId);
-            //IEnumerable<Question> Questions = await _quizRepository.GetQuestionByQuizID(QuizId);
-            //IEnumerable<Answer> Answers = await _quizRepository.GetAnswerByQuestionID(QuizId);
-
-            //var quizViewModel = new CreateQuizViewModel
-            //{
-            //    Quiz quiz = await _quizRepository.GetByQuizIdAsync(QuizId),
-            //    IEnumerable<Question> Questions = await _quizRepository.GetQuestionByQuizID(QuizId),
-            //    IEnumerable<Answer> Answers = await _quizRepository.GetAnswerByQuestionID(QuizId)
-            //};
-
+            QuizId = 11; // PLACEHOLDER
 
             var quizViewModel = new CreateQuizViewModel();
             quizViewModel.Quiz = await _quizRepository.GetByQuizIdTwo(QuizId);
             quizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(QuizId);
-            int QuestionID = 10;
-            quizViewModel.Answers = await _quizRepository.GetAnswerByQuestionID(QuestionID);
+            
+            int QuestionID = 10; // PLACEHOLDER
+            quizViewModel.Answers = await _quizRepository.GetSpecificAnswers(QuizId);
+            // get list of question ids. get list of ans for each question id
+
+
+
             // todo: question type
 
             return View(quizViewModel);
