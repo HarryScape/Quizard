@@ -19,11 +19,21 @@
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
-                            @foreach(var answer in Model.Answers.Where(i => i.QuestionId.Equals(question.Id)))
+                            @foreach (var answer in Model.Answers.Where(i => i.QuestionId.Equals(question.Id)))
                             {
-                                <p>@answer.QuestionAnswer</p>
+                                @*<p>@answer.QuestionAnswer</p>*@
+
+                                @if (answer.isCorrect.Contains("Correct"))
+                                {
+                                    <strong>@answer.QuestionAnswer</strong>
+                                }
+                                else
+                                {
+                                    @answer.QuestionAnswer
+                                }
+                                <br />
                             }
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -31,3 +41,60 @@
         }
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+@*acordian test*@
+
+@*<br /><br /><br />
+
+
+@{
+    var counter = 1;
+}
+
+<div class="bs-example" id="AccordianList">
+    <div class="panel-group" id="accordionY">
+        @{
+            int ij = 1;
+        }
+        @foreach (var question in Model.Questions)
+        {
+            <div class="row">
+                <div class="col">
+                    <div class="tabs">
+                        <div class="tab">
+                            <input type="checkbox" id=@ij>
+                            <label class="tab-label" for=@ij>Question @counter: @question.QuestionTitle</label>
+                            <div class="tab-content">
+
+                                @foreach (var answer in Model.Answers.Where(i => i.QuestionId.Equals(question.Id)))
+                                {
+                                    @if (answer.isCorrect.Contains("Correct"))
+                                    {
+                                        <strong>@answer.QuestionAnswer</strong>
+                                    }
+                                    else
+                                    {
+                                        @answer.QuestionAnswer
+                                    }
+                                    <br />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ij++;
+            counter++;
+        }
+    </div>
+</div>*@

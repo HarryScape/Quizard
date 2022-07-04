@@ -1,20 +1,20 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 
@@ -77,10 +77,10 @@ body {
 
 
 
-/* ACORDIAN */
+/*ACORDIAN
 
 
-/*body {
+body {
     color: $midnight;
     background: $clouds;
     padding: 0 1em 1em;
@@ -101,10 +101,10 @@ input {
     position: absolute;
     opacity: 0;
     z-index: -1;
-}
+}*/
 
-// Layout
-.row {
+/*Layout*/
+/*.row {
     display: flex;
     .col
 
@@ -118,7 +118,10 @@ input {
 
 }
 }*/
-/* Accordion styles */
+
+
+
+/*Accordion styles*/
 /*body {
     color: #2c3e50;
     background: #ecf0f1;
@@ -153,7 +156,8 @@ input {
         .row .col:last-child {
             margin-left: 1em;
         }*/
-/* Accordion styles */
+
+/*Accordion styles*/
 /*.tabs {
     border-radius: 8px;
     overflow: hidden;
@@ -170,24 +174,23 @@ input {
 .tab-label {
     display: flex;
     justify-content: space-between;
-    padding: 1em;*/
-    /*background: #2c3e50;*/
-    /*background: #1004ad;
+    padding: 1em;
+    background: #2c3e50;
+    background: #1004ad;
     font-weight: bold;
-    cursor: pointer;*/
-    /* Icon */
-/*}
+    cursor: pointer;
+    Icon
+}
 
     .tab-label:hover {
         background: #0e039b;
     }
 
-    .tab-label::after {*/
-        /*content: "\276F";*/
-        /*content: "\2605";*/ /*star*/
-        /*content: "\003F";*/ /*?*/
-
-        /*width: 1em;
+    .tab-label::after {
+        content: "\276F";
+        content: "\2605";
+        star content: "\003F";
+        ? width: 1em;
         height: 1em;
         text-align: center;
         transition: all 0.35s;
@@ -205,9 +208,9 @@ input {
     display: flex;
     justify-content: flex-end;
     padding: 1em;
-    font-size: 0.75em;*/
-    /*background: #2c3e50;*/
-    /*background: #0e039b;
+    font-size: 0.75em;
+    background: #2c3e50;
+    background: #0e039b;
     cursor: pointer;
 }
 

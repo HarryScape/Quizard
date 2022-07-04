@@ -21,6 +21,7 @@ namespace Quizard.Models
         public ICollection<Question> QuizQuestions { get; set; }
 
         // TODO: Add category maybe
+        //public string? Module { get; set; }
 
     }
 }

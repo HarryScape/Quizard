@@ -1,45 +1,40 @@
 ﻿@model IEnumerable<Quiz>
 
 
-<h1> Test </h1>
+<h1> Dashboard </h1>
 
 
-<div>
-    @foreach (var item in Model)
+<br />
+<br />
+<br />
+
+
+
+<body>
+    <table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Quiz</th>
+                <th>Date Updated</th>
+                <th>Module</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
             {
-        <p>@item.QuizName</p>
-        <p>@item.DateCreated <br /></p>
-        <br />
-    }
-</div>
+                <tr>
+                    <td>@item.QuizName</td>
+                    <td>@item.DateCreated <br /></td>
+                    <td></td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                        <button type="submit" class="btn btn-primary">Export</button>
+                        <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Quiz", new { QuizId = item.Id })'">Edit</button>
 
-
-
-@{var i = 1;}
-
-<div class="bs-example">
-    <div class="panel-group" id="accordionY">
-        @{int ij = 1;}
-        @foreach (var item in Model)
-        {
-            <div class="row">
-                <div class="col">
-                    <div class="tabs">
-                        <div class="tab">
-                            <input type="checkbox" id=@ij>
-                            <label class="tab-label" for=@ij>Question @i: @item.QuizName</label>
-                            <div class="tab-content">
-                                @item.QuizName <br>
-                                
-                                @item.DateCreated
-                                @* add a foreach loop with answers in here*@
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            ij++;
-            i++;
-        }
-    </div>
-</div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>

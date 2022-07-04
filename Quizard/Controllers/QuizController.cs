@@ -35,7 +35,7 @@ namespace Quizard.Controllers
         // Create a method for for controlling different upload types:
         // public async Task<IActionResult> Upload(IFormFile file) {
         //      _quizParserService.CheckDataType() { }
-        //   if file.filetype = x then UploadTxt() else UploadXML() etc. 
+        //   if file.filetype = x then UploadTxt() else UploadXML() etc blackboard/other VLE. 
 
 
         [ActionName("Upload")]
@@ -85,28 +85,19 @@ namespace Quizard.Controllers
 
 
 
-        // CREATE
-
-
+        // Sructure Quiz
+        [ActionName("Create")]
         public async Task<IActionResult> Create(int QuizId)
         {
-            QuizId = 11; // PLACEHOLDER
+            //QuizId = 11; // PLACEHOLDER
 
             var quizViewModel = new CreateQuizViewModel();
-            quizViewModel.Quiz = await _quizRepository.GetByQuizIdTwo(QuizId);
+            quizViewModel.Quiz = await _quizRepository.GetQuizById(QuizId);
             quizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(QuizId);
-            
-            int QuestionID = 10; // PLACEHOLDER
             quizViewModel.Answers = await _quizRepository.GetSpecificAnswers(QuizId);
-            // get list of question ids. get list of ans for each question id
-
-
-
             // todo: question type
 
             return View(quizViewModel);
-
-
         }
     }
 }
