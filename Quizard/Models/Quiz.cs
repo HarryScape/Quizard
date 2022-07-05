@@ -9,7 +9,7 @@ namespace Quizard.Models
         public int Id { get; set; }
         public string QuizName { get; set; }
         public DateTime DateCreated { get; set; }
-
+        public string? Module { get; set; }
 
         // Quiz can only have one user. ? NULLABLE FOR NOW. 
         [ForeignKey("User")]
@@ -19,9 +19,6 @@ namespace Quizard.Models
 
         // Quiz can have many questions
         public ICollection<Question> QuizQuestions { get; set; }
-
-        // TODO: Add category maybe
-        //public string? Module { get; set; }
 
     }
 }

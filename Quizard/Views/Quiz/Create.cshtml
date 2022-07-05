@@ -1,5 +1,7 @@
 ﻿@model Quizard.ViewModels.CreateQuizViewModel
 
+<script src = "/js/site.js" defer></script>
+
 <h1> @Model.Quiz.QuizName </h1>
 <br />
 
@@ -10,7 +12,7 @@
     <div class="panel-group" id="accordionY">
         @foreach (var question in Model.Questions)
         {
-            <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion accordion-flush" id="accordionFlushExample" draggable="true">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingOne">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
@@ -98,3 +100,32 @@
         }
     </div>
 </div>*@
+
+
+
+
+
+@*JQuery drag and drop*@
+
+
+<div class="container">
+    <div class="col-md-6">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>TestTest</th>
+                </tr>
+            </thead>
+            <tbody id="sortable" style="cursor:pointer;">
+                @foreach (var question in Model.Questions)
+                {
+                    <tr>
+                        <td>@question.QuestionTitle</td>
+                        <td class="taskSingleInLine" id="task@(question.Id)" data-taskid="@(question.Id)">@question.QuestionTitle</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a class="btn btn-primary" href="@Url.Action("Save", "Quiz")">Save</a>
+    </div>
+</div>

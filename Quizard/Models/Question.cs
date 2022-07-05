@@ -10,6 +10,7 @@ namespace Quizard.Models
         public int Id { get; set; }
         public QuestionType QuestionType { get; set; }
         public string QuestionTitle { get; set; }
+        public int? QuestionPosition { get; set; }
         [ForeignKey("Quiz")]
         public int QuizId { get; set; }
         public Quiz Quiz { get; set; }

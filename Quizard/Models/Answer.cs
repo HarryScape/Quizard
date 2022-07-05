@@ -14,7 +14,6 @@ namespace Quizard.Models
         [ForeignKey("Question")]
         public int QuestionId { get; set; }
         public Question Question { get; set; }
-        // Maybe AnswerOrder for randomisation
     }
 }
 

@@ -54,6 +54,9 @@ namespace Quizard.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("QuestionPosition")
+                        .HasColumnType("int");
+
                     b.Property<string>("QuestionTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -81,6 +84,9 @@ namespace Quizard.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Module")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("QuizName")
                         .IsRequired()
