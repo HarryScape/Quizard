@@ -26,12 +26,6 @@ window.onclick = function (event) {
 }
 
 
+    //Dragable List:
 
-const draggables = document.querySelectorAll('.accordion accordion-flush')
-const container = document.querySelectorAll('.QuestionAccordian')
 
-draggables.forEach(draggable => {
-    draggable.addEventListener('dragstart', () => {
-        console.log('drag start')
-    })
-})
