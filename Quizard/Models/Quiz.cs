@@ -17,8 +17,8 @@ namespace Quizard.Models
         public User? User { get; set; }
 
 
-        // Quiz can have many questions
-        public ICollection<Question> QuizQuestions { get; set; }
+        // Quiz can have many sections
+        public ICollection<Section> QuizSections { get; set; }
 
     }
 }

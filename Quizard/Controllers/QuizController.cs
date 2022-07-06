@@ -49,11 +49,16 @@ namespace Quizard.Controllers
             quiz.DateCreated = DateTime.Now;
             _quizRepository.Add(quiz);
 
+            Section section = new Section();
+            section.SectionName = "Default Question Pool";
+            section.QuizId = quiz.Id;
+            _quizRepository.Add(section);
+
             using (StreamReader fileReader = new StreamReader(file.OpenReadStream()))
             {
                 while (!fileReader.EndOfStream)
                 {
-                    Question question = new Question();;
+                   Question question = new Question(); ;
                     List<Answer> answers = new List<Answer>();
 
                     var line = fileReader.ReadLine();
@@ -61,7 +66,7 @@ namespace Quizard.Controllers
 
                     question.QuestionType = Enum.Parse<QuestionType>(values[0]);
                     question.QuestionTitle = values[1];
-                    question.QuizId = quiz.Id;
+                    question.SectionId = section.Id;
                     _quizRepository.Add(question);
 
                     for (int i = 2; i < values.Length; i += 2)
@@ -89,15 +94,40 @@ namespace Quizard.Controllers
         [ActionName("Create")]
         public async Task<IActionResult> Create(int QuizId)
         {
-            //QuizId = 11; // PLACEHOLDER
-
             var quizViewModel = new CreateQuizViewModel();
             quizViewModel.Quiz = await _quizRepository.GetQuizById(QuizId);
+            quizViewModel.Sections = await _quizRepository.GetQuizSections(QuizId);
             quizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(QuizId);
             quizViewModel.Answers = await _quizRepository.GetSpecificAnswers(QuizId);
             // todo: question type
 
             return View(quizViewModel);
         }
+
+
+
+        // TODO: AddSection Method
+        [HttpPost]
+        [ActionName("AddSection")]
+        public async Task<IActionResult> AddSection(CreateQuizViewModel QuizVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var section = new Section
+                {
+                    SectionName = QuizVM.SectionName,
+                    QuizId = QuizVM.Quiz.Id
+                };
+                _quizRepository.Add(section);
+                return View("Create", QuizVM);
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid Section");
+            }
+
+            return View("Create", QuizVM);
+        }
+
     }
 }

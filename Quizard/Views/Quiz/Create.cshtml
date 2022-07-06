@@ -225,3 +225,51 @@
 
 
 
+@*QUICKVIEW QUIZ*@
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<h1> @Model.Quiz.QuizName Test</h1>
+
+<form method="post" asp-action="AddSection" enctype="multipart/form-data">
+    <div id="CreateSection">
+        int QuizId = @Model.Quiz.Id;
+        <label asp-for="SectionName"> Add Section </label>
+        <input asp-for="SectionName" class="form-control" placeholder="Section Name" style="width:500px;">
+        <span asp-validation-for="SectionName" class="text-danger"></span>
+        <button type="submit" class="btn btn-primary">Add Section</button>
+    </div>
+</form>
+
+<div class="AddSection">
+
+</div>
+
+
+
+<br />
+
+<h1>Sections</h1>
+@foreach (var Qsection in Model.Sections.Where(i => i.QuizId.Equals(Model.Quiz.Id)))
+{
+    <h2> @Qsection.SectionName </h2>
+    <h3>Questions</h3>
+
+    @foreach (var question in Model.Questions.Where(i => i.SectionId.Equals(Qsection.Id)))
+    {
+        <ul> <strong> @question.QuestionTitle </strong> </ul>
+
+        @foreach (var answer in Model.Answers.Where(i => i.QuestionId.Equals(question.Id)))
+        {
+            <ul> @answer.QuestionAnswer </ul>
+        }
+    }
+}
