@@ -1,19 +1,22 @@
-﻿namespace Quizard.Services
+﻿using System.IO;
+using System.Globalization;
+using System.Linq;
+using Quizard.Models;
+using Quizard.Interfaces;
+
+namespace Quizard.Services
 {
-    public class QuizParserService
+    public class QuizParserService : IQuizParserService
     {
-        // Tab delimited file parsing
-        public async Task<bool> ParseTxt()
-        {
-            // input file location
-            // list of correct answers
-            // list of wrong answers
-            // Q type
-            // Q title
 
-            return true;
-        }
 
-        // TODO: ParseXML()
+        // need isValidQustion bools. 
+        // public async Task<bool> isValidUpload()
+        // public async Task<bool> isValidQuiz()
+        // .txt, .csv, xml,.zip. answers[] <= 100, must have correct questiontype.
+
+
+
+
     }
 }

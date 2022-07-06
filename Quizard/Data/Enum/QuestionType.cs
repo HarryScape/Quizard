@@ -2,11 +2,17 @@
 {
     public enum QuestionType
     {
-        MultipleChoice,
-        MultipleAnswer,
-        Essay,
-        TrueFalse,
-        FillInBlank,
-        Matching
+        // MultipleChoice
+        MC,
+        // MultipleAnswer
+        MA,
+        // Essay
+        Ess,
+        // TrueFalse
+        TF,
+        //FillInBlank
+        FIB,
+        // Matching
+        MAT
     }
 }

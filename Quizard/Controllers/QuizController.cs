@@ -1,19 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Net.Http.Headers;
+using Quizard.Data.Enum;
 using Quizard.Interfaces;
-
+using Quizard.Models;
+using Quizard.ViewModels;
 
 namespace Quizard.Controllers
 {
     public class QuizController : Controller
     {
-        readonly IStreamFileUploadService _streamFileUploadService;
+        private readonly IQuizRepository _quizRepository;
 
-        public QuizController(IStreamFileUploadService streamFileUploadService)
+        public QuizController(IQuizRepository quizRepository)
         {
-            _streamFileUploadService = streamFileUploadService;
+            _quizRepository = quizRepository;
         }
+
+        // UPLOAD
 
         [HttpGet]
         public IActionResult Upload()
@@ -21,36 +23,81 @@ namespace Quizard.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<Quiz> quizzes = await _quizRepository.GetAll();
+            return View(quizzes);
+        }
+
+
+
+        // TODO:
+        // Create a method for for controlling different upload types:
+        // public async Task<IActionResult> Upload(IFormFile file) {
+        //      _quizParserService.CheckDataType() { }
+        //   if file.filetype = x then UploadTxt() else UploadXML() etc blackboard/other VLE. 
+
+
         [ActionName("Upload")]
         [HttpPost]
-        public async Task<IActionResult> SaveFileToPhysicalFolder()
+        public async Task<IActionResult> Upload(IFormFile file)
         {
-            var boundary = HeaderUtilities.RemoveQuotes(
-             MediaTypeHeaderValue.Parse(Request.ContentType).Boundary
-            ).Value;
+            // TODO: try and catch
 
-            var reader = new MultipartReader(boundary, Request.Body);
+            Quiz quiz = new Quiz();
+            quiz.QuizName = file.FileName;
+            quiz.DateCreated = DateTime.Now;
+            _quizRepository.Add(quiz);
 
-            var section = await reader.ReadNextSectionAsync();
-
-            string response = string.Empty;
-            try
+            using (StreamReader fileReader = new StreamReader(file.OpenReadStream()))
             {
-                if (await _streamFileUploadService.UploadFile(reader, section))
+                while (!fileReader.EndOfStream)
                 {
-                    ViewBag.Message = "File Upload Successful";
+                    Question question = new Question();;
+                    List<Answer> answers = new List<Answer>();
+
+                    var line = fileReader.ReadLine();
+                    var values = line.Split("\t");
+
+                    question.QuestionType = Enum.Parse<QuestionType>(values[0]);
+                    question.QuestionTitle = values[1];
+                    question.QuizId = quiz.Id;
+                    _quizRepository.Add(question);
+
+                    for (int i = 2; i < values.Length; i += 2)
+                    {
+                        Answer answer = new Answer();
+                        answer.QuestionAnswer = values[i];
+                        answer.isCorrect = values[i + 1];
+                        answer.QuestionId = question.Id;
+                        answers.Add(answer);
+                    }
+
+                    _quizRepository.Add(answers);
+
                 }
-                else
-                {
-                    ViewBag.Message = "File Upload Failed";
-                }
-            }
-            catch (Exception ex)
-            {
-                //Log ex
-                ViewBag.Message = "File Upload Failed";
             }
             return View();
+        }
+
+
+
+
+
+
+        // Sructure Quiz
+        [ActionName("Create")]
+        public async Task<IActionResult> Create(int QuizId)
+        {
+            //QuizId = 11; // PLACEHOLDER
+
+            var quizViewModel = new CreateQuizViewModel();
+            quizViewModel.Quiz = await _quizRepository.GetQuizById(QuizId);
+            quizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(QuizId);
+            quizViewModel.Answers = await _quizRepository.GetSpecificAnswers(QuizId);
+            // todo: question type
+
+            return View(quizViewModel);
         }
     }
 }

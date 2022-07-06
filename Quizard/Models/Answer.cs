@@ -6,15 +6,14 @@ namespace Quizard.Models
     public class Answer
     {
         [Key]
-        public string Id { get; set; }
-        public bool? isCorrect { get; set; }
-
-        [Required]
-        public string QuestionAnswer { get; set; }
+        public int Id { get; set; }
+        // public bool? isCorrect { get; set; }
+        public string? isCorrect { get; set; }
+        public string? QuestionAnswer { get; set; }
         [Required]
         [ForeignKey("Question")]
         public int QuestionId { get; set; }
         public Question Question { get; set; }
-
     }
 }
+

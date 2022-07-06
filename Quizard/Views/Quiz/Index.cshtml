@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Quiz>
+
+
+<h1> Dashboard </h1>
+
+
+<br />
+<br />
+<br />
+
+
+
+<body>
+    <table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Quiz</th>
+                <th>Date Updated</th>
+                <th>Module</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.QuizName</td>
+                    <td>@item.DateCreated <br /></td>
+                    <td></td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                        <button type="submit" class="btn btn-primary">Export</button>
+                        <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Quiz", new { QuizId = item.Id })'">Edit</button>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
