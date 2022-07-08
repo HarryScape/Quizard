@@ -191,11 +191,13 @@ namespace Quizard.Migrations
 
             modelBuilder.Entity("Quizard.Models.Section", b =>
                 {
-                    b.HasOne("Quizard.Models.Quiz", null)
+                    b.HasOne("Quizard.Models.Quiz", "Quiz")
                         .WithMany("QuizSections")
                         .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Quiz");
                 });
 
             modelBuilder.Entity("Quizard.Models.Question", b =>

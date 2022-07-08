@@ -225,6 +225,12 @@
 
 
 
+
+
+
+
+
+
 @*QUICKVIEW QUIZ*@
 
 <br />
@@ -237,23 +243,21 @@
 <br />
 <br />
 
+<input id="QuizId"
+       name="QuizId"
+       type="hidden"
+       value="@Model.Quiz.Id" />
+
 <h1> @Model.Quiz.QuizName Test</h1>
 
 <form method="post" asp-action="AddSection" enctype="multipart/form-data">
     <div id="CreateSection">
-        int QuizId = @Model.Quiz.Id;
         <label asp-for="SectionName"> Add Section </label>
         <input asp-for="SectionName" class="form-control" placeholder="Section Name" style="width:500px;">
         <span asp-validation-for="SectionName" class="text-danger"></span>
         <button type="submit" class="btn btn-primary">Add Section</button>
     </div>
 </form>
-
-<div class="AddSection">
-
-</div>
-
-
 
 <br />
 

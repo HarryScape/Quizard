@@ -14,6 +14,7 @@ namespace Quizard.Models
         [ForeignKey("Section")]
         public int SectionId { get; set; }
         public Section Section { get; set; }
+        // Add isActive bool for question selection
 
 
         public ICollection<Answer> QuestionAnswers { get; set; }
