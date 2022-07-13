@@ -11,12 +11,14 @@ namespace Quizard.Models
         public QuestionType QuestionType { get; set; }
         public string QuestionTitle { get; set; }
         public int? QuestionPosition { get; set; }
-        [ForeignKey("Quiz")]
-        public int QuizId { get; set; }
-        public Quiz Quiz { get; set; }
+        [ForeignKey("Section")]
+        public int SectionId { get; set; }
+        public Section Section { get; set; }
+        // Add isActive bool for question selection
+
+
         public ICollection<Answer> QuestionAnswers { get; set; }
 
-        // TODO: add QuestionOrder attribute
 
     }
 }

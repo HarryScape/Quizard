@@ -1,227 +1,56 @@
 ﻿@model Quizard.ViewModels.CreateQuizViewModel
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="//code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+@*NEW JS SORTABLE ACCORDION*@
 
-<script>
-    $(document).ready(function() {
-        $("#sortable").sortable({
-            update: function(event, ui) {
-                var itemIds = "";
-                $("#sortable").find(".taskSingleInline").each(function() {
-                    var itemId = $(this).attr("data-taskid");
-                    itemIds = itemIds + itemId + ",";
-                });
-                $.ajax({
-                    url: '@Url.Action("Update", "Quiz")',
-                    data: { itemIds: itemIds },
-                    type: 'POST',
-                    success: function(data) {
+<div class="flex-container">
 
-                    },
-                    error: function(xhr, status, error) {
+<div class="controls">
+@*<a class="btn btn-primary" href="@Url.Action("Update", "Quiz")">Save</a>*@
 
-                    }
-                });
-            }
-        });
-    });
-</script>
+<h4 class="quizName"> @Model.Quiz.QuizName </h4>
 
-<style>
-    #sortable tr:hover {
-        background-color: blue;
-        color: #fff;
-    }
-</style>
+<div class="input-group">
+    <input type="text" class="input" id="Email" name="Email" placeholder="Add Section" autocomplete="off">
+    <input class="button--add" value="Add" type="submit">
+</div>
 
+<input class="button--save" value="Save Quiz" type="submit">
 
-
-
-
-<h1> @Model.Quiz.QuizName </h1>
-<br />
-
-@{
-    var i = 1;
-}
-<div class="QuestionAccordian">
-    <div class="panel-group" id="accordionY">
-        @foreach (var question in Model.Questions)
-        {
-            <div class="accordion accordion-flush" id="accordionFlushExample" draggable="true">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            <p>@question.QuestionTitle</p>
-                        </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            @foreach (var answer in Model.Answers.Where(i => i.QuestionId.Equals(question.Id)))
-                            {
-                                @*<p>@answer.QuestionAnswer</p>*@
-
-                                @if (answer.isCorrect.Contains("Correct"))
-                                {
-                                    <strong>@answer.QuestionAnswer</strong>
-                                }
-                                else
-                                {
-                                    @answer.QuestionAnswer
-                                }
-                                <br />
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-            i++;
-        }
-    </div>
 </div>
 
 
-
-
-
-
-
-
-
-
-@*JQuery drag and drop*@
-
-@*
-<div class="container">
-    <div class="QuizAccordian">
-        <div class="panel-group" id="accordionY">
-            @{
-                int ij = 1;
-            }
-            @foreach (var question in Model.Questions)
-            {
-                <div class="accordion accordion-flush" id="accordionFlushExample" draggable="true">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="flush-headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                <p>@question.QuestionTitle</p>
-                            </button>
-                        </h2>
-                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
-                                @foreach (var answer in Model.Answers.Where(i => i.QuestionId.Equals(question.Id)))
-                                {
-
-
-                                    @if (answer.isCorrect.Contains("Correct"))
-                                    {
-                                        <strong>@answer.QuestionAnswer</strong>
-                                    }
-                                    else
-                                    {
-                                        @answer.QuestionAnswer
-                                    }
-                                    <br />
-                                }
+<div class="quiz-wrapper">
+    @*sections*@
+    @foreach (var Qsection in Model.Sections.Where(i => i.QuizId.Equals(Model.Quiz.Id)))
+    {
+        <div class="accordion-section-item">
+            <button class="accordion-section-button"> <strong> @Qsection.SectionName </strong> </button>
+            <div class="accordion-section-collapse ">
+                <div class="accordion-section-body">
+                    @*questions *@
+                    <div class="accordion-question">
+                        @foreach (var question in Model.Questions.Where(i => i.SectionId.Equals(Qsection.Id)))
+                        {
+                            <div class="accordion-question-item" draggable="true">
+                                <button class="accordion-question-button"> @question.QuestionTitle </button>
+                                <div class="accordion-question-collapse collapse">
+                                    <div class="accordion-question-body">
+                                        @*answers*@
+                                        <ol>
+                                            @foreach (var answer in Model.Answers.Where(i => i.QuestionId.Equals(question.Id)))
+                                            {
+                                                <li> @answer.QuestionAnswer </li>
+                                            }
+                                        </ol>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
                 </div>
-                ij++;
-            }
+            </div>
         </div>
-    </div>
+    }
 </div>
 
-*@
-<a class="btn btn-primary" href="@Url.Action("Update", "Quiz")">Save</a>
-
-
-
-
-
-
-@*WORKING TABLE*@
-
-<div class="container">
-    <div class="col-md-6">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Position</th>
-                </tr>
-            </thead>
-            <tbody id="sortable" style="cursor:pointer;">
-                @foreach (var question in Model.Questions)
-                {
-                    <tr>
-                        <td>@question.Id</td>
-                        <td class="taskSingleInline" id="task@(question.Id)" data-taskid=@(question.Id)>@question.QuestionTitle</td>
-                        <td>@question.QuestionPosition</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
 </div>
-
-
-
-
-
-
-
-@*acordian test*@
-
-@*<br /><br /><br />
-
-
-@{
-    var counter = 1;
-}
-
-<div class="bs-example" id="AccordianList">
-    <div class="panel-group" id="accordionY">
-        @{
-            int ij = 1;
-        }
-        @foreach (var question in Model.Questions)
-        {
-            <div class="row">
-                <div class="col">
-                    <div class="tabs">
-                        <div class="tab">
-                            <input type="checkbox" id=@ij>
-                            <label class="tab-label" for=@ij>Question @counter: @question.QuestionTitle</label>
-                            <div class="tab-content">
-
-                                @foreach (var answer in Model.Answers.Where(i => i.QuestionId.Equals(question.Id)))
-                                {
-                                    @if (answer.isCorrect.Contains("Correct"))
-                                    {
-                                        <strong>@answer.QuestionAnswer</strong>
-                                    }
-                                    else
-                                    {
-                                        @answer.QuestionAnswer
-                                    }
-                                    <br />
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            ij++;
-            counter++;
-        }
-    </div>
-</div>*@
-
-
-
-
-

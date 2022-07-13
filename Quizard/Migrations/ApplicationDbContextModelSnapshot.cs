@@ -64,12 +64,12 @@ namespace Quizard.Migrations
                     b.Property<int>("QuestionType")
                         .HasColumnType("int");
 
-                    b.Property<int>("QuizId")
+                    b.Property<int>("SectionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuizId");
+                    b.HasIndex("SectionId");
 
                     b.ToTable("Questions");
                 });
@@ -100,6 +100,31 @@ namespace Quizard.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Quizzes");
+                });
+
+            modelBuilder.Entity("Quizard.Models.Section", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("QuizId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SectionName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SectionOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuizId");
+
+                    b.ToTable("Sections");
                 });
 
             modelBuilder.Entity("Quizard.Models.User", b =>
@@ -146,13 +171,13 @@ namespace Quizard.Migrations
 
             modelBuilder.Entity("Quizard.Models.Question", b =>
                 {
-                    b.HasOne("Quizard.Models.Quiz", "Quiz")
+                    b.HasOne("Quizard.Models.Section", "Section")
                         .WithMany("QuizQuestions")
-                        .HasForeignKey("QuizId")
+                        .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Quiz");
+                    b.Navigation("Section");
                 });
 
             modelBuilder.Entity("Quizard.Models.Quiz", b =>
@@ -164,12 +189,28 @@ namespace Quizard.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Quizard.Models.Section", b =>
+                {
+                    b.HasOne("Quizard.Models.Quiz", "Quiz")
+                        .WithMany("QuizSections")
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Quiz");
+                });
+
             modelBuilder.Entity("Quizard.Models.Question", b =>
                 {
                     b.Navigation("QuestionAnswers");
                 });
 
             modelBuilder.Entity("Quizard.Models.Quiz", b =>
+                {
+                    b.Navigation("QuizSections");
+                });
+
+            modelBuilder.Entity("Quizard.Models.Section", b =>
                 {
                     b.Navigation("QuizQuestions");
                 });

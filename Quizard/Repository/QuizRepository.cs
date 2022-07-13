@@ -36,6 +36,13 @@ namespace Quizard.Repository
         }
 
 
+        // Get Sections
+        public async Task<IEnumerable<Section>> GetQuizSections(int Quizid)
+        {
+            return await _context.Sections.Where(c => c.Quiz.Id.Equals(Quizid)).ToListAsync();
+        }
+
+
         // Get Question
         public async Task<IEnumerable<Question>> GetAllQuestions()
         {
@@ -43,7 +50,9 @@ namespace Quizard.Repository
         }
         public async Task<IEnumerable<Question>> GetQuestionByQuizID(int Quizid)
         {
-            return await _context.Questions.Where(c => c.Quiz.Id.Equals(Quizid)).ToListAsync();
+            //return await _context.Questions.Where(c => c.Quiz.Id.Equals(Quizid)).ToListAsync();
+            return await _context.Questions.Where(i => i.SectionId == i.Section.Id).Where(j => j.Section.Quiz.Id == Quizid).ToListAsync();
+
         }
 
 
@@ -54,7 +63,10 @@ namespace Quizard.Repository
         }
         public async Task<IEnumerable<Answer>> GetSpecificAnswers(int QuizId)
         {
-            return await _context.Answers.Where(i => i.QuestionId == i.Question.Id).Where(j => j.Question.QuizId == QuizId).ToListAsync();
+            //return await _context.Answers.Where(i => i.QuestionId == i.Question.Id).Where(j => j.Question.QuizId == QuizId).ToListAsync();
+            return await _context.Answers.Where(i => i.QuestionId == i.Question.Id)
+                .Where(j => j.Question.SectionId == j.Question.Section.Id)
+                .Where(c => c.Question.Section.QuizId == QuizId).ToListAsync();
         }
 
 
@@ -65,6 +77,12 @@ namespace Quizard.Repository
         public bool Add(Quiz quiz)
         {
             _context.Add(quiz);
+            return Save();
+        }
+
+        public bool Add(Section section)
+        {
+            _context.Add(section);
             return Save();
         }
 
