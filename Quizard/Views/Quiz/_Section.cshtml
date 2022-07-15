@@ -1,0 +1,34 @@
+﻿@model Quizard.ViewModels.CreateQuizViewModel
+
+
+        @*sections*@
+        @foreach (var Qsection in Model.Sections.Where(i => i.QuizId.Equals(Model.Quiz.Id)))
+        {
+            <div class="accordion-section-item">
+                <button class="accordion-section-button"> <strong> @Qsection.SectionName </strong> </button>
+                <div class="accordion-section-collapse ">
+                    <div class="accordion-section-body">
+                        @*questions *@
+                        <div class="accordion-question">
+                            @foreach (var question in Model.Questions.Where(i => i.SectionId.Equals(Qsection.Id)))
+                            {
+                                <div class="accordion-question-item" draggable="true">
+                                    <button class="accordion-question-button"> @question.QuestionTitle </button>
+                                    <div class="accordion-question-collapse collapse">
+                                        <div class="accordion-question-body">
+                                            @*answers*@
+                                            <ol>
+                                                @foreach (var answer in Model.Answers.Where(i => i.QuestionId.Equals(question.Id)))
+                                                {
+                                                    <li> @answer.QuestionAnswer </li>
+                                                }
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }

@@ -90,7 +90,7 @@ namespace Quizard.Controllers
 
 
 
-        // Sructure Quiz
+        // Sructure Quiz Page
         [ActionName("Create")]
         public async Task<IActionResult> Create(int QuizId)
         {
@@ -105,29 +105,31 @@ namespace Quizard.Controllers
         }
 
 
-
-        // TODO: AddSection Method
-        [HttpPost]
-        [ActionName("AddSection")]
-        public async Task<IActionResult> AddSection(CreateQuizViewModel QuizVM)
+        public IActionResult SectionPartialView()
         {
-            if (ModelState.IsValid)
-            {
-                var section = new Section
-                {
-                    SectionName = QuizVM.SectionName,
-                    QuizId = QuizVM.Quiz.Id
-                };
-                _quizRepository.Add(section);
-                return View("Create", QuizVM);
-            }
-            else
-            {
-                ModelState.AddModelError("", "Invalid Section");
-            }
+            var QuizVM = new CreateQuizViewModel();
 
-            return View("Create", QuizVM);
+            return PartialView("_Section", QuizVM);
         }
+
+
+        // Working with ajax call
+        [HttpPost]
+        public ActionResult AddSection(string sectionName, int quizId)
+        {
+            var quizVM = new CreateQuizViewModel();
+            var section = new Section()
+            {
+                SectionName = sectionName,
+                QuizId = quizId
+            };
+
+            //quizVM.Sections.
+
+            return Json(section);
+        }
+
+
 
     }
 }
