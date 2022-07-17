@@ -7,8 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Content\Images\delbin.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Data\UploadDirectory\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Views\Quiz\DisplayTemplates\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -41,6 +41,10 @@ namespace Quizard.Repository
         {
             return await _context.Sections.Where(c => c.Quiz.Id.Equals(Quizid)).ToListAsync();
         }
+        public async Task<Section> GetSectionById(int id)
+        {
+            return await _context.Sections.FirstOrDefaultAsync(i => i.Id == id);
+        }
 
 
         // Get Question
@@ -51,8 +55,11 @@ namespace Quizard.Repository
         public async Task<IEnumerable<Question>> GetQuestionByQuizID(int Quizid)
         {
             //return await _context.Questions.Where(c => c.Quiz.Id.Equals(Quizid)).ToListAsync();
-            return await _context.Questions.Where(i => i.SectionId == i.Section.Id).Where(j => j.Section.Quiz.Id == Quizid).ToListAsync();
-
+            return await _context.Questions.OrderBy(o => o.QuestionPosition).Where(i => i.SectionId == i.Section.Id).Where(j => j.Section.Quiz.Id == Quizid).ToListAsync();
+        }
+        public async Task<Question> GetQuestionById(int id)
+        {
+            return await _context.Questions.FirstOrDefaultAsync(i => i.Id == id);
         }
 
 
@@ -116,6 +123,18 @@ namespace Quizard.Repository
         public bool Update(Quiz quiz)
         {
             _context.Update(quiz);
+            return Save();
+        }
+
+        public bool Update(Question question)
+        {
+            _context.Update(question);
+            return Save();
+        }
+
+        public bool Update(Section section)
+        {
+            _context.Update(section);
             return Save();
         }
     }

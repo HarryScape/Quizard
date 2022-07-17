@@ -398,28 +398,59 @@ function getDragAfterElement(container, y) {
 function AddSection() {
     var name = document.getElementById("AddSectionName").value;
     var quizId = document.getElementById("HiddenQuizId").value;
-    console.log(name);
-    console.log(quizId);
+    //console.log(name);
+    //console.log(quizId);
 
     var dataPost = { sectionName: name, quizId: quizId };
 
+    // TODO: Include partial view refresh on success
     $.ajax({
         type: "POST",
         data: dataPost,
-        url: "/Quiz/AddSection",
+        url: "/Quiz/AddSectionDB",
         dataType: "json",
         success: function (response) {
+
+            
+
             if (response != null) {
-                console.log("Sent okay");
+                console.log("Sent okay", response);
             } else {
                 console.log("Something went wrong");
             } 
+            /*$('.test').html('')*/
+            
         },
         failure: function (response) {
             console.log(response.responseText);
         },
         error: function (response) {
             console.log(response.responseText);
-        }  
+        },
+        complete: function (response) {
+            let t = $('.quiz-wrapper');
+            t.html(response.responseText);
+        }
     });
+}
+
+function Del() {
+        alert("Sure you want to delete?");
+}
+
+
+function UpdateQuestions() {
+    //var questionArray = new Array();
+    //var question = { id: name, sectionId: quizId, position: position };
+
+    //document.querySelectorAll(".accordion-question-item").foreach((item) => {
+    //    console.log("Q Found");
+    //});
+
+    var qDiv = document.querySelectorAll(".accordion-question-item"), i;
+    var count = 0;
+    for (i = 0; i < qDiv.length; ++i) {
+        console.log("Q Found " + count);
+        count++;
+    }
 }

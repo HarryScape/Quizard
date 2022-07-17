@@ -104,13 +104,26 @@ namespace Quizard.Controllers
             return View(quizViewModel);
         }
 
-
-        public IActionResult SectionPartialView()
+        [HttpPost]
+        public ActionResult SectionPartialView(string sectionName, int quizId)
         {
-            var QuizVM = new CreateQuizViewModel();
 
-            return PartialView("_Section", QuizVM);
+            var section = new Section()
+            {
+                SectionName = sectionName,
+                QuizId = quizId
+            };
+            _quizRepository.Add(section);
+
+            CreateQuizViewModel quizVM = new CreateQuizViewModel();
+            var p = PartialView("_Section", quizVM);
+            return p;
         }
+
+        //public IActionResult testPV()
+        //{
+        //    return PartialView("_test");
+        //}
 
 
         // Working with ajax call
@@ -124,11 +137,55 @@ namespace Quizard.Controllers
                 QuizId = quizId
             };
 
-            //quizVM.Sections.
-
+            //quizVM.Sections.Add(section);
+            //return PartialView("_Section", section);
             return Json(section);
         }
 
+        // Test. May have to use if ajax fails
+        [HttpPost]
+        public async Task<IActionResult> AddSectionDB(string sectionName, int quizId)
+        {
+            var section = new Section()
+            {
+                SectionName = sectionName,
+                QuizId = quizId
+            };
+            _quizRepository.Add(section);
+            // need to reload page
+            //return Json(section);
+            var quizViewModel = new CreateQuizViewModel();
+            quizViewModel.Quiz = await _quizRepository.GetQuizById(quizId);
+            quizViewModel.Sections = await _quizRepository.GetQuizSections(quizId);
+            quizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(quizId);
+            quizViewModel.Answers = await _quizRepository.GetSpecificAnswers(quizId);
+
+            var p = PartialView("_Section", quizViewModel);
+            return p;
+        }
+
+        public async Task<JsonResult> UpdateQuestionPosition(Array questionIds)
+        {
+            var message = "";
+            if (questionIds == null)
+            {
+                message = "No changes made";
+            }
+
+            if (questionIds != null)
+            {
+                foreach (int question in questionIds)
+                {
+                    Question q = await _quizRepository.GetQuestionById(question);
+                    // update position
+                    q.QuestionPosition = 11; //placeholder
+                    q.SectionId = 99; // placeholder
+                    _quizRepository.Update(q);
+                    message = "Question Position Updated";
+                }
+            }
+            return Json(message);
+        }
 
 
     }
