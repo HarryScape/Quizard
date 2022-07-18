@@ -1,8 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Quizard.Data.Enum;
 using Quizard.Interfaces;
 using Quizard.Models;
 using Quizard.ViewModels;
+
+
+using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace Quizard.Controllers
 {
@@ -120,11 +126,6 @@ namespace Quizard.Controllers
             return p;
         }
 
-        //public IActionResult testPV()
-        //{
-        //    return PartialView("_test");
-        //}
-
 
         // Working with ajax call
         [HttpPost]
@@ -142,7 +143,7 @@ namespace Quizard.Controllers
             return Json(section);
         }
 
-        // Test. May have to use if ajax fails
+        // Adds Section straight to DB...
         [HttpPost]
         public async Task<IActionResult> AddSectionDB(string sectionName, int quizId)
         {
@@ -152,7 +153,6 @@ namespace Quizard.Controllers
                 QuizId = quizId
             };
             _quizRepository.Add(section);
-            // need to reload page
             //return Json(section);
             var quizViewModel = new CreateQuizViewModel();
             quizViewModel.Quiz = await _quizRepository.GetQuizById(quizId);
@@ -164,26 +164,69 @@ namespace Quizard.Controllers
             return p;
         }
 
-        public async Task<JsonResult> UpdateQuestionPosition(Array questionIds)
+        //public async Task<JsonResult> UpdateQuizPosition(Question questionArray)
+        //{
+        //    var message = "";
+        //    if (questionArray == null)
+        //    {
+        //        message = "No changes made";
+        //    }
+
+        //    if (questionArray != null)
+        //    {
+        //        foreach (var questionItem in questionArray)
+        //        {
+        //            //Question q = await _quizRepository.GetQuestionById(question);
+        //            // update position
+        //            var question = new Question()
+        //            {
+        //                question.Id = questionItem.Id
+
+        //            };
+        //            //q.QuestionPosition = 11; //placeholder
+        //            //q.SectionId = 99; // placeholder
+        //            // _quizRepository.Update(q);
+        //            message = "Question Position Updated";
+        //        }
+        //    }
+        //    return Json(message);
+        //}
+
+        [HttpPost]
+        public async Task<ActionResult> SaveQuiz(string questionArray)
         {
-            var message = "";
-            if (questionIds == null)
+            int i = 0;
+            List<QuestionJsonHelper> questionList = JsonConvert.DeserializeObject<List<QuestionJsonHelper>>(questionArray);
+
+            foreach (var item in questionList)
             {
-                message = "No changes made";
+                Question question = await _quizRepository.GetQuestionById(item.Id);
+                question.SectionId = item.SectionId;
+                question.QuestionPosition = item.QuestionPosition;
+                _quizRepository.Update(question);
             }
 
-            if (questionIds != null)
-            {
-                foreach (int question in questionIds)
-                {
-                    Question q = await _quizRepository.GetQuestionById(question);
-                    // update position
-                    q.QuestionPosition = 11; //placeholder
-                    q.SectionId = 99; // placeholder
-                    _quizRepository.Update(q);
-                    message = "Question Position Updated";
-                }
-            }
+          
+
+            //JArray array = JArray.Parse(questionArray);
+            //foreach (JObject obj in array.Children<JObject>())
+            //{
+            //    foreach (JProperty singleProp in obj.Properties())
+            //    {
+            //        string name = singleProp.Name;
+            //        string value = singleProp.Value.ToString();
+            //        //Do something with name and value
+            //        //System.Windows.MessageBox.Show("name is "+name+" and value is "+value);
+            //    }
+            //}
+
+            //var testArray = JArray.Parse(questionArray).Children<JObject>()
+            //         .SelectMany(x => x.Properties().Select(c => c.Value.Value<string>()));
+
+            //var result = JsonConvert.SerializeObject(testArray.SelectMany(x => JArray.Parse(x)));
+
+
+            var message = "I hate ajax";
             return Json(message);
         }
 

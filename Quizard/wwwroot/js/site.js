@@ -403,54 +403,85 @@ function AddSection() {
 
     var dataPost = { sectionName: name, quizId: quizId };
 
-    // TODO: Include partial view refresh on success
     $.ajax({
         type: "POST",
         data: dataPost,
         url: "/Quiz/AddSectionDB",
         dataType: "json",
         success: function (response) {
-
-            
-
             if (response != null) {
                 console.log("Sent okay", response);
             } else {
                 console.log("Something went wrong");
-            } 
-            /*$('.test').html('')*/
-            
+            }
+            // var quizUpdate = JSON.stringify(response);
+            //// $('.quiz-wrapper').html(quizUpdate);
+            // //   $('.quiz-wrapper').html(quizUpdate).html();
+            // $('.quiz-wrapper').load(quizUpdate).html();
+
         },
         failure: function (response) {
-            console.log(response.responseText);
+            //console.log(response.responseText);
         },
         error: function (response) {
-            console.log(response.responseText);
+            //console.log(response.responseText);
         },
+        // works kind of
         complete: function (response) {
-            let t = $('.quiz-wrapper');
-            t.html(response.responseText);
+            $('.quiz-wrapper').html(response.responseText);
         }
     });
 }
 
-function Del() {
-        alert("Sure you want to delete?");
+function Delete() {
+    alert("Sure you want to delete?");
+    // Create Delete action in controller.
+    // Maybe I can add a cascade constraint...
 }
 
 
 function UpdateQuestions() {
     //var questionArray = new Array();
-    //var question = { id: name, sectionId: quizId, position: position };
-
-    //document.querySelectorAll(".accordion-question-item").foreach((item) => {
-    //    console.log("Q Found");
-    //});
-
-    var qDiv = document.querySelectorAll(".accordion-question-item"), i;
+    var questionArray = [];
+    var questionDivs = document.querySelectorAll(".accordion-question-item"), i;
     var count = 0;
-    for (i = 0; i < qDiv.length; ++i) {
-        console.log("Q Found " + count);
+
+    for (i = 0; i < questionDivs.length; ++i) {
+        var element = questionDivs[i];
+        var questionId = element.id;
+        var sectionId = element.closest('.accordion-section-item').id;
+        var QuestionJsonHelper = { Id: questionId, SectionId: sectionId, QuestionPosition: count };
+        questionArray.push(QuestionJsonHelper);
         count++;
     }
+    console.log(questionArray);
+
+    $.ajax({
+        url: "/Quiz/SaveQuiz",
+        type: "POST",
+        //traditional: true,
+        contentType: 'application/json; charset=utf-8',
+        //data: JSON.stringify(questionArray),
+        //data: questionArray,
+        //data: JSON.stringify({ List: questionArray }),
+        data: JSON.stringify({ Qlist: questionArray }),
+        dataType: "string",
+        success: function (responce) {
+            if (responce) {
+                console.log("true");
+            }
+            else {
+                console.log("fail");
+            }
+        },
+        failure: function (response) {
+            console.log("Failure: " + response.responseText);
+        },
+        error: function (response) {
+            console.log("Error: " + response.responseText);
+            console.log(questionArray);
+        }
+    });
+
 }
+

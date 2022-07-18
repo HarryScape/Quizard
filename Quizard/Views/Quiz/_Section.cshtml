@@ -1,16 +1,17 @@
 ﻿@model Quizard.ViewModels.CreateQuizViewModel
 
-@*<div class="quiz-wrapper" id="partialZone">*@
+<script src="~/js/site.js" asp-append-version="true"></script>
+
     @*sections*@
     @{
         int Sindex = 0;
     }
     @foreach (var Qsection in Model.Sections.Where(i => i.QuizId.Equals(Model.Quiz.Id)))
     {
-        int Sid = Qsection.Id;
-        <div class="accordion-section-item" id="@("s" + @Sindex + "id" + Sid)">
+        int sectionId = Qsection.Id;
+        <div class="accordion-section-item" id="@(sectionId)">
             @*<button class="delete-button" type="submit"><img src="@Url.Content("~/Content/Images/delbin.png")"></button>*@
-            <button id="delete-button" type="submit"><img src="~/Content/Images/delbin.png" onclick="Del()"></button>
+            <button id="delete-button" type="submit"><img src="~/Content/Images/delbin.png" onclick="Delete()"></button>
 
             <button class="accordion-section-button"> <strong> @Qsection.SectionName </strong> </button>
 
@@ -23,8 +24,8 @@
                         }
                         @foreach (var question in Model.Questions.Where(i => i.SectionId.Equals(Qsection.Id)))
                         {
-                            int Qid = question.Id;
-                            <div class="accordion-question-item" draggable="true" div id="@("s" + Sindex + "q" + Qindex + "id" + Qid)">
+                            int questionId = question.Id;
+                            <div class="accordion-question-item" draggable="true" id="@questionId" data-section-index="@Sindex" data-sectionId="@sectionId" data-position="@Qindex">
                                 <button class="accordion-question-button"> @question.QuestionTitle </button>
                                 <div class="accordion-question-collapse collapse">
                                     <div class="accordion-question-body">
@@ -46,4 +47,3 @@
         </div>
         Sindex++;
     }
-@*</div>*@
