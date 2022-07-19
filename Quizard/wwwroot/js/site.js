@@ -396,10 +396,9 @@ function getDragAfterElement(container, y) {
 
 // This func correctly passes data to controller.
 function AddSection() {
+    UpdateQuestions();
     var name = document.getElementById("AddSectionName").value;
     var quizId = document.getElementById("HiddenQuizId").value;
-    //console.log(name);
-    //console.log(quizId);
 
     var dataPost = { sectionName: name, quizId: quizId };
 
@@ -421,12 +420,12 @@ function AddSection() {
 
         },
         failure: function (response) {
-            //console.log(response.responseText);
+            console.log(response.responseText);
         },
         error: function (response) {
-            //console.log(response.responseText);
+            console.log(response.responseText);
         },
-        // works kind of
+        // Working state
         complete: function (response) {
             $('.quiz-wrapper').html(response.responseText);
         }
@@ -436,12 +435,11 @@ function AddSection() {
 function Delete() {
     alert("Sure you want to delete?");
     // Create Delete action in controller.
-    // Maybe I can add a cascade constraint...
+    // Alert user that questions in this section will be deleted too. 
 }
 
 
 function UpdateQuestions() {
-    //var questionArray = new Array();
     var questionList = [];
     var questionDivs = document.querySelectorAll(".accordion-question-item"), i;
     var count = 0;
@@ -454,54 +452,11 @@ function UpdateQuestions() {
         questionList.push(QuestionJsonHelper);
         count++;
     }
-    //console.log(questionArray);
-    //var a = 7;
-    //var tester = { lemon: a, lime: a };
-    //var dataToPost = JSON.stringify({ questionList: questionList });
-    var dataToPost = JSON.stringify({ updates: questionList });
-    //var dataToPost = JSON.stringify({ questionList });
-
-    console.log(dataToPost);
-
-
-
 
     $.post('/Quiz/SaveQuiz', { updates: questionList },
         function () {
             $('#result').html('"PassThings()" successfully called.');
         });
-
-    //$.ajax({
-    //    type: "POST",
-    //    //data: JSON.stringify(questionArray),
-    //    //data: { arrayList: JSON.stringify(questionArray) },
-    //    data: dataToPost,
-    //    //data: $.param({ questionList: questionList }, true),
-    //    //data: JSON.stringify(tester),
-    //    //data: tester,
-    //    //data: JSON.stringify({ Array: questionArray }),
-    //    //data: JSON.stringify({ Qlist: questionArray }),
-    //    //data: JSON.stringify({ arrayList: questionArray }),
-    //    url: "/Quiz/SaveQuiz",
-    //    //traditional: true,
-    //    contentType: 'application/json',
-    //    dataType: "json",
-    //    success: function (response) {
-    //        if (response) {
-    //            console.log("true");
-    //        }
-    //        else {
-    //            console.log("fail");
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        console.log("Failure: " + response.responseText);
-    //    },
-    //    error: function (response) {
-    //        console.log("Error: " + response.responseText);
-    //        console.log(questionArray);
-    //    }
-    //});
 }
 
 

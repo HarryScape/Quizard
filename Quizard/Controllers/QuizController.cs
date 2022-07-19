@@ -92,10 +92,6 @@ namespace Quizard.Controllers
         }
 
 
-
-
-
-
         // Sructure Quiz Page
         [ActionName("Create")]
         public async Task<IActionResult> Create(int QuizId)
@@ -127,22 +123,6 @@ namespace Quizard.Controllers
         }
 
 
-        // Working with ajax call
-        [HttpPost]
-        public ActionResult AddSection(string sectionName, int quizId)
-        {
-            var quizVM = new CreateQuizViewModel();
-            var section = new Section()
-            {
-                SectionName = sectionName,
-                QuizId = quizId
-            };
-
-            //quizVM.Sections.Add(section);
-            //return PartialView("_Section", section);
-            return Json(section);
-        }
-
         // Adds Section straight to DB...
         [HttpPost]
         public async Task<IActionResult> AddSectionDB(string sectionName, int quizId)
@@ -163,54 +143,10 @@ namespace Quizard.Controllers
             return p;
         }
 
-        //public async Task<JsonResult> UpdateQuizPosition(Question questionArray)
-        //{
-        //    var message = "";
-        //    if (questionArray == null)
-        //    {
-        //        message = "No changes made";
-        //    }
-
-        //    if (questionArray != null)
-        //    {
-        //        foreach (var questionItem in questionArray)
-        //        {
-        //            //Question q = await _quizRepository.GetQuestionById(question);
-        //            // update position
-        //            var question = new Question()
-        //            {
-        //                question.Id = questionItem.Id
-
-        //            };
-        //            //q.QuestionPosition = 11; //placeholder
-        //            //q.SectionId = 99; // placeholder
-        //            // _quizRepository.Update(q);
-        //            message = "Question Position Updated";
-        //        }
-        //    }
-        //    return Json(message);
-        //}
-
-        [HttpPost]
-        public async Task<IActionResult> SaveQuizTwo(IEnumerable<QuestionJsonHelper> updates)
-        {
-            foreach (var item in updates)
-            {
-                Question question = await _quizRepository.GetQuestionById(Int32.Parse(item.Id));
-                question.SectionId = Int32.Parse(item.SectionId);
-                question.QuestionPosition = item.QuestionPosition;
-                _quizRepository.Update(question);
-            }
-            return null;
-        }
-
-
 
         [HttpPost]
         public async Task<IActionResult> SaveQuiz(List<QuestionJsonHelper> updates)
         {
-            string br = "br";
-
             foreach(var item in updates)
             {
                 Question question = await _quizRepository.GetQuestionById(Int32.Parse(item.Id));
@@ -219,38 +155,7 @@ namespace Quizard.Controllers
                 _quizRepository.Update(question);
             }
 
-            //var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(questionArray);
-            //List<QuestionJsonHelper> questionList = JsonConvert.DeserializeObject<List<QuestionJsonHelper>>(questionArray);
-
-            //foreach (var item in questionList)
-            //{
-            //    Question question = await _quizRepository.GetQuestionById(item.Id);
-            //    question.SectionId = item.SectionId;
-            //    question.QuestionPosition = item.QuestionPosition;
-            //    _quizRepository.Update(question);
-            //}
-
-
-
-            //JArray array = JArray.Parse(questionArray);
-            //foreach (JObject obj in array.Children<JObject>())
-            //{
-            //    foreach (JProperty singleProp in obj.Properties())
-            //    {
-            //        string name = singleProp.Name;
-            //        string value = singleProp.Value.ToString();
-            //        //Do something with name and value
-            //        //System.Windows.MessageBox.Show("name is "+name+" and value is "+value);
-            //    }
-            //}
-
-            //var testArray = JArray.Parse(questionArray).Children<JObject>()
-            //         .SelectMany(x => x.Properties().Select(c => c.Value.Value<string>()));
-
-            //var result = JsonConvert.SerializeObject(testArray.SelectMany(x => JArray.Parse(x)));
-
-
-            var message = "I hate ajax";
+            var message = "State saved";
             return Json(message);
         }
 
