@@ -442,7 +442,7 @@ function Delete() {
 
 function UpdateQuestions() {
     //var questionArray = new Array();
-    var questionArray = [];
+    var questionList = [];
     var questionDivs = document.querySelectorAll(".accordion-question-item"), i;
     var count = 0;
 
@@ -451,37 +451,58 @@ function UpdateQuestions() {
         var questionId = element.id;
         var sectionId = element.closest('.accordion-section-item').id;
         var QuestionJsonHelper = { Id: questionId, SectionId: sectionId, QuestionPosition: count };
-        questionArray.push(QuestionJsonHelper);
+        questionList.push(QuestionJsonHelper);
         count++;
     }
-    console.log(questionArray);
+    //console.log(questionArray);
+    //var a = 7;
+    //var tester = { lemon: a, lime: a };
+    //var dataToPost = JSON.stringify({ questionList: questionList });
+    var dataToPost = JSON.stringify({ updates: questionList });
+    //var dataToPost = JSON.stringify({ questionList });
 
-    $.ajax({
-        url: "/Quiz/SaveQuiz",
-        type: "POST",
-        //traditional: true,
-        contentType: 'application/json; charset=utf-8',
-        //data: JSON.stringify(questionArray),
-        //data: questionArray,
-        //data: JSON.stringify({ List: questionArray }),
-        data: JSON.stringify({ Qlist: questionArray }),
-        dataType: "string",
-        success: function (responce) {
-            if (responce) {
-                console.log("true");
-            }
-            else {
-                console.log("fail");
-            }
-        },
-        failure: function (response) {
-            console.log("Failure: " + response.responseText);
-        },
-        error: function (response) {
-            console.log("Error: " + response.responseText);
-            console.log(questionArray);
-        }
-    });
+    console.log(dataToPost);
 
+
+
+
+    $.post('/Quiz/SaveQuiz', { updates: questionList },
+        function () {
+            $('#result').html('"PassThings()" successfully called.');
+        });
+
+    //$.ajax({
+    //    type: "POST",
+    //    //data: JSON.stringify(questionArray),
+    //    //data: { arrayList: JSON.stringify(questionArray) },
+    //    data: dataToPost,
+    //    //data: $.param({ questionList: questionList }, true),
+    //    //data: JSON.stringify(tester),
+    //    //data: tester,
+    //    //data: JSON.stringify({ Array: questionArray }),
+    //    //data: JSON.stringify({ Qlist: questionArray }),
+    //    //data: JSON.stringify({ arrayList: questionArray }),
+    //    url: "/Quiz/SaveQuiz",
+    //    //traditional: true,
+    //    contentType: 'application/json',
+    //    dataType: "json",
+    //    success: function (response) {
+    //        if (response) {
+    //            console.log("true");
+    //        }
+    //        else {
+    //            console.log("fail");
+    //        }
+    //    },
+    //    failure: function (response) {
+    //        console.log("Failure: " + response.responseText);
+    //    },
+    //    error: function (response) {
+    //        console.log("Error: " + response.responseText);
+    //        console.log(questionArray);
+    //    }
+    //});
 }
+
+
 

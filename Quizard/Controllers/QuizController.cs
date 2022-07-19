@@ -153,7 +153,6 @@ namespace Quizard.Controllers
                 QuizId = quizId
             };
             _quizRepository.Add(section);
-            //return Json(section);
             var quizViewModel = new CreateQuizViewModel();
             quizViewModel.Quiz = await _quizRepository.GetQuizById(quizId);
             quizViewModel.Sections = await _quizRepository.GetQuizSections(quizId);
@@ -193,20 +192,45 @@ namespace Quizard.Controllers
         //}
 
         [HttpPost]
-        public async Task<ActionResult> SaveQuiz(string questionArray)
+        public async Task<IActionResult> SaveQuizTwo(IEnumerable<QuestionJsonHelper> updates)
         {
-            int i = 0;
-            List<QuestionJsonHelper> questionList = JsonConvert.DeserializeObject<List<QuestionJsonHelper>>(questionArray);
-
-            foreach (var item in questionList)
+            foreach (var item in updates)
             {
-                Question question = await _quizRepository.GetQuestionById(item.Id);
-                question.SectionId = item.SectionId;
+                Question question = await _quizRepository.GetQuestionById(Int32.Parse(item.Id));
+                question.SectionId = Int32.Parse(item.SectionId);
+                question.QuestionPosition = item.QuestionPosition;
+                _quizRepository.Update(question);
+            }
+            return null;
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> SaveQuiz(List<QuestionJsonHelper> updates)
+        {
+            string br = "br";
+
+            foreach(var item in updates)
+            {
+                Question question = await _quizRepository.GetQuestionById(Int32.Parse(item.Id));
+                question.SectionId = Int32.Parse(item.SectionId);
                 question.QuestionPosition = item.QuestionPosition;
                 _quizRepository.Update(question);
             }
 
-          
+            //var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(questionArray);
+            //List<QuestionJsonHelper> questionList = JsonConvert.DeserializeObject<List<QuestionJsonHelper>>(questionArray);
+
+            //foreach (var item in questionList)
+            //{
+            //    Question question = await _quizRepository.GetQuestionById(item.Id);
+            //    question.SectionId = item.SectionId;
+            //    question.QuestionPosition = item.QuestionPosition;
+            //    _quizRepository.Update(question);
+            //}
+
+
 
             //JArray array = JArray.Parse(questionArray);
             //foreach (JObject obj in array.Children<JObject>())
