@@ -159,3 +159,305 @@ function getDragAfterElement(container, y) {
 //     { offset: Number.NEGATIVE_INFINITY }
 //   ).element;
 // }
+
+
+
+// ADDING SECTIONS.
+
+
+//function AddSection() {
+
+//    var name = document.getElementById("AddSectionName").value;
+//    var quizId = document.getElementById("HiddenQuizId").value;
+//    console.log(name);
+//    console.log(quizId);
+
+////    const result = fetch('/Quiz/AddSection', {
+////        method: 'POST',
+////        body: JSON.stringify({
+////            str: name,
+////            num: quizId
+////        })
+////    });
+////    const response = await result.json();
+
+////    const result = fetch
+
+
+
+
+//$.ajax({
+//    url: '/Quiz/AddSection',
+//    data: {
+//        'quizId': quizId, 'sectionName': name
+//    },
+//    type: "POST",
+//    success: function () {
+//        console.log('woot');
+//    }
+//});
+//}
+
+
+////fetch(`/Quiz/AddSection`, {
+////    method: 'POST',
+////    body: JSON.stringify({
+////        id: id,
+////        one: 'test'
+////    })
+
+
+////var request = new XMLHttpRequest();
+////request.open('POST', '/Quiz/AddSection', true);
+////request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+////request.send(data);
+////}
+
+
+////(async () => {
+////    function AddSection() {
+////        var name = document.getElementById("AddSectionName").value;
+////        var quizId = document.getElementById("HiddenQuizId").value;
+
+////        const result = await fetch('/Quiz/AddPart', {
+////            method: 'POST',
+////            body: JSON.stringify({
+////                str: name,
+////                num: quizId
+////            })
+////        });
+////        const response = await result.json();
+////    }
+//}
+
+
+//function AddSection() {
+//    var name = document.getElementById("AddSectionName").value;
+//    var quizId = document.getElementById("HiddenQuizId").value;
+//    console.log(name);
+//    console.log(quizId);
+
+//    fetch('/QuizController/AddSection', {
+//        method: 'POST',
+//        body: JSON.stringify({
+//            str: 'name',
+//            num: 'quizId'
+//        })
+//    }).then(res => res.json())
+//        .then(data => /* do whatever you want with it */ console.log('hell'));
+//}
+
+
+
+
+//async function AddSection() {
+//    var name = document.getElementById("AddSectionName").value;
+//    var quizId = document.getElementById("HiddenQuizId").value;
+
+//    const result = await fetch('/Quiz/AddSection', {
+//        method: 'POST',
+//        body: JSON.stringify({
+//            str: name,
+//            num: quizId
+//        })
+//    });
+//    const response = await result.json();
+//}
+
+// whatever code you need
+//dawait AddPart();
+
+//function AddSection() {
+//        var name = document.getElementById("AddSectionName").value;
+//    var quizId = document.getElementById("HiddenQuizId").value;
+
+
+//    fetch('/QuizController/AddSection', {
+//        method: 'post',
+//        body: JSON.stringify({ SectionName: name, quizId: quizId })
+//    })
+//}
+
+//function AddSection() {
+//    var name = document.getElementById("AddSectionName").value;
+//    var quizId = document.getElementById("HiddenQuizId").value;
+
+//    fetch("/QuizController/AddSection/", {
+//        method: "post",
+//        headers: {
+//            'Accept': 'application/json',
+//            'Content-Type': 'application/json'
+//        },
+
+//        //make sure to serialize your JSON body
+//        body: JSON.stringify({
+//            sectionName: name,
+//            id: quizId
+//        })
+//    })
+//        .then((response) => {
+//            //do something awesome that makes the world a better place
+//        });
+//}
+
+//function AddSection() {
+//    var name = document.getElementById("AddSectionName").value;
+//    var quizId = document.getElementById("HiddenQuizId").value;
+//    console.log('done')
+//    $(document).ready(function () {
+//        $("#AddSectionBtn").click(function () {
+//            var f = {};
+//            f.url = '@Url.Action("AddSection", "Quiz")';
+//            f.type = "POST";
+//            f.dataType = "json";
+//            f.data = JSON.stringify({ sectionName: name, quizId: quizId });
+//            f.contentType = "application/json";
+//            f.success = function (response) {
+//                alert("success");
+//            };
+//            f.error = function (response) {
+//                alert("failed");
+//            };
+//            $.ajax(f);
+//        });
+//    });
+//}
+
+
+// Fetch API does not work with razor page, ajax it is...
+//function AddSection() {
+//    var name = document.getElementById("AddSectionName").value;
+//    var quizId = document.getElementById("HiddenQuizId").value;
+
+//    fetch("/QuizController/AddSection", {
+
+//        credentials: 'include',
+//        method: 'POST',
+//        headers: {
+//            'Accept': 'application/json',
+//            'Content-Type': 'application/json'
+//            //'X-XSRF-Token': gettoken()
+//        },
+//        body: JSON.stringify({
+//            SectionName: 'test name',
+//            QuizId: '2'
+//        })
+//    }).then(res => {
+//        return res.json()
+//    })
+//        .then(data => console.log(data))
+//        .catch(error => console.error('ERROR', error))
+//}
+
+
+
+//function AddSection() {
+//    var name = document.getElementById("AddSectionName").value;
+//    var quizId = document.getElementById("HiddenQuizId").value;
+
+//    $.ajax({
+//        type: "POST",
+//        url: "QuizController/AddSection",
+//        contentType: "application/json; charset=utf-8",
+//        dataType: "json",
+//        data: JSON.stringify({
+//            SectionName: 'test name',
+//            QuizId: '2'
+//        })
+//        error: function (xhr, status, error) {
+//        }
+//    }).done(function (data) {
+//        debugger;
+//        $("body").removeClass("loading");
+
+//    });
+//}
+
+
+//function AddSection() {
+//    console.log('clicked')
+//    var name = document.getElementById("AddSectionName").value;
+//    var quizId = document.getElementById("HiddenQuizId").value;
+
+//    $.ajax({
+//        type: "POST"
+//            url: "@Url.Action("AddSection")",
+//        dataType: "json",
+//        data: { sectionName: name, quizId: quizId }
+//            success: function (result) {
+//            console.log(result);
+//        },
+//        error: function (req, status, error) {
+//            console.log(req, status, error)
+//        }
+//    });
+//}
+
+
+// This func correctly passes data to controller.
+function AddSection() {
+    UpdateQuestions();
+    var name = document.getElementById("AddSectionName").value;
+    var quizId = document.getElementById("HiddenQuizId").value;
+
+    var dataPost = { sectionName: name, quizId: quizId };
+
+    $.ajax({
+        type: "POST",
+        data: dataPost,
+        url: "/Quiz/AddSectionDB",
+        dataType: "json",
+        success: function (response) {
+            if (response != null) {
+                console.log("Sent okay", response);
+            } else {
+                console.log("Something went wrong");
+            }
+            // var quizUpdate = JSON.stringify(response);
+            //// $('.quiz-wrapper').html(quizUpdate);
+            // //   $('.quiz-wrapper').html(quizUpdate).html();
+            // $('.quiz-wrapper').load(quizUpdate).html();
+
+        },
+        failure: function (response) {
+            console.log(response.responseText);
+        },
+        error: function (response) {
+            console.log(response.responseText);
+        },
+        // Working state
+        complete: function (response) {
+            $('.quiz-wrapper').html(response.responseText);
+        }
+    });
+}
+
+function Delete() {
+    alert("Sure you want to delete?");
+    // Create Delete action in controller.
+    // Alert user that questions in this section will be deleted too. 
+}
+
+
+function UpdateQuestions() {
+    var questionList = [];
+    var questionDivs = document.querySelectorAll(".accordion-question-item"), i;
+    var count = 0;
+
+    for (i = 0; i < questionDivs.length; ++i) {
+        var element = questionDivs[i];
+        var questionId = element.id;
+        var sectionId = element.closest('.accordion-section-item').id;
+        var QuestionJsonHelper = { Id: questionId, SectionId: sectionId, QuestionPosition: count };
+        questionList.push(QuestionJsonHelper);
+        count++;
+    }
+
+    $.post('/Quiz/SaveQuiz', { updates: questionList },
+        function () {
+            $('#result').html('"PassThings()" successfully called.');
+        });
+}
+
+
+

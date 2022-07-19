@@ -1,56 +1,29 @@
 ﻿@model Quizard.ViewModels.CreateQuizViewModel
 
-@*NEW JS SORTABLE ACCORDION*@
+
+@Html.HiddenFor(x => x.Quiz.Id, new { id = "HiddenQuizId" })
+
 
 <div class="flex-container">
 
-<div class="controls">
-@*<a class="btn btn-primary" href="@Url.Action("Update", "Quiz")">Save</a>*@
+    <div class="controls">
+        <h4 class="quizName"> @Model.Quiz.QuizName </h4>
 
-<h4 class="quizName"> @Model.Quiz.QuizName </h4>
-
-<div class="input-group">
-    <input type="text" class="input" id="Email" name="Email" placeholder="Add Section" autocomplete="off">
-    <input class="button--add" value="Add" type="submit">
-</div>
-
-<input class="button--save" value="Save Quiz" type="submit">
-
-</div>
-
-
-<div class="quiz-wrapper">
-    @*sections*@
-    @foreach (var Qsection in Model.Sections.Where(i => i.QuizId.Equals(Model.Quiz.Id)))
-    {
-        <div class="accordion-section-item">
-            <button class="accordion-section-button"> <strong> @Qsection.SectionName </strong> </button>
-            <div class="accordion-section-collapse ">
-                <div class="accordion-section-body">
-                    @*questions *@
-                    <div class="accordion-question">
-                        @foreach (var question in Model.Questions.Where(i => i.SectionId.Equals(Qsection.Id)))
-                        {
-                            <div class="accordion-question-item" draggable="true">
-                                <button class="accordion-question-button"> @question.QuestionTitle </button>
-                                <div class="accordion-question-collapse collapse">
-                                    <div class="accordion-question-body">
-                                        @*answers*@
-                                        <ol>
-                                            @foreach (var answer in Model.Answers.Where(i => i.QuestionId.Equals(question.Id)))
-                                            {
-                                                <li> @answer.QuestionAnswer </li>
-                                            }
-                                        </ol>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
+        <div class="input-group">
+            <input type="text" class="input" id="AddSectionName" placeholder="Add Section" autocomplete="off">
+            <input class="button--add" value="Add" type="submit" id="AddSectionBtn" onclick="AddSection()">
         </div>
-    }
+
+        <input class="button--save" value="Save" type="submit" onclick="UpdateQuestions()">
+        <input class="button--save" value="Dashboard" type="submit" onclick="location.href='@Url.Action("Index", "Quiz")'">
+        <input class="button--save" value="Delete Quiz" type="submit" onclick="delete()">
+
+    </div>
+
+    <div class="quiz-wrapper" id="partialZone">
+
+        @{Html.RenderPartial("_Section");}
+
+    </div>
 </div>
 
-</div>

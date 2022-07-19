@@ -5,6 +5,13 @@ h3 {
     margin-top: 0;
 }
 
+#delete-button {
+    padding: 0;
+    border: none;
+    position:absolute;
+    right: 20px;
+}
+
 .flex-container {
     /*    display: flex;
     flex-direction: row;
@@ -32,12 +39,13 @@ h3 {
 
 .controls {
     margin-top: 30px;
-    background-color: rgb(177, 178, 250);
+    background-color: rgb(217, 217, 245);
     border: solid 2px #5e4dcd;
     border-radius: 0.5rem;
     /*    order: 2;
     flex-basis: auto;
     flex: 1 1 auto;*/
+    max-width: 400px;
 
     order: 2;
     flex: 1 1 auto;
@@ -57,6 +65,7 @@ h3 {
 .accordion-section-item {
     border-left: 15px solid rgb(177, 178, 250);
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0, 0.5);
+    position: relative;
 }
 
 .accordion-section-button {
@@ -115,7 +124,7 @@ h3 {
 /* ACCORDION BEHAVIOUR  */
 
 .accordion-question-button::after {
-    content: "\002B";
+    /*content: "\002B";*/
     font-size: 1rem;
     position: absolute;
     /*right: 10rem;*/
@@ -196,9 +205,9 @@ h3 {
 
 .input {
     min-height: 50px;
-    max-width: 150px;
+    max-width: 300px;
     padding: 0 1rem;
-    color: #fff;
+    color: black;
     font-size: 15px;
     border: 1px solid #5e4dcd;
     border-radius: 6px 0 0 6px;
@@ -222,7 +231,6 @@ h3 {
     }
 
 .input:focus, .input:focus-visible {
-    border-color: #3898EC;
     outline: none;
 }
 

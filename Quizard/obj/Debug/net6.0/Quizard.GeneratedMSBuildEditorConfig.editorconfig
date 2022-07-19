@@ -23,6 +23,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Parts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Quiz/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -31,12 +35,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Quiz/scratchpad.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxzY3JhdGNocGFkLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Quiz/Upload.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxVcGxvYWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Quiz/_Section.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxfU2VjdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Shared/Error.cshtml]

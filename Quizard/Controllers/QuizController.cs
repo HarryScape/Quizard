@@ -1,8 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Quizard.Data.Enum;
 using Quizard.Interfaces;
 using Quizard.Models;
 using Quizard.ViewModels;
+
+
+using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace Quizard.Controllers
 {
@@ -86,11 +92,7 @@ namespace Quizard.Controllers
         }
 
 
-
-
-
-
-        // Sructure Quiz
+        // Sructure Quiz Page
         [ActionName("Create")]
         public async Task<IActionResult> Create(int QuizId)
         {
@@ -104,30 +106,59 @@ namespace Quizard.Controllers
             return View(quizViewModel);
         }
 
-
-
-        // TODO: AddSection Method
         [HttpPost]
-        [ActionName("AddSection")]
-        public async Task<IActionResult> AddSection(CreateQuizViewModel QuizVM)
+        public ActionResult SectionPartialView(string sectionName, int quizId)
         {
-            if (ModelState.IsValid)
+
+            var section = new Section()
             {
-                var section = new Section
-                {
-                    SectionName = QuizVM.SectionName,
-                    QuizId = QuizVM.Quiz.Id
-                };
-                _quizRepository.Add(section);
-                return View("Create", QuizVM);
-            }
-            else
+                SectionName = sectionName,
+                QuizId = quizId
+            };
+            _quizRepository.Add(section);
+
+            CreateQuizViewModel quizVM = new CreateQuizViewModel();
+            var p = PartialView("_Section", quizVM);
+            return p;
+        }
+
+
+        // Adds Section straight to DB...
+        [HttpPost]
+        public async Task<IActionResult> AddSectionDB(string sectionName, int quizId)
+        {
+            var section = new Section()
             {
-                ModelState.AddModelError("", "Invalid Section");
+                SectionName = sectionName,
+                QuizId = quizId
+            };
+            _quizRepository.Add(section);
+            var quizViewModel = new CreateQuizViewModel();
+            quizViewModel.Quiz = await _quizRepository.GetQuizById(quizId);
+            quizViewModel.Sections = await _quizRepository.GetQuizSections(quizId);
+            quizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(quizId);
+            quizViewModel.Answers = await _quizRepository.GetSpecificAnswers(quizId);
+
+            var p = PartialView("_Section", quizViewModel);
+            return p;
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> SaveQuiz(List<QuestionJsonHelper> updates)
+        {
+            foreach(var item in updates)
+            {
+                Question question = await _quizRepository.GetQuestionById(Int32.Parse(item.Id));
+                question.SectionId = Int32.Parse(item.SectionId);
+                question.QuestionPosition = item.QuestionPosition;
+                _quizRepository.Update(question);
             }
 
-            return View("Create", QuizVM);
+            var message = "State saved";
+            return Json(message);
         }
+
 
     }
 }

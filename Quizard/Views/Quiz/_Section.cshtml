@@ -1,0 +1,49 @@
+﻿@model Quizard.ViewModels.CreateQuizViewModel
+
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+    @*sections*@
+    @{
+        int Sindex = 0;
+    }
+    @foreach (var Qsection in Model.Sections.Where(i => i.QuizId.Equals(Model.Quiz.Id)))
+    {
+        int sectionId = Qsection.Id;
+        <div class="accordion-section-item" id="@(sectionId)">
+            @*<button class="delete-button" type="submit"><img src="@Url.Content("~/Content/Images/delbin.png")"></button>*@
+            <button id="delete-button" type="submit"><img src="~/Content/Images/delbin.png" onclick="Delete()"></button>
+
+            <button class="accordion-section-button"> <strong> @Qsection.SectionName </strong> </button>
+
+            <div class="accordion-section-collapse ">
+                <div class="accordion-section-body">
+                    @*questions *@
+                    <div class="accordion-question">
+                        @{
+                            int Qindex = 0;
+                        }
+                        @foreach (var question in Model.Questions.Where(i => i.SectionId.Equals(Qsection.Id)))
+                        {
+                            int questionId = question.Id;
+                            <div class="accordion-question-item" draggable="true" id="@questionId" data-section-index="@Sindex" data-sectionId="@sectionId" data-position="@Qindex">
+                                <button class="accordion-question-button"> @question.QuestionTitle </button>
+                                <div class="accordion-question-collapse collapse">
+                                    <div class="accordion-question-body">
+                                        @*answers*@
+                                        <ol>
+                                            @foreach (var answer in Model.Answers.Where(i => i.QuestionId.Equals(question.Id)))
+                                            {
+                                                <li> @answer.QuestionAnswer </li>
+                                            }
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            Qindex++;
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        Sindex++;
+    }
