@@ -1,0 +1,23 @@
+﻿
+
+<h1> Dashboard </h1>
+
+@if (User.Identity.IsAuthenticated)
+{
+    @if (User.IsInRole("teacher"))
+    {
+        <h3> You are a teacher</h3>
+    }
+    else if (User.IsInRole("student"))
+    {
+        <h3> You are a student</h3>
+    }
+        else if (User.IsInRole("admin"))
+    {
+        <h3> You are an admin</h3>
+    }
+    else
+    {
+        <h3> There is some error...</h3>
+    }
+}
