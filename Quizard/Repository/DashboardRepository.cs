@@ -18,7 +18,7 @@ namespace Quizard.Repository
         public async Task<List<Quiz>> GetAllTeacherQuizzes()
         {
             var currentUser = _httpContextAccessor.HttpContext?.User.GetUserId();
-            var userQuizes = _context.Quizzes.Where(i => i.User.Id == currentUser);
+            var userQuizes = _context.Quizzes.OrderByDescending(j => j.DateCreated).Where(i => i.User.Id == currentUser);
             return userQuizes.ToList();
         }
 

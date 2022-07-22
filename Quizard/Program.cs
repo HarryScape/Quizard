@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Quizard.Data;
 using Quizard.Interfaces;
 using Quizard.Models;
@@ -39,6 +40,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+//app.UseStaticFiles(new StaticFileOptions()
+//{
+//    FileProvider = new PhysicalFileProvider(
+//          Path.Combine(Directory.GetCurrentDirectory(), @"Images")),
+//    RequestPath = "/Images"
+//});
+
 
 app.UseRouting();
 app.UseAuthentication();

@@ -1,4 +1,9 @@
 
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+
 h1,
 h2,
 h3 {
@@ -8,8 +13,24 @@ h3 {
 #delete-button {
     padding: 0;
     border: none;
-    position:absolute;
+    position: absolute;
     right: 20px;
+    background-image: none;
+}
+
+.humbleicons {
+    width: 1.5em;
+    height: 1.5em;
+    display: inline-block;
+    align-self: center;
+    vertical-align: middle;
+    margin-top: -0.1em;
+    padding: 0;
+    border: none;
+    position: absolute;
+    right: 20px;
+    background: transparent;
+    cursor: pointer
 }
 
 .flex-container {
@@ -25,6 +46,7 @@ h3 {
     justify-content: flex-start;
     align-content: stretch;
     align-items: flex-start;
+    height: auto;
 }
 
 .quiz-wrapper {
@@ -63,7 +85,8 @@ h3 {
 /* ACORDION STYLING */
 
 .accordion-section-item {
-    border-left: 15px solid rgb(177, 178, 250);
+    /*border-left: 15px solid rgb(177, 178, 250);*/
+    border-left: 15px solid #5e4dcd;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0, 0.5);
     position: relative;
 }
@@ -254,4 +277,66 @@ h3 {
 .quizName{
     text-align:center;
     margin-bottom: 40px;
+}
+
+#UploadAlt {
+    cursor: pointer;
+    min-height: 50px;
+    max-width: 900px;
+    padding: 0 1rem;
+    padding-top: 13px;
+    color: black;
+    font-size: 15px;
+    border: 1px solid #5e4dcd;
+    border-radius: 6px 0 0 6px;
+    background-color: transparent;
+}
+
+::-webkit-file-upload-button {
+    display: none;
+    cursor: pointer;
+}
+
+/*.table-row:hover {
+    background-color: #edeef7;
+    border-radius: 6rem;
+}*/
+
+.button-table {
+    /*margin-top: 20px;*/
+    min-height: 40px;
+    padding: .5em 1em;
+    border: none;
+    border-radius: 6px;
+    background-color: #5e4dcd;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color .3s ease-in-out;
+}
+
+    .button-table:hover {
+        background-color: #5e5dcd;
+    }
+
+table th {
+    background-color: rgb(217, 217, 245);
+    border-radius: 6px;
+    margin: 20px;
+    border: solid white 2px;
+}
+
+/*table td:nth-child(1) {
+    text-align: left;
+}
+table th:nth-child(1) {
+    text-align: left;
+}*/
+
+table {
+    text-align: center;
+    border-collapse: separate;
+    border: solid rgb(217, 217, 245) 1px;
+    border-radius: 6px;
+    padding: 10px;
 }
