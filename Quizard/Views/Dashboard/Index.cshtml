@@ -1,6 +1,74 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@model Quizard.ViewModels.DashboardViewModel
+
 
 <h1> Dashboard </h1>
+
+<div class="upload-container">
+    <div class="mb-3 mt-3">
+        <p>
+            Upload your questions <br />
+            .XML .TXT .DOCX
+        </p>
+        <form method="post" enctype="multipart/form-data" asp-controller="Dashboard" asp-action="Upload">
+            <input type="hidden" id="UserId" name="UserId" asp-for="UserId" />
+            <div class="mb-3">
+                <label class="form-label">Upload Quiz</label>
+                <input type="file" name="file" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br />
+
+<body>
+    <div class="quiz-table">
+        <table id="example" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Quiz</th>
+                    <th>Date Updated</th>
+                    <th>Module</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Quizzes)
+                {
+                    <tr>
+                        <td>@item.QuizName</td>
+                        <td>@item.DateCreated <br /></td>
+                        <td></td>
+                        <td>
+                            <button type="submit" class="btn btn-primary">Delete</button>
+                            <button type="submit" class="btn btn-primary">Export</button>
+                            <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Quiz", new { QuizId = item.Id })'">Edit</button>
+                            <button type="submit" class="btn btn-primary">Take Quiz</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+
+
+
+
+
+<br />
+<br />
+<br />
+<br />
+
+
+
+
 
 @if (User.Identity.IsAuthenticated)
 {
@@ -12,7 +80,7 @@
     {
         <h3> You are a student</h3>
     }
-        else if (User.IsInRole("admin"))
+    else if (User.IsInRole("admin"))
     {
         <h3> You are an admin</h3>
     }

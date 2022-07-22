@@ -407,9 +407,11 @@ namespace Quizard.Migrations
 
             modelBuilder.Entity("Quizard.Models.Quiz", b =>
                 {
-                    b.HasOne("Quizard.Models.User", null)
+                    b.HasOne("Quizard.Models.User", "User")
                         .WithMany("UserQuizzes")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Quizard.Models.Section", b =>
