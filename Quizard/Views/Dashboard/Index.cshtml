@@ -8,7 +8,7 @@
 {
     @if (User.IsInRole("teacher"))
     {
-        <p> Welcome back, master quizzard!</p>
+        <p> Welcome back, master quizzard! </p>
     }
     else if (User.IsInRole("student"))
     {
@@ -25,21 +25,6 @@
 }
 
 <br />
-
-@*<div class="upload-container">
-    <div class="mb-3 mt-3">
-        <form method="post" enctype="multipart/form-data" asp-controller="Dashboard" asp-action="Upload">
-            <input type="hidden" id="UserId" name="UserId" asp-for="UserId" />
-            <div class="mb-3">
-                <label class="form-label">Upload a .txt Quiz!</label>
-                <input type="file" name="file" class="form-control" />
-            </div>
-            <div class="mb-3">
-                <button type="submit" class="button--save">Upload</button>
-            </div>
-        </form>
-    </div>
-</div>*@
 
 <body>
     <div class="quiz-table">
@@ -79,8 +64,8 @@
         <form method="post" enctype="multipart/form-data" asp-controller="Dashboard" asp-action="Upload">
             <input type="hidden" id="UserId" name="UserId" asp-for="UserId" />
             <div class="input-group">
-                <input type="file" id="UploadAlt">
-                <input class="button--add" value="Upload" type="submit" id="AddSectionBtn" onclick="AddSection()">
+                <input type="file" name="file" id="UploadAlt">
+                <input class="button--add" value="Upload" type="submit" id="AddSectionBtn">
             </div>
         </form>
     </div>

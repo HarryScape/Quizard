@@ -340,3 +340,13 @@ table {
     border-radius: 6px;
     padding: 10px;
 }
+
+.correct-ans::before {
+    content: "\2713"; 
+    left: 1em;
+    position:absolute;
+}
+
+ol{
+    position: relative;
+}
