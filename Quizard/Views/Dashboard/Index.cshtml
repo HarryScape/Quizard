@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@model Quizard.ViewModels.DashboardViewModel
+
+
+<h1> Dashboard </h1>
+@if (User.Identity.IsAuthenticated)
+{
+    @if (User.IsInRole("teacher"))
+    {
+        <p> Welcome back, master quizzard! </p>
+    }
+    else if (User.IsInRole("student"))
+    {
+        <p> Welcome back, apprentice quizzard!</p>
+    }
+    else if (User.IsInRole("admin"))
+    {
+        <p> Welcome back, grand quizzard overseer supreme!</p>
+    }
+    else
+    {
+        <p> There is some error in the cosmos...</p>
+    }
+}
+
+<br />
+
+<body>
+    <div class="quiz-table">
+        <table id="example" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Quiz</th>
+                    <th>Date Updated</th>
+                    <th>Module</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Quizzes)
+                {
+                    <tr class="table-row">
+                        <td>@item.QuizName</td>
+                        <td>@item.DateCreated <br /></td>
+                        <td></td>
+                        <td>
+                            <button type="submit" class="button-table">Delete</button>
+                            <button type="submit" class="button-table">Publish</button>
+                            <button type="submit" class="button-table" onclick="location.href='@Url.Action("Create", "Quiz", new { QuizId = item.Id })'">Edit</button>
+                            <button type="submit" class="button-table">Take Quiz</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<br />
+<div class="upload-container">
+    <label class="form-label"><strong> Upload a .txt Quiz! </strong></label>
+    <div class="mb-3 mt-3">
+        <form method="post" enctype="multipart/form-data" asp-controller="Dashboard" asp-action="Upload">
+            <input type="hidden" id="UserId" name="UserId" asp-for="UserId" />
+            <div class="input-group">
+                <input type="file" name="file" id="UploadAlt">
+                <input class="button--add" value="Upload" type="submit" id="AddSectionBtn">
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+

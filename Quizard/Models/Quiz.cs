@@ -11,9 +11,10 @@ namespace Quizard.Models
         public DateTime DateCreated { get; set; }
         public string? Module { get; set; }
 
+        // USER ID NEED TO BE CHANGED TO A STRING.... DONT FORGET!!!!
         // Quiz can only have one user. ? NULLABLE FOR NOW. 
         [ForeignKey("User")]
-        public int? UserId { get; set; }
+        public string? UserId { get; set; }
         public User? User { get; set; }
 
 
