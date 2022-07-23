@@ -26,9 +26,16 @@ namespace Quizard.Interfaces
         bool Add(Question quiz);
         bool Add(List<Answer> answers);
         bool Update(Quiz quiz);
-        bool Delete(Quiz quiz);
         bool Update(Question question);
         bool Update(Section section);
+        bool Delete(Quiz quiz);
+        bool Delete(Section section);
+        bool Delete(Question question);
+        bool Delete(Answer answer);
+        bool DeleteAns(IEnumerable<Answer> answers);
+        bool DeleteQuestions(IEnumerable<Question> questions);
+        bool DeleteSections(IEnumerable<Section> sections);
+
         bool Save();
     }
 }

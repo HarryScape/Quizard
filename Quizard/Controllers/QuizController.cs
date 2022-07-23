@@ -160,6 +160,23 @@ namespace Quizard.Controllers
             return Json(message);
         }
 
+        public async Task<IActionResult> DeleteQuiz(int id)
+        {
+            var quiz = await _quizRepository.GetQuizById(id);
+            IEnumerable<Answer> answers = await _quizRepository.GetSpecificAnswers(id);
+            IEnumerable<Section> sections = await _quizRepository.GetQuizSections(id);
+            IEnumerable<Question> questions = await _quizRepository.GetQuestionByQuizID(id);
+
+            if (quiz == null) return View("Error");
+
+            _quizRepository.DeleteAns(answers);
+            _quizRepository.DeleteQuestions(questions);
+            _quizRepository.DeleteSections(sections);
+            _quizRepository.Delete(quiz);
+
+            return RedirectToAction("Index", "Dashboard");
+        }
+
 
     }
 }

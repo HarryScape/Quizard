@@ -114,6 +114,64 @@ namespace Quizard.Repository
             return Save();
         }
 
+        public bool Delete(Section section)
+        {
+            _context.Remove(section);
+            return Save();
+        }
+
+        public bool Delete(Question question)
+        {
+            _context.Remove(question);
+            return Save();
+        }
+
+        public bool Delete(Answer answer)
+        {
+            _context.Remove(answer);
+            return Save();
+        }
+
+
+
+
+        public bool DeleteAns(IEnumerable<Answer> answers)
+        {
+            if (answers != null)
+            {
+                foreach (Answer answer in answers)
+                {
+                    _context.Remove(answer);
+                }
+            }
+            return Save();
+        }
+        public bool DeleteQuestions(IEnumerable<Question> questions)
+        {
+            if (questions != null)
+            {
+                foreach (Question question in questions)
+                {
+                    _context.Remove(question);
+                }
+            }
+            return Save();
+        }
+        public bool DeleteSections(IEnumerable<Section> sections)
+        {
+            if (sections != null)
+            {
+                foreach (Section section in sections)
+                {
+                    _context.Remove(section);
+                }
+            }
+            return Save();
+        }
+
+
+
+
         public bool Save()
         {
             var saved = _context.SaveChanges();
