@@ -57,6 +57,10 @@ namespace Quizard.Repository
             //return await _context.Questions.Where(c => c.Quiz.Id.Equals(Quizid)).ToListAsync();
             return await _context.Questions.OrderBy(o => o.QuestionPosition).Where(i => i.SectionId == i.Section.Id).Where(j => j.Section.Quiz.Id == Quizid).ToListAsync();
         }
+        public async Task<IEnumerable<Question>> GetQuestionBySectionID(int sectionId)
+        {
+            return await _context.Questions.Where(i => i.SectionId == sectionId).ToListAsync();
+        }
         public async Task<Question> GetQuestionById(int id)
         {
             return await _context.Questions.FirstOrDefaultAsync(i => i.Id == id);

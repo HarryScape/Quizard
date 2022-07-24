@@ -432,11 +432,6 @@ function AddSection() {
     });
 }
 
-function Delete() {
-    alert("Sure you want to delete?");
-    // Create Delete action in controller.
-    // Alert user that questions in this section will be deleted too. 
-}
 
 
 function UpdateQuestions() {
@@ -461,3 +456,71 @@ function UpdateQuestions() {
 
 
 
+//$(document).on("click", "#sec-del", function () {
+
+//    $("#exampleModalCenter").modal("toggle");
+
+//})
+
+//$(document).on("click", "#del-quiz", function () {
+
+//    $("#exampleModalCenter").modal("toggle");
+
+//})
+
+
+$(document).on("click", "#exit-modal", function () {
+
+    $("#exampleModalCenter").modal("toggle");
+
+})
+
+
+function DeleteSection(id) {
+    $("#exampleModalCenter").modal("toggle");
+    UpdateQuestions();
+    const button = document.getElementById('del-confirm');
+    button.addEventListener('click', function handleClick() {
+        console.log('element clicked');
+        $("#exampleModalCenter").modal("toggle");
+
+        $.ajax({
+            type: "POST",
+            data: { sectionId: id },
+            url: "/Quiz/DeleteSection",
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: "json",
+            success: function (response) {
+                if (response != null) {
+                    console.log("Sent okay", response);
+                } else {
+                    console.log("Something went wrong");
+                }
+            },
+            failure: function (response) {
+                console.log(response.responseText);
+            },
+            error: function (response) {
+                console.log(response.responseText);
+            },
+            complete: function (response) {
+                $('.quiz-wrapper').html(response.responseText);
+            }
+        });
+    });
+}
+
+
+function DeleteQuiz(id) {
+    $("#exampleModalCenter").modal("toggle");
+
+    const button = document.getElementById('del-confirm');
+    button.addEventListener('click', function handleClick() {
+        $("#exampleModalCenter").modal("toggle");
+
+        $.post('/Quiz/DeleteQuiz', { id: id },
+            function (response) {
+                window.location.href = response.redirectToUrl;
+            });
+    });
+}
