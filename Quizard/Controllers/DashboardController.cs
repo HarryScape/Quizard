@@ -45,85 +45,80 @@ namespace Quizard.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadQuiz(IFormFile file)
+        public async Task<IActionResult> UploadQuiz(IFormFile file, DashboardViewModel dashboardViewModel)
         {
             string lms = await _quizParserService.GetQuizLMS(file);
-            int stop = 10;
 
             if (lms.Equals("Blackboard"))
             {
-                stop = 1;
-                _blackboardParserService.ParseQuiz(file);
+                await _blackboardParserService.ParseQuiz(file, dashboardViewModel);
             }
             else if (lms.Equals("Canvas"))
             {
-                stop = 2;
-                _canvasParserService.ParseQuiz(file);
+                await _canvasParserService.ParseQuiz(file, dashboardViewModel);
             }
             else if (lms.Equals("Moodle"))
             {
-                stop = 3;
-                _moodleParserService.ParseQuiz(file);
+                await _moodleParserService.ParseQuiz(file, dashboardViewModel);
             }
             else
             {
                 return View("Error");
             }
-
-
+            
             return RedirectToAction("Index", "Dashboard");
         }
 
 
 
 
-        [ActionName("Upload")]
-        [HttpPost]
-        public async Task<IActionResult> Upload(IFormFile file, DashboardViewModel dashboardViewModel)
-        {
-            // TODO: try and catch
+        //[ActionName("Upload")]
+        //[HttpPost]
+        //public async Task<IActionResult> Upload(IFormFile file, DashboardViewModel dashboardViewModel)
+        //{
+        //    // TODO: try and catch
 
-            Quiz quiz = new Quiz();
-            quiz.QuizName = file.FileName;
-            quiz.DateCreated = DateTime.Now;
-            quiz.UserId = dashboardViewModel.UserId;
-            _quizRepository.Add(quiz);
+        //    Quiz quiz = new Quiz();
+        //    quiz.QuizName = file.FileName;
+        //    quiz.DateCreated = DateTime.Now;
+        //    quiz.UserId = dashboardViewModel.UserId;
+        //    _quizRepository.Add(quiz);
 
-            Section section = new Section();
-            section.SectionName = "Default Question Pool";
-            section.QuizId = quiz.Id;
-            _quizRepository.Add(section);
+        //    Section section = new Section();
+        //    section.SectionName = "Default Question Pool";
+        //    section.QuizId = quiz.Id;
+        //    _quizRepository.Add(section);
 
-            using (StreamReader fileReader = new StreamReader(file.OpenReadStream()))
-            {
-                while (!fileReader.EndOfStream)
-                {
-                    Question question = new Question(); ;
-                    List<Answer> answers = new List<Answer>();
+        //    using (StreamReader fileReader = new StreamReader(file.OpenReadStream()))
+        //    {
+        //        while (!fileReader.EndOfStream)
+        //        {
+        //            Question question = new Question(); ;
+        //            List<Answer> answers = new List<Answer>();
 
-                    var line = fileReader.ReadLine();
-                    var values = line.Split("\t");
+        //            var line = fileReader.ReadLine();
+        //            var values = line.Split("\t");
 
-                    question.QuestionType = Enum.Parse<QuestionType>(values[0]);
-                    question.QuestionTitle = values[1];
-                    question.SectionId = section.Id;
-                    _quizRepository.Add(question);
+        //            question.QuestionType = Enum.Parse<QuestionType>(values[0]);
+        //            question.QuestionTitle = values[1];
+        //            question.SectionId = section.Id;
+        //            _quizRepository.Add(question);
 
-                    for (int i = 2; i < values.Length; i += 2)
-                    {
-                        Answer answer = new Answer();
-                        answer.QuestionAnswer = values[i];
-                        answer.isCorrect = values[i + 1];
-                        answer.QuestionId = question.Id;
-                        answers.Add(answer);
-                    }
+        //            for (int i = 2; i < values.Length; i += 2)
+        //            {
+        //                Answer answer = new Answer();
+        //                answer.QuestionAnswer = values[i];
+        //                answer.isCorrect = values[i + 1];
+        //                answer.QuestionId = question.Id;
+        //                answers.Add(answer);
+        //            }
 
-                    _quizRepository.Add(answers);
+        //            _quizRepository.Add(answers);
 
-                }
-            }
-            return RedirectToAction("Index", "Dashboard");
-        }
+        //        }
+        //    }
+        //    return RedirectToAction("Index", "Dashboard");
+        //}
 
 
 

@@ -36,7 +36,6 @@ namespace Quizard.Services
                     lms = "Blackboard";
                 }
             }
-
             return lms;
         }
 

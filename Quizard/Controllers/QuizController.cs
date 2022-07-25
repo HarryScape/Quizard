@@ -127,7 +127,7 @@ namespace Quizard.Controllers
 
             //return RedirectToAction("Index", "Dashboard");
             return Json(new { redirectToUrl = Url.Action("Index", "Dashboard") });
-            return Json(Url.Action("Index", "Dashboard"));
+            //return Json(Url.Action("Index", "Dashboard"));
         }
 
 

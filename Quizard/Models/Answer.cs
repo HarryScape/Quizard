@@ -8,8 +8,9 @@ namespace Quizard.Models
         [Key]
         public int Id { get; set; }
         // public bool? isCorrect { get; set; }
-        public string? isCorrect { get; set; }
+        public bool? isCorrect { get; set; }
         public string? QuestionAnswer { get; set; }
+        public string? Comment { get; set; }
         [Required]
         [ForeignKey("Question")]
         public int QuestionId { get; set; }

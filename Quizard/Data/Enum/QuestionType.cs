@@ -6,18 +6,20 @@
         MC,
         // Multiple Answer
         MA,
-        // Essay
+        // Essay (Manual Grading)
         ESS,
-        // Short Answer
-        SA,
+        // Short Answer (Manual Grading)
+        SR,
         // TrueFalse
         TF,
         // Fill In Blank
         FIB,
-        // Matching
+        // Matching (revisit...)
         MAT,
-        // Order answers
-        ORD
+        // Order answers (Manual Grading)
+        ORD,
+        // Numeric
+        NUM
 
     }
 }

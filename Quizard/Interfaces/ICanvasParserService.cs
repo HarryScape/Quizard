@@ -1,7 +1,9 @@
-﻿namespace Quizard.Interfaces
+﻿using Quizard.ViewModels;
+
+namespace Quizard.Interfaces
 {
     public interface ICanvasParserService
     {
-        Task<bool> ParseQuiz(IFormFile file);
+        Task<bool> ParseQuiz(IFormFile file, DashboardViewModel dashboardViewModel);
     }
 }

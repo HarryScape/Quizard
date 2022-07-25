@@ -163,14 +163,17 @@ namespace Quizard.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("QuestionAnswer")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.Property<string>("isCorrect")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("isCorrect")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

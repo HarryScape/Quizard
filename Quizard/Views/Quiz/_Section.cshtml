@@ -37,7 +37,8 @@
                                         @foreach (var answer in Model.Answers.Where(i => i.QuestionId.Equals(question.Id)))
                                         {
                                             @*<li> @answer.QuestionAnswer </li>*@
-                                            @if (answer.isCorrect.Contains("Correct"))
+                                            @*@if (answer.isCorrect.Contains("Correct"))*@
+                                            @if (answer.isCorrect == true)
                                             {
                                                <li class="correct-ans"> <strong>@answer.QuestionAnswer</strong> </li>
                                             }
