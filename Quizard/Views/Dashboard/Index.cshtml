@@ -45,7 +45,7 @@
                         <td>@item.DateCreated <br /></td>
                         <td></td>
                         <td>
-                            <button type="submit" class="button-table">Delete</button>
+                            <button type="submit" class="button-table" onclick="DeleteQuiz(@item.Id)">Delete</button>
                             <button type="submit" class="button-table">Publish</button>
                             <button type="submit" class="button-table" onclick="location.href='@Url.Action("Create", "Quiz", new { QuizId = item.Id })'">Edit</button>
                             <button type="submit" class="button-table">Take Quiz</button>
@@ -72,3 +72,27 @@
 </div>
 <br />
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center w-100" id="exampleModalLongTitle">Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="exit-modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center w-100">
+                The contents will be permanently deleted, are you sure?
+            </div>
+            <div class="modal-footer">
+                <div class="col text-center">
+                    <button type="button" class="button--save" data-dismiss="modal" id="exit-modal">Close</button>
+                    <button type="button" class="button--save" id="del-confirm">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

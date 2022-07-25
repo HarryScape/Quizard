@@ -14,6 +14,7 @@ namespace Quizard.Interfaces
         // Question
         Task<IEnumerable<Question>> GetAllQuestions();
         Task<IEnumerable<Question>> GetQuestionByQuizID(int Quizid);
+        Task<IEnumerable<Question>> GetQuestionBySectionID(int sectionId);
         Task<Question> GetQuestionById(int id);
         // Answer
         Task<IEnumerable<Answer>> GetAllAnswers();
@@ -26,9 +27,16 @@ namespace Quizard.Interfaces
         bool Add(Question quiz);
         bool Add(List<Answer> answers);
         bool Update(Quiz quiz);
-        bool Delete(Quiz quiz);
         bool Update(Question question);
         bool Update(Section section);
+        bool Delete(Quiz quiz);
+        bool Delete(Section section);
+        bool Delete(Question question);
+        bool Delete(Answer answer);
+        bool DeleteAns(IEnumerable<Answer> answers);
+        bool DeleteQuestions(IEnumerable<Question> questions);
+        bool DeleteSections(IEnumerable<Section> sections);
+
         bool Save();
     }
 }

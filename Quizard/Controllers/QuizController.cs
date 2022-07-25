@@ -44,55 +44,6 @@ namespace Quizard.Controllers
         //   if file.filetype = x then UploadTxt() else UploadXML() etc blackboard/other VLE. 
 
 
-        //[ActionName("Upload")]
-        //[HttpPost]
-        //public async Task<IActionResult> Upload(IFormFile file, DashboardViewModel dashboardViewModel)
-        //{
-        //    // TODO: try and catch
-
-        //    Quiz quiz = new Quiz();
-        //    quiz.QuizName = file.FileName;
-        //    quiz.DateCreated = DateTime.Now;
-        //    quiz.UserId = dashboardViewModel.UserId;
-        //    _quizRepository.Add(quiz);
-
-        //    Section section = new Section();
-        //    section.SectionName = "Default Question Pool";
-        //    section.QuizId = quiz.Id;
-        //    _quizRepository.Add(section);
-
-        //    using (StreamReader fileReader = new StreamReader(file.OpenReadStream()))
-        //    {
-        //        while (!fileReader.EndOfStream)
-        //        {
-        //           Question question = new Question(); ;
-        //            List<Answer> answers = new List<Answer>();
-
-        //            var line = fileReader.ReadLine();
-        //            var values = line.Split("\t");
-
-        //            question.QuestionType = Enum.Parse<QuestionType>(values[0]);
-        //            question.QuestionTitle = values[1];
-        //            question.SectionId = section.Id;
-        //            _quizRepository.Add(question);
-
-        //            for (int i = 2; i < values.Length; i += 2)
-        //            {
-        //                Answer answer = new Answer();
-        //                answer.QuestionAnswer = values[i];
-        //                answer.isCorrect = values[i + 1];
-        //                answer.QuestionId = question.Id;
-        //                answers.Add(answer);
-        //            }
-
-        //            _quizRepository.Add(answers);
-
-        //        }
-        //    }
-        //    return RedirectToAction("Index", "Dashboard");
-        //}
-
-
         // Sructure Quiz Page
         [ActionName("Create")]
         public async Task<IActionResult> Create(int QuizId)
@@ -148,7 +99,7 @@ namespace Quizard.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveQuiz(List<QuestionJsonHelper> updates)
         {
-            foreach(var item in updates)
+            foreach (var item in updates)
             {
                 Question question = await _quizRepository.GetQuestionById(Int32.Parse(item.Id));
                 question.SectionId = Int32.Parse(item.SectionId);
@@ -160,6 +111,48 @@ namespace Quizard.Controllers
             return Json(message);
         }
 
+        public async Task<IActionResult> DeleteQuiz(int id)
+        {
+            var quiz = await _quizRepository.GetQuizById(id);
+            IEnumerable<Answer> answers = await _quizRepository.GetSpecificAnswers(id);
+            IEnumerable<Section> sections = await _quizRepository.GetQuizSections(id);
+            IEnumerable<Question> questions = await _quizRepository.GetQuestionByQuizID(id);
 
+            if (quiz == null) return View("Error");
+
+            _quizRepository.DeleteAns(answers);
+            _quizRepository.DeleteQuestions(questions);
+            _quizRepository.DeleteSections(sections);
+            _quizRepository.Delete(quiz);
+
+            //return RedirectToAction("Index", "Dashboard");
+            return Json(new { redirectToUrl = Url.Action("Index", "Dashboard") });
+            return Json(Url.Action("Index", "Dashboard"));
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteSection(int sectionId)
+        {
+            var section = await _quizRepository.GetSectionById(sectionId);
+            int quizId = section.QuizId;
+
+            IEnumerable<Question> questions = await _quizRepository.GetQuestionBySectionID(sectionId);
+            if (questions != null)
+            {
+                _quizRepository.DeleteQuestions(questions);
+            }
+            _quizRepository.Delete(section);
+
+            var quizViewModel = new CreateQuizViewModel();
+            quizViewModel.Quiz = await _quizRepository.GetQuizById(quizId);
+            quizViewModel.Sections = await _quizRepository.GetQuizSections(quizId);
+            quizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(quizId);
+            quizViewModel.Answers = await _quizRepository.GetSpecificAnswers(quizId);
+
+            var p = PartialView("_Section", quizViewModel);
+            return p;
+        }
     }
 }

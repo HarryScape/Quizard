@@ -57,6 +57,10 @@ namespace Quizard.Repository
             //return await _context.Questions.Where(c => c.Quiz.Id.Equals(Quizid)).ToListAsync();
             return await _context.Questions.OrderBy(o => o.QuestionPosition).Where(i => i.SectionId == i.Section.Id).Where(j => j.Section.Quiz.Id == Quizid).ToListAsync();
         }
+        public async Task<IEnumerable<Question>> GetQuestionBySectionID(int sectionId)
+        {
+            return await _context.Questions.Where(i => i.SectionId == sectionId).ToListAsync();
+        }
         public async Task<Question> GetQuestionById(int id)
         {
             return await _context.Questions.FirstOrDefaultAsync(i => i.Id == id);
@@ -113,6 +117,64 @@ namespace Quizard.Repository
             _context.Remove(quiz);
             return Save();
         }
+
+        public bool Delete(Section section)
+        {
+            _context.Remove(section);
+            return Save();
+        }
+
+        public bool Delete(Question question)
+        {
+            _context.Remove(question);
+            return Save();
+        }
+
+        public bool Delete(Answer answer)
+        {
+            _context.Remove(answer);
+            return Save();
+        }
+
+
+
+
+        public bool DeleteAns(IEnumerable<Answer> answers)
+        {
+            if (answers != null)
+            {
+                foreach (Answer answer in answers)
+                {
+                    _context.Remove(answer);
+                }
+            }
+            return Save();
+        }
+        public bool DeleteQuestions(IEnumerable<Question> questions)
+        {
+            if (questions != null)
+            {
+                foreach (Question question in questions)
+                {
+                    _context.Remove(question);
+                }
+            }
+            return Save();
+        }
+        public bool DeleteSections(IEnumerable<Section> sections)
+        {
+            if (sections != null)
+            {
+                foreach (Section section in sections)
+                {
+                    _context.Remove(section);
+                }
+            }
+            return Save();
+        }
+
+
+
 
         public bool Save()
         {

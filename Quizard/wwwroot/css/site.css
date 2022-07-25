@@ -350,3 +350,12 @@ table {
 ol{
     position: relative;
 }
+
+.close {
+    border: none;
+    border-radius: 6px;
+    /*color: #fff;*/
+    /*background-color: #5e4dcd;*/
+    background-color: transparent;
+    background-image: none;
+}
