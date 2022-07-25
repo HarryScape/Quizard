@@ -14,12 +14,22 @@ namespace Quizard.Controllers
         private readonly IDashboardRepository _dashboardRepository;
         private readonly IQuizRepository _quizRepository;
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly IQuizParserService _quizParserService;
+        private readonly IBlackboardParserService _blackboardParserService;
+        private readonly ICanvasParserService _canvasParserService;
+        private readonly IMoodleParserService _moodleParserService;
 
-        public DashboardController(IDashboardRepository dashboardRepository, IQuizRepository quizRepository, IHttpContextAccessor contextAccessor)
+        public DashboardController(IDashboardRepository dashboardRepository, IQuizRepository quizRepository,
+            IHttpContextAccessor contextAccessor, IQuizParserService quizParserService, IBlackboardParserService blackboardParserService,
+            ICanvasParserService canvasParserService, IMoodleParserService moodleParserService)
         {
             _dashboardRepository = dashboardRepository;
             _quizRepository = quizRepository;
             _contextAccessor = contextAccessor;
+            _quizParserService = quizParserService;
+            _blackboardParserService = blackboardParserService;
+            _canvasParserService = canvasParserService;
+            _moodleParserService = moodleParserService;
         }
 
         public async Task<IActionResult> Index()
@@ -34,8 +44,35 @@ namespace Quizard.Controllers
             return View(dashboardViewModel);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UploadQuiz(IFormFile file)
+        {
+            string lms = await _quizParserService.GetQuizLMS(file);
+            int stop = 10;
+
+            if (lms.Equals("Blackboard"))
+            {
+                stop = 1;
+                _blackboardParserService.ParseQuiz(file);
+            }
+            else if (lms.Equals("Canvas"))
+            {
+                stop = 2;
+                _canvasParserService.ParseQuiz(file);
+            }
+            else if (lms.Equals("Moodle"))
+            {
+                stop = 3;
+                _moodleParserService.ParseQuiz(file);
+            }
+            else
+            {
+                return View("Error");
+            }
 
 
+            return RedirectToAction("Index", "Dashboard");
+        }
 
 
 

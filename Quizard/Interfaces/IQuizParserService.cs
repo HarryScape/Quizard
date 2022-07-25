@@ -2,6 +2,6 @@
 {
     public interface IQuizParserService
     {
-        //public async Task<bool> ParseCSV();
+        Task<string> GetQuizLMS(IFormFile file);
     }
 }

@@ -14,6 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IQuizRepository, QuizRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+builder.Services.AddScoped<IQuizParserService, QuizParserService>();
+builder.Services.AddScoped<IBlackboardParserService, BlackboardParserService>();
+builder.Services.AddScoped<IMoodleParserService, MoodleParserService>();
+builder.Services.AddScoped<ICanvasParserService, CanvasParserService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
