@@ -31,7 +31,7 @@ namespace Quizard.Services
             {
                 while (!fileReader.EndOfStream)
                 {
-                    Question question = new Question(); ;
+                    Question question = new Question();
                     List<Answer> answers = new List<Answer>();
 
                     var line = fileReader.ReadLine();
