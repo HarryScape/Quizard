@@ -14,12 +14,22 @@ namespace Quizard.Controllers
         private readonly IDashboardRepository _dashboardRepository;
         private readonly IQuizRepository _quizRepository;
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly IQuizParserService _quizParserService;
+        private readonly IBlackboardParserService _blackboardParserService;
+        private readonly ICanvasParserService _canvasParserService;
+        private readonly IMoodleParserService _moodleParserService;
 
-        public DashboardController(IDashboardRepository dashboardRepository, IQuizRepository quizRepository, IHttpContextAccessor contextAccessor)
+        public DashboardController(IDashboardRepository dashboardRepository, IQuizRepository quizRepository,
+            IHttpContextAccessor contextAccessor, IQuizParserService quizParserService, IBlackboardParserService blackboardParserService,
+            ICanvasParserService canvasParserService, IMoodleParserService moodleParserService)
         {
             _dashboardRepository = dashboardRepository;
             _quizRepository = quizRepository;
             _contextAccessor = contextAccessor;
+            _quizParserService = quizParserService;
+            _blackboardParserService = blackboardParserService;
+            _canvasParserService = canvasParserService;
+            _moodleParserService = moodleParserService;
         }
 
         public async Task<IActionResult> Index()
@@ -34,64 +44,29 @@ namespace Quizard.Controllers
             return View(dashboardViewModel);
         }
 
-
-
-
-
-
-
-        [ActionName("Upload")]
         [HttpPost]
-        public async Task<IActionResult> Upload(IFormFile file, DashboardViewModel dashboardViewModel)
+        public async Task<IActionResult> UploadQuiz(IFormFile file, DashboardViewModel dashboardViewModel)
         {
-            // TODO: try and catch
+            string lms = await _quizParserService.GetQuizLMS(file);
 
-            Quiz quiz = new Quiz();
-            quiz.QuizName = file.FileName;
-            quiz.DateCreated = DateTime.Now;
-            quiz.UserId = dashboardViewModel.UserId;
-            _quizRepository.Add(quiz);
-
-            Section section = new Section();
-            section.SectionName = "Default Question Pool";
-            section.QuizId = quiz.Id;
-            _quizRepository.Add(section);
-
-            using (StreamReader fileReader = new StreamReader(file.OpenReadStream()))
+            if (lms.Equals("Blackboard"))
             {
-                while (!fileReader.EndOfStream)
-                {
-                    Question question = new Question(); ;
-                    List<Answer> answers = new List<Answer>();
-
-                    var line = fileReader.ReadLine();
-                    var values = line.Split("\t");
-
-                    question.QuestionType = Enum.Parse<QuestionType>(values[0]);
-                    question.QuestionTitle = values[1];
-                    question.SectionId = section.Id;
-                    _quizRepository.Add(question);
-
-                    for (int i = 2; i < values.Length; i += 2)
-                    {
-                        Answer answer = new Answer();
-                        answer.QuestionAnswer = values[i];
-                        answer.isCorrect = values[i + 1];
-                        answer.QuestionId = question.Id;
-                        answers.Add(answer);
-                    }
-
-                    _quizRepository.Add(answers);
-
-                }
+                await _blackboardParserService.ParseQuiz(file, dashboardViewModel);
             }
+            else if (lms.Equals("Canvas"))
+            {
+                await _canvasParserService.ParseQuiz(file, dashboardViewModel);
+            }
+            else if (lms.Equals("Moodle"))
+            {
+                await _moodleParserService.ParseQuiz(file, dashboardViewModel);
+            }
+            else
+            {
+                return View("Error");
+            }
+            
             return RedirectToAction("Index", "Dashboard");
         }
-
-
-
-
-
-
     }
 }

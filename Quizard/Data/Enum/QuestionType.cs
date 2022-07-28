@@ -2,19 +2,24 @@
 {
     public enum QuestionType
     {
-        // MultipleChoice
+        // Multiple Choice
         MC,
-        // MultipleAnswer
+        // Multiple Answer
         MA,
-        // Essay
-        Ess,
+        // Essay (Manual Grading)
+        ESS,
+        // Short Answer (Manual Grading)
+        SR,
         // TrueFalse
         TF,
-        // FillInBlank
+        // Fill In Blank
         FIB,
-        // Matching
-        MAT
-        // Calculate Formula
+        // Matching (revisit...)
+        MAT,
+        // Order answers (Manual Grading)
+        ORD,
+        // Numeric (Manual Grading?)
+        NUM
 
     }
 }

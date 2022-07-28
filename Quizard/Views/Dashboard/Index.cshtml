@@ -61,7 +61,7 @@
 <div class="upload-container">
     <label class="form-label"><strong> Upload a .txt Quiz! </strong></label>
     <div class="mb-3 mt-3">
-        <form method="post" enctype="multipart/form-data" asp-controller="Dashboard" asp-action="Upload">
+        <form method="post" enctype="multipart/form-data" asp-controller="Dashboard" asp-action="UploadQuiz">
             <input type="hidden" id="UserId" name="UserId" asp-for="UserId" />
             <div class="input-group">
                 <input type="file" name="file" id="UploadAlt">
