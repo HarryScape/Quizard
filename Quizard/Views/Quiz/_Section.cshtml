@@ -28,6 +28,13 @@
                     @foreach (var question in Model.Questions.Where(i => i.SectionId.Equals(Qsection.Id)))
                     {
                         int questionId = question.Id;
+
+                        <a id="sec-del" onclick="DeleteSection(@sectionId)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-pencil">
+                                <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z"/>
+                                </svg>
+                        </a>
+
                         <div class="accordion-question-item" draggable="true" id="@questionId" data-section-index="@Sindex" data-sectionId="@sectionId" data-position="@Qindex">
                             <button class="accordion-question-button"> @question.QuestionTitle </button>
                             <div class="accordion-question-collapse collapse">
@@ -40,7 +47,7 @@
                                             @*@if (answer.isCorrect.Contains("Correct"))*@
                                             @if (answer.isCorrect == true)
                                             {
-                                               <li class="correct-ans"> <strong>@answer.QuestionAnswer</strong> </li>
+                                                <li class="correct-ans"> <strong>@answer.QuestionAnswer</strong> </li>
                                             }
                                             else
                                             {
