@@ -18,7 +18,7 @@
         MAT,
         // Order answers (Manual Grading)
         ORD,
-        // Numeric
+        // Numeric (Manual Grading?)
         NUM
 
     }

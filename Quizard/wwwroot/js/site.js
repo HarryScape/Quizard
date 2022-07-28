@@ -161,7 +161,6 @@ function getDragAfterElement(container, y) {
 // }
 
 
-
 // ADDING SECTIONS.
 
 
@@ -182,8 +181,6 @@ function getDragAfterElement(container, y) {
 ////    const response = await result.json();
 
 ////    const result = fetch
-
-
 
 
 //$.ajax({
@@ -350,7 +347,6 @@ function getDragAfterElement(container, y) {
 //}
 
 
-
 //function AddSection() {
 //    var name = document.getElementById("AddSectionName").value;
 //    var quizId = document.getElementById("HiddenQuizId").value;
@@ -431,7 +427,6 @@ function AddSection() {
         }
     });
 }
-
 
 
 function UpdateQuestions() {

@@ -16,18 +16,6 @@ namespace Quizard.Services
 
         public async Task<bool> ParseQuiz(IFormFile file, DashboardViewModel dashboardViewModel)
         {
-            // make an array of lines until an empty line is reached
-            // skip first word of line[0]
-            // questionTitle = line[0] - first word
-            // foreach nextline of answers:
-            //      if line contains "*" isCorrect = true
-            //      if line contains "..." add as Comment
-            //      questionAnswer = line[i] - first word
-            //  if answers contains "___" qtypee = ESS
-            //  if answers every line contains "*" qtype = FIB
-            //  if answers contains > 1 "*" qtype = MC
-            //  if answers contains exactly 1 "*" qtype = MC
-            //  if answers contrains "true" || "false" qtype = TF
             // bool isComment = line.StartsWith("...");
 
             Quiz quiz = new Quiz();
@@ -40,8 +28,6 @@ namespace Quizard.Services
             section.SectionName = "Default Question Pool";
             section.QuizId = quiz.Id;
             _quizRepository.Add(section);
-
-
 
             using (StreamReader fileReader = new StreamReader(file.OpenReadStream()))
             {

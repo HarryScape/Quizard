@@ -36,14 +36,6 @@ namespace Quizard.Controllers
         }
 
 
-
-        // TODO:
-        // Create a method for for controlling different upload types:
-        // public async Task<IActionResult> Upload(IFormFile file) {
-        //      _quizParserService.CheckDataType() { }
-        //   if file.filetype = x then UploadTxt() else UploadXML() etc blackboard/other VLE. 
-
-
         // Sructure Quiz Page
         [ActionName("Create")]
         public async Task<IActionResult> Create(int QuizId)
@@ -125,9 +117,7 @@ namespace Quizard.Controllers
             _quizRepository.DeleteSections(sections);
             _quizRepository.Delete(quiz);
 
-            //return RedirectToAction("Index", "Dashboard");
             return Json(new { redirectToUrl = Url.Action("Index", "Dashboard") });
-            //return Json(Url.Action("Index", "Dashboard"));
         }
 
 
