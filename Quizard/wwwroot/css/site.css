@@ -359,3 +359,114 @@ ol{
     background-color: transparent;
     background-image: none;
 }
+
+
+
+
+/*test drag command drop*/
+
+
+
+/** {
+    font-family: sans-serif;
+    font-size: 12px;
+}*/
+
+.tool, .object, .popup, .drop {
+    /*border: 1px solid #888;*/
+    /*margin: 10px;*/
+    padding: 3px;
+    border-radius: 6px;
+    /*margin-left: 20px;*/
+    /*box-shadow: 1px 2px 4px #aaa;*/
+}
+
+#tools .tool, #tools .frame {
+/*    height: 50px;
+    width: 50px;*/
+    /*float: left;*/
+    /*background-color: #fee;*/
+}
+
+.tools{
+    width: 100px;
+    /*position: relative;*/
+}
+
+.drop{
+    max-width: 100%;
+}
+
+#containers {
+    clear: both;
+    width: 900px;
+    height: auto;
+    /*height:400px;*/
+
+}
+
+    #containers .frame {
+/*        min-height: 100%;
+        height: fit-content;
+        width: 900px;*/
+        /*background-color: red;*/
+    }
+
+
+    #containers .popup {
+        /*min-height: 20px;*/
+        /*float: left;*/
+        position: inline-block;
+        /*min-width: 100px;*/
+        width: 100%;
+        background-color: rgb(217, 217, 245);
+        border-left: 15px solid #5e4dcd;
+        padding-left: 50px;
+        margin-top: 30px;
+    }
+
+    #containers .drop {
+        /*min-height: 20px;*/
+        width: 90%;
+    }
+
+
+    #containers .tool {
+        /*background-color: #fee;*/
+        background-color: red;
+        height: auto;
+        /*min-height: auto;*/
+    }
+
+    #containers .object {
+        /*background-color: green;*/
+        /*background-color: #5e5dcd;*/
+        /*height: auto;*/
+        /*        min-height: auto;
+        min-width: 50px;*/
+        /*color: #fff;*/
+        /*float: left;*/
+        width: auto;
+        border: 1px dotted #5e5dcd;
+        max-width: 80%;
+        margin: 10px;
+        margin-left: 20px;
+    }
+
+    #containers .ph {
+        margin: 10px;
+        padding: 3px;
+        border: 1px solid #0f0;
+        border-radius: 5px;
+        width: 80%;
+    }
+
+.ui-state-hover {
+    /*background: #07f !important;*/
+    background: rgb(177, 178, 250, 70%) !important;
+    width: 300px;
+}
+
+.insidePopup {
+    /*border: 2px solid #0ff;*/
+}

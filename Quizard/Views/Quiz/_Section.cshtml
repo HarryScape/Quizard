@@ -2,6 +2,39 @@
 
 <script src="~/js/site.js" asp-append-version="true"></script>
 
+
+<div id="containers">
+
+    <div class="frame">
+        @*Container*@
+        <div class="popup">
+            <strong>Default Question Pool</strong>
+                <div class="object">Consider the following hierarchy of functions that can be deﬁned from an asymptotic point of view</div>
+                <div class="object">How many LOTR movies are there?</div>
+                <div class="object">What is 2+3?</div>
+                <div class="object">Which of the following are dinosaurs?</div>
+                <div class="object">Comment the effects on bonds price of a rise in interest rates</div>
+                <div class="object">Who is buried in Grant's tomb in New York City?</div>
+                <div class="object">The American holiday of Thanks giving is celebrated on the __________ Thursday of November</div>
+                <div class="object">Who lives at the North Pole?</div>
+        </div>
+        @*<div class="object">This is a test element for debugging this nightmare.</div>*@
+    </div>
+
+    <div class="frame">
+        @*Container*@
+        <div class="popup">
+            <strong>Section 2 - Answer any two questions</strong>
+                <div class="object">Define the following terms:</div>
+                <div class="object">Time Complexity</div>
+                <div class="object">Space Complexity</div>
+        </div>
+    </div>
+
+</div>
+
+
+
 @*sections*@
 @{
     int Sindex = 0;
@@ -29,13 +62,20 @@
                     {
                         int questionId = question.Id;
 
-                        <a id="sec-del" onclick="DeleteSection(@sectionId)">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-pencil">
-                                <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z"/>
-                                </svg>
-                        </a>
+                        @*<a id="sec-del" onclick="DeleteSection(@sectionId)">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-pencil">
+                <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z"/>
+                </svg>
+                </a>*@
 
                         <div class="accordion-question-item" draggable="true" id="@questionId" data-section-index="@Sindex" data-sectionId="@sectionId" data-position="@Qindex">
+
+                            <a id="sec-del" onclick="DeleteSection(@sectionId)">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-pencil">
+                                    <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z" />
+                                </svg>
+                            </a>
+
                             <button class="accordion-question-button"> @question.QuestionTitle </button>
                             <div class="accordion-question-collapse collapse">
                                 <div class="accordion-question-body">
@@ -66,4 +106,6 @@
     </div>
     Sindex++;
 }
+
+
 

@@ -519,3 +519,36 @@ function DeleteQuiz(id) {
             });
     });
 }
+
+
+
+
+
+
+
+$('#containers .frame .popup, #containers .frame .object ').droppable({
+    activeClass: "ui-state-default",
+    hoverClass: "ui-state-hover",
+    accept: '.object',
+    cursor: 'move',
+    greedy: true,
+    drop: function (event, ui) {
+        $(ui.draggable).addClass("insidePopup");
+        ui.draggable.detach().appendTo($(this));
+    }
+});
+$('#containers .frame .popup').sortable();
+$('#containers .frame').droppable({
+    activeClass: "ui-state-default",
+    hoverClass: "ui-state-hover",
+    accept: '.insidePopup',
+    greedy: true,
+    drop: function (event, ui) {
+        ui.draggable.detach().appendTo($(this));
+        $(ui.draggable).removeClass("insidePopup");
+    }
+});
+$('#containers .frame .object').draggable({
+    helper: 'clone',
+    containment: "document"
+});
