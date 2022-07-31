@@ -44,8 +44,17 @@ namespace Quizard.Controllers
             quizViewModel.Quiz = await _quizRepository.GetQuizById(QuizId);
             quizViewModel.Sections = await _quizRepository.GetQuizSections(QuizId);
             quizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(QuizId);
+            quizViewModel.ParentQuestions = await _quizRepository.GetParentQuestions(QuizId);
             quizViewModel.Answers = await _quizRepository.GetSpecificAnswers(QuizId);
             // todo: question type
+            foreach (var question in quizViewModel.ParentQuestions)
+            {
+                question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
+            }
+            foreach (var question in quizViewModel.Questions)
+            {
+                question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
+            }
 
             return View(quizViewModel);
         }

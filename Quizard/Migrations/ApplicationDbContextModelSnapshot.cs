@@ -190,6 +190,9 @@ namespace Quizard.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("QuestionPosition")
                         .HasColumnType("int");
 
@@ -204,6 +207,8 @@ namespace Quizard.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
 
                     b.HasIndex("SectionId");
 
@@ -399,11 +404,17 @@ namespace Quizard.Migrations
 
             modelBuilder.Entity("Quizard.Models.Question", b =>
                 {
+                    b.HasOne("Quizard.Models.Question", "ParentQuestion")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+
                     b.HasOne("Quizard.Models.Section", "Section")
                         .WithMany("QuizQuestions")
                         .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ParentQuestion");
 
                     b.Navigation("Section");
                 });
@@ -430,6 +441,8 @@ namespace Quizard.Migrations
 
             modelBuilder.Entity("Quizard.Models.Question", b =>
                 {
+                    b.Navigation("Children");
+
                     b.Navigation("QuestionAnswers");
                 });
 

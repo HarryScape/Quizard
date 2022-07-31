@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Question>
+
+@foreach (var question in Model)
+{
+    <div class="object"> @question.QuestionTitle
+    @if(question.Children != null)
+    {
+        @Html.Partial("_QuestionPartial", question.Children)
+    }
+    </div>
+}
+

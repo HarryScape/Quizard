@@ -15,6 +15,8 @@ namespace Quizard.Interfaces
         Task<IEnumerable<Question>> GetAllQuestions();
         Task<IEnumerable<Question>> GetQuestionByQuizID(int Quizid);
         Task<IEnumerable<Question>> GetQuestionBySectionID(int sectionId);
+        Task<IEnumerable<Question>> GetParentQuestions(int quizId);
+        Task<IEnumerable<Question>> GetChildQuestions(int id);
         Task<Question> GetQuestionById(int id);
         // Answer
         Task<IEnumerable<Answer>> GetAllAnswers();
