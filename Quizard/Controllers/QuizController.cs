@@ -1,24 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Quizard.Data.Enum;
 using Quizard.Interfaces;
 using Quizard.Models;
 using Quizard.ViewModels;
-
-
-using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json.Linq;
 
 namespace Quizard.Controllers
 {
     public class QuizController : Controller
     {
         private readonly IQuizRepository _quizRepository;
+        private readonly IQuizParserService _quizParserService;
 
-        public QuizController(IQuizRepository quizRepository)
+        public QuizController(IQuizRepository quizRepository, IQuizParserService quizParserService)
         {
             _quizRepository = quizRepository;
+            _quizParserService = quizParserService;
         }
 
         // UPLOAD
@@ -36,28 +32,10 @@ namespace Quizard.Controllers
         }
 
 
-        // Sructure Quiz Page
         [ActionName("Create")]
-        public async Task<IActionResult> Create(int QuizId)
+        public async Task<IActionResult> Create(int quizId)
         {
-            var quizViewModel = new CreateQuizViewModel();
-            //await quizViewModel.GenerateQuiz(QuizId);
-            quizViewModel.Quiz = await _quizRepository.GetQuizById(QuizId);
-            quizViewModel.Sections = await _quizRepository.GetQuizSections(QuizId);
-            quizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(QuizId);
-            quizViewModel.ParentQuestions = await _quizRepository.GetParentQuestions(QuizId);
-            quizViewModel.Answers = await _quizRepository.GetSpecificAnswers(QuizId);
-            // nested question update
-            foreach (var question in quizViewModel.ParentQuestions)
-            {
-                question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
-                question.QuestionAnswers = (ICollection<Answer>)await _quizRepository.GetAnswersByQuestion(question.Id);
-            }
-            foreach (var question in quizViewModel.Questions)
-            {
-                question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
-                question.QuestionAnswers = (ICollection<Answer>)await _quizRepository.GetAnswersByQuestion(question.Id);
-            }
+            var quizViewModel = await _quizParserService.GenerateQuizViewModel(quizId);
 
             return View(quizViewModel);
         }
@@ -73,13 +51,28 @@ namespace Quizard.Controllers
             };
             _quizRepository.Add(section);
 
-            CreateQuizViewModel quizVM = new CreateQuizViewModel();
-            var p = PartialView("_Section", quizVM);
-            return p;
+            CreateQuizViewModel quizViewModel = new CreateQuizViewModel();
+
+            return PartialView("_Section", quizViewModel);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddQuestionGroup(string groupName, int quizId, int sectionId)
+        {
+            var questionGroup = new Question()
+            {
+                QuestionType = QuestionType.GROUP,
+                QuestionTitle = groupName,
+                QuestionPosition = 0,
+                SectionId = sectionId
+            };
+            _quizRepository.Add(questionGroup);
 
-        // Adds Section straight to DB...
+            var quizViewModel = await _quizParserService.GenerateQuizViewModel(quizId);
+
+            return PartialView("_Section", quizViewModel);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddSectionDB(string sectionName, int quizId)
         {
@@ -89,26 +82,10 @@ namespace Quizard.Controllers
                 QuizId = quizId
             };
             _quizRepository.Add(section);
-            var quizViewModel = new CreateQuizViewModel();
-            quizViewModel.Quiz = await _quizRepository.GetQuizById(quizId);
-            quizViewModel.Sections = await _quizRepository.GetQuizSections(quizId);
-            quizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(quizId);
-            quizViewModel.ParentQuestions = await _quizRepository.GetParentQuestions(quizId);
-            quizViewModel.Answers = await _quizRepository.GetSpecificAnswers(quizId);
 
-            foreach (var question in quizViewModel.ParentQuestions)
-            {
-                question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
-                question.QuestionAnswers = (ICollection<Answer>)await _quizRepository.GetAnswersByQuestion(question.Id);
-            }
-            foreach (var question in quizViewModel.Questions)
-            {
-                question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
-                question.QuestionAnswers = (ICollection<Answer>)await _quizRepository.GetAnswersByQuestion(question.Id);
-            }
+            var quizViewModel = await _quizParserService.GenerateQuizViewModel(quizId);
 
-            var p = PartialView("_Section", quizViewModel);
-            return p;
+            return PartialView("_Section", quizViewModel);
         }
 
 
@@ -119,7 +96,7 @@ namespace Quizard.Controllers
             {
                 Question question = await _quizRepository.GetQuestionById(Int32.Parse(item.Id));
                 question.SectionId = Int32.Parse(item.SectionId);
-                question.QuestionPosition = item.QuestionPosition;
+                question.QuestionPosition = (item.QuestionPosition + 1);
                 question.ParentId = item.ParentId;
                 _quizRepository.Update(question);
             }
@@ -145,8 +122,6 @@ namespace Quizard.Controllers
             return Json(new { redirectToUrl = Url.Action("Index", "Dashboard") });
         }
 
-
-
         [HttpPost]
         public async Task<IActionResult> DeleteSection(int sectionId)
         {
@@ -160,26 +135,9 @@ namespace Quizard.Controllers
             }
             _quizRepository.Delete(section);
 
-            var quizViewModel = new CreateQuizViewModel();
-            quizViewModel.Quiz = await _quizRepository.GetQuizById(quizId);
-            quizViewModel.Sections = await _quizRepository.GetQuizSections(quizId);
-            quizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(quizId);
-            quizViewModel.ParentQuestions = await _quizRepository.GetParentQuestions(quizId);
-            quizViewModel.Answers = await _quizRepository.GetSpecificAnswers(quizId);
+            var quizViewModel = await _quizParserService.GenerateQuizViewModel(quizId);
 
-            foreach (var question in quizViewModel.ParentQuestions)
-            {
-                question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
-                question.QuestionAnswers = (ICollection<Answer>)await _quizRepository.GetAnswersByQuestion(question.Id);
-            }
-            foreach (var question in quizViewModel.Questions)
-            {
-                question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
-                question.QuestionAnswers = (ICollection<Answer>)await _quizRepository.GetAnswersByQuestion(question.Id);
-            }
-
-            var p = PartialView("_Section", quizViewModel);
-            return p;
+            return PartialView("_Section", quizViewModel);
         }
     }
 }

@@ -392,7 +392,7 @@ function getDragAfterElement(container, y) {
 
 // This func correctly passes data to controller.
 function AddSection() {
-    UpdateQuestions();
+    SavePosition();
     var name = document.getElementById("AddSectionName").value;
     var quizId = document.getElementById("HiddenQuizId").value;
 
@@ -427,6 +427,48 @@ function AddSection() {
         }
     });
 }
+
+
+function AddQuestionGroup() {
+    SavePosition();
+    var name = document.getElementById("AddGroupName").value;
+    var quizId = document.getElementById("HiddenQuizId").value;
+    var secId = document.getElementsByClassName("popup")[0].id;
+
+    var dataPost = { groupName: name, quizId: quizId, sectionId: secId };
+
+    console.log(dataPost);
+
+    $.ajax({
+        type: "POST",
+        data: dataPost,
+        url: "/Quiz/AddQuestionGroup",
+        dataType: "json",
+        success: function (response) {
+            if (response != null) {
+                console.log("Sent okay", response);
+            } else {
+                console.log("Something went wrong");
+            }
+            // var quizUpdate = JSON.stringify(response);
+            //// $('.quiz-wrapper').html(quizUpdate);
+            // //   $('.quiz-wrapper').html(quizUpdate).html();
+            // $('.quiz-wrapper').load(quizUpdate).html();
+
+        },
+        failure: function (response) {
+            console.log(response.responseText);
+        },
+        error: function (response) {
+            console.log(response.responseText);
+        },
+        // Working state
+        complete: function (response) {
+            $('.quiz-wrapper').html(response.responseText);
+        }
+    });
+}
+
 
 
 //function UpdateQuestions() {
@@ -464,18 +506,18 @@ function SavePosition() {
         if (element.parentNode.closest(".object") !== null) {
             parent = element.parentNode.closest('.object').id;
         }
-        console.log(questionId, parent)
+        //console.log(questionId, parent)
 
         var QuestionJsonHelper = { Id: questionId, SectionId: sectionId, QuestionPosition: count, ParentId: parent };
         questionList.push(QuestionJsonHelper);
         count++;
     }
 
-    console.log(questionList);
+    //console.log(questionList);
 
     $.post('/Quiz/SaveQuiz', { updates: questionList },
         function () {
-            $('#result').html('"PassThings()" successfully called.');
+            $('#result').html('successfully called.');
         });
 }
 

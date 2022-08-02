@@ -8,15 +8,15 @@
 {
     @if (User.IsInRole("teacher"))
     {
-        <p> Welcome back, master quizzard! </p>
+        <p> Welcome back, master quizard! </p>
     }
     else if (User.IsInRole("student"))
     {
-        <p> Welcome back, apprentice quizzard!</p>
+        <p> Welcome back, apprentice quizard!</p>
     }
     else if (User.IsInRole("admin"))
     {
-        <p> Welcome back, grand quizzard overseer supreme!</p>
+        <p> Welcome back, grand quizard overseer supreme!</p>
     }
     else
     {
