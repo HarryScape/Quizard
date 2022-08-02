@@ -13,8 +13,12 @@
             <input type="text" class="input" id="AddSectionName" placeholder="Add Section" autocomplete="off">
             <input class="button--add" value="Add" type="submit" id="AddSectionBtn" onclick="AddSection()">
         </div>
+        <div class="input-group">
+            <input type="text" class="input" id="AddGroupName" placeholder="Add Question Group" autocomplete="off">
+            <input class="button--add" value="Add" type="submit" id="AddSectionBtn">
+        </div>
 
-        <input class="button--save" value="Save" type="submit" onclick="UpdateQuestions()">
+        <input class="button--save" value="Save" type="submit" onclick="SavePosition()">
         <input class="button--save" value="Dashboard" type="submit" onclick="location.href='@Url.Action("Index", "Dashboard")'">
         <input class="button--save" value="Delete Quiz" type="submit" id="del-quiz" onclick="DeleteQuiz(@Model.Quiz.Id)">
 

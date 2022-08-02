@@ -224,6 +224,7 @@ h3 {
 .input-group {
     display: flex;
     align-items: center;
+    padding-bottom: 10px;
 }
 
 .input {
@@ -423,6 +424,7 @@ ol{
         border-left: 15px solid #5e4dcd;
         padding-left: 50px;
         margin-top: 30px;
+        min-height: 200px;
     }
 
     #containers .drop {
@@ -434,7 +436,7 @@ ol{
     #containers .tool {
         /*background-color: #fee;*/
         background-color: red;
-        height: auto;
+        height: 100%;
         /*min-height: auto;*/
     }
 
@@ -451,6 +453,8 @@ ol{
         max-width: 95%;
         margin: 10px;
         margin-left: 20px;
+        cursor: pointer;
+        margin-bottom: 20px;
     }
 
     #containers .ph {
@@ -465,8 +469,21 @@ ol{
     /*background: #07f !important;*/
     background: rgb(177, 178, 250, 70%) !important;
     width: 300px;
+    height: 100%;
 }
 
 .insidePopup {
     /*border: 2px solid #0ff;*/
+    height: auto;
+}
+
+
+.panel {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+}
+
+.panel ol {
+    list-style: none;
 }

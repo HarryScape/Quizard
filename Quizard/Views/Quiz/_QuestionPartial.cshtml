@@ -2,11 +2,32 @@
 
 @foreach (var question in Model)
 {
-    <div class="object"> @question.QuestionTitle
-    @if(question.Children != null)
-    {
-        @Html.Partial("_QuestionPartial", question.Children)
-    }
+    <div class="object" id="@(question.Id)">
+        @question.QuestionTitle
+@*        <div class="panel">
+            <ol>
+            @if (question.QuestionAnswers != null)
+            {
+                foreach (Answer ans in question.QuestionAnswers)
+                {
+
+                    @if (ans.isCorrect)
+                    {
+                        <li class="correct-ans"> <strong> @ans.QuestionAnswer </strong> </li>
+                    }
+                    else
+                    {
+                        <li> @ans.QuestionAnswer </li>
+                    }
+                }
+            }
+            </ol>
+        </div>*@
+
+        @if (question.Children != null)
+        {
+            @Html.Partial("_QuestionPartial", question.Children)
+        }
     </div>
 }
 

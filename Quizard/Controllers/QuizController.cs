@@ -41,19 +41,22 @@ namespace Quizard.Controllers
         public async Task<IActionResult> Create(int QuizId)
         {
             var quizViewModel = new CreateQuizViewModel();
+            //await quizViewModel.GenerateQuiz(QuizId);
             quizViewModel.Quiz = await _quizRepository.GetQuizById(QuizId);
             quizViewModel.Sections = await _quizRepository.GetQuizSections(QuizId);
             quizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(QuizId);
             quizViewModel.ParentQuestions = await _quizRepository.GetParentQuestions(QuizId);
             quizViewModel.Answers = await _quizRepository.GetSpecificAnswers(QuizId);
-            // todo: question type
+            // nested question update
             foreach (var question in quizViewModel.ParentQuestions)
             {
                 question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
+                question.QuestionAnswers = (ICollection<Answer>)await _quizRepository.GetAnswersByQuestion(question.Id);
             }
             foreach (var question in quizViewModel.Questions)
             {
                 question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
+                question.QuestionAnswers = (ICollection<Answer>)await _quizRepository.GetAnswersByQuestion(question.Id);
             }
 
             return View(quizViewModel);
@@ -90,7 +93,19 @@ namespace Quizard.Controllers
             quizViewModel.Quiz = await _quizRepository.GetQuizById(quizId);
             quizViewModel.Sections = await _quizRepository.GetQuizSections(quizId);
             quizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(quizId);
+            quizViewModel.ParentQuestions = await _quizRepository.GetParentQuestions(quizId);
             quizViewModel.Answers = await _quizRepository.GetSpecificAnswers(quizId);
+
+            foreach (var question in quizViewModel.ParentQuestions)
+            {
+                question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
+                question.QuestionAnswers = (ICollection<Answer>)await _quizRepository.GetAnswersByQuestion(question.Id);
+            }
+            foreach (var question in quizViewModel.Questions)
+            {
+                question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
+                question.QuestionAnswers = (ICollection<Answer>)await _quizRepository.GetAnswersByQuestion(question.Id);
+            }
 
             var p = PartialView("_Section", quizViewModel);
             return p;
@@ -105,6 +120,7 @@ namespace Quizard.Controllers
                 Question question = await _quizRepository.GetQuestionById(Int32.Parse(item.Id));
                 question.SectionId = Int32.Parse(item.SectionId);
                 question.QuestionPosition = item.QuestionPosition;
+                question.ParentId = item.ParentId;
                 _quizRepository.Update(question);
             }
 
@@ -148,7 +164,19 @@ namespace Quizard.Controllers
             quizViewModel.Quiz = await _quizRepository.GetQuizById(quizId);
             quizViewModel.Sections = await _quizRepository.GetQuizSections(quizId);
             quizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(quizId);
+            quizViewModel.ParentQuestions = await _quizRepository.GetParentQuestions(quizId);
             quizViewModel.Answers = await _quizRepository.GetSpecificAnswers(quizId);
+
+            foreach (var question in quizViewModel.ParentQuestions)
+            {
+                question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
+                question.QuestionAnswers = (ICollection<Answer>)await _quizRepository.GetAnswersByQuestion(question.Id);
+            }
+            foreach (var question in quizViewModel.Questions)
+            {
+                question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
+                question.QuestionAnswers = (ICollection<Answer>)await _quizRepository.GetAnswersByQuestion(question.Id);
+            }
 
             var p = PartialView("_Section", quizViewModel);
             return p;

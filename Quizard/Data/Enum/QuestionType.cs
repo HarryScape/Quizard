@@ -19,7 +19,9 @@
         // Order answers (Manual Grading)
         ORD,
         // Numeric (Manual Grading?)
-        NUM
+        NUM,
+        // Question Group
+        GROUP
 
     }
 }

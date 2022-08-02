@@ -21,6 +21,7 @@ namespace Quizard.Interfaces
         // Answer
         Task<IEnumerable<Answer>> GetAllAnswers();
         Task<IEnumerable<Answer>> GetSpecificAnswers(int QuizId);
+        Task<IEnumerable<Answer>> GetAnswersByQuestion(int id);
 
 
         // CRUD

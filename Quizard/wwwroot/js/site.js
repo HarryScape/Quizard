@@ -429,25 +429,60 @@ function AddSection() {
 }
 
 
-function UpdateQuestions() {
+//function UpdateQuestions() {
+//    var questionList = [];
+//    var questionDivs = document.querySelectorAll(".accordion-question-item"), i;
+//    var count = 0;
+
+//    for (i = 0; i < questionDivs.length; ++i) {
+//        var element = questionDivs[i];
+//        var questionId = element.id;
+//        var sectionId = element.closest('.accordion-section-item').id;
+//        var QuestionJsonHelper = { Id: questionId, SectionId: sectionId, QuestionPosition: count };
+//        questionList.push(QuestionJsonHelper);
+//        count++;
+//    }
+
+//    $.post('/Quiz/SaveQuiz', { updates: questionList },
+//        function () {
+//            $('#result').html('"PassThings()" successfully called.');
+//        });
+//}
+
+
+/*Version 2*/
+function SavePosition() {
     var questionList = [];
-    var questionDivs = document.querySelectorAll(".accordion-question-item"), i;
+    var questionDivs = document.querySelectorAll(".object"), i;
     var count = 0;
 
     for (i = 0; i < questionDivs.length; ++i) {
         var element = questionDivs[i];
         var questionId = element.id;
-        var sectionId = element.closest('.accordion-section-item').id;
-        var QuestionJsonHelper = { Id: questionId, SectionId: sectionId, QuestionPosition: count };
+        var sectionId = element.closest('.popup').id;
+        var parent = null;
+        if (element.parentNode.closest(".object") !== null) {
+            parent = element.parentNode.closest('.object').id;
+        }
+        console.log(questionId, parent)
+
+        var QuestionJsonHelper = { Id: questionId, SectionId: sectionId, QuestionPosition: count, ParentId: parent };
         questionList.push(QuestionJsonHelper);
         count++;
     }
+
+    console.log(questionList);
 
     $.post('/Quiz/SaveQuiz', { updates: questionList },
         function () {
             $('#result').html('"PassThings()" successfully called.');
         });
 }
+
+
+
+
+
 
 
 
@@ -526,7 +561,7 @@ function DeleteQuiz(id) {
 
 
 
-$('#containers .frame .popup, #containers .frame .object ').droppable({
+$('#containers .popup, #containers .object ').droppable({
     activeClass: "ui-state-default",
     hoverClass: "ui-state-hover",
     accept: '.object',
@@ -537,7 +572,7 @@ $('#containers .frame .popup, #containers .frame .object ').droppable({
         ui.draggable.detach().appendTo($(this));
     }
 });
-$('#containers .frame .popup').sortable();
+$('#containers .popup').sortable();
 $('#containers .frame').droppable({
     activeClass: "ui-state-default",
     hoverClass: "ui-state-hover",
@@ -548,7 +583,30 @@ $('#containers .frame').droppable({
         $(ui.draggable).removeClass("insidePopup");
     }
 });
-$('#containers .frame .object').draggable({
+$('#containers .object').draggable({
     helper: 'clone',
     containment: "document"
 });
+
+
+
+var acc = document.getElementsByClassName("object");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function () {
+        /* Toggle between adding and removing the "active" class,
+        to highlight the button that controls the panel */
+        this.classList.toggle("active");
+
+        /* Toggle between hiding and showing the active panel */
+        //var panel = this.nextElementSibling;
+        var panel = this.querySelector(".panel");
+
+        if (panel.style.display === "block") {
+            panel.style.display = "none";
+        } else {
+            panel.style.display = "block";
+        }
+    });
+}

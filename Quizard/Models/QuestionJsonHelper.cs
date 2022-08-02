@@ -9,5 +9,6 @@ namespace Quizard.Models
         public string Id { get; set; }
         public string SectionId { get; set; }
         public int QuestionPosition { get; set; }
+        public int? ParentId { get; set; }
     }
 }

@@ -88,6 +88,10 @@ namespace Quizard.Repository
                 .Where(j => j.Question.SectionId == j.Question.Section.Id)
                 .Where(c => c.Question.Section.QuizId == QuizId).ToListAsync();
         }
+        public async Task<IEnumerable<Answer>> GetAnswersByQuestion(int id)
+        {
+            return await _context.Answers.Where(i => i.QuestionId == id).ToListAsync();
+        }
 
 
 
