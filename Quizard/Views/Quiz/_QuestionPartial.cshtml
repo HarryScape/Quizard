@@ -3,26 +3,40 @@
 @foreach (var question in Model)
 {
     <div class="object" id="@(question.Id)">
-        @question.QuestionTitle
-@*        <div class="panel">
-            <ol>
-            @if (question.QuestionAnswers != null)
-            {
-                foreach (Answer ans in question.QuestionAnswers)
-                {
 
-                    @if (ans.isCorrect)
+        <a id="question-edit" onclick="DeleteSection(@question.Section.Id)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-pencil">
+                <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z" />
+            </svg>
+        </a>
+
+        @if (question.QuestionType == Quizard.Data.Enum.QuestionType.GROUP)
+        {
+            <strong>@question.QuestionTitle</strong>
+        }
+        else
+        {
+            @question.QuestionTitle
+        }
+
+        <div class="panel">
+            <ol>
+                @if (question.QuestionAnswers != null)
+                {
+                    foreach (var ans in question.QuestionAnswers)
                     {
-                        <li class="correct-ans"> <strong> @ans.QuestionAnswer </strong> </li>
-                    }
-                    else
-                    {
-                        <li> @ans.QuestionAnswer </li>
+                        @if (ans.isCorrect == true)
+                        {
+                            <li class="correct-ans"> <strong> @ans.QuestionAnswer </strong> </li>
+                        }
+                        else
+                        {
+                            <li> @ans.QuestionAnswer </li>
+                        }
                     }
                 }
-            }
             </ol>
-        </div>*@
+        </div>
 
         @if (question.Children != null)
         {

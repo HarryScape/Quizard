@@ -29,9 +29,18 @@ h3 {
     border: none;
     position: absolute;
     right: 20px;
+    /*left: 40px;*/
     background: transparent;
-    cursor: pointer
+    cursor: pointer;
+    color: black;
 }
+
+.sec-title {
+    padding-bottom: 50px;
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
 
 .flex-container {
     /*    display: flex;
@@ -43,7 +52,8 @@ h3 {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: flex-start;
+    /*justify-content: flex-start;*/
+    justify-content: space-between;
     align-content: stretch;
     align-items: flex-start;
     height: auto;
@@ -60,7 +70,7 @@ h3 {
 }
 
 .controls {
-    margin-top: 30px;
+    margin-top: 50px;
     background-color: rgb(217, 217, 245);
     border: solid 2px #5e4dcd;
     border-radius: 0.5rem;
@@ -68,11 +78,11 @@ h3 {
     flex-basis: auto;
     flex: 1 1 auto;*/
     max-width: 400px;
-
     order: 2;
     flex: 1 1 auto;
     align-self: auto;
     padding: 20px;
+    flex-flow: row wrap;
 }
 
 
@@ -104,7 +114,7 @@ h3 {
 }
 
 .accordion-question-item {
-     /*background-color: #fff;*/ 
+    /*background-color: #fff;*/
     margin-bottom: 20px;
     border-radius: 0.5rem;
 }
@@ -131,9 +141,9 @@ h3 {
     margin-top: 10px;
 }
 
-.accordion-question-body ol{
-    list-style: none;
-}
+    .accordion-question-body ol {
+        list-style: none;
+    }
 
 /* .accordion-question-item h2 {
   margin-bottom: 0;
@@ -271,12 +281,12 @@ h3 {
     transition: background-color .3s ease-in-out;
 }
 
-.button--save:hover {
-    background-color: #5e5dcd;
-}
+    .button--save:hover {
+        background-color: #5e5dcd;
+    }
 
-.quizName{
-    text-align:center;
+.quizName {
+    text-align: center;
     margin-bottom: 40px;
 }
 
@@ -343,12 +353,12 @@ table {
 }
 
 .correct-ans::before {
-    content: "\2713"; 
+    content: "\2713";
     left: 1em;
-    position:absolute;
+    position: absolute;
 }
 
-ol{
+ol {
     position: relative;
 }
 
@@ -383,31 +393,36 @@ ol{
 }
 
 #tools .tool, #tools .frame {
-/*    height: 50px;
+    /*    height: 50px;
     width: 50px;*/
     /*float: left;*/
     /*background-color: #fee;*/
 }
 
-.tools{
+.tools {
     width: 100px;
     /*position: relative;*/
 }
 
-.drop{
+.drop {
     max-width: 100%;
 }
 
 #containers {
     clear: both;
-    width: 900px;
+    width: 850px;
     height: auto;
     /*height:400px;*/
-
+    position: absolute;
+    /*flex*/
+    /*    order: 1;
+    flex: 3 0 auto;
+    align-self: flex-start;*/
+    padding-bottom: 70px;
 }
 
     #containers .frame {
-/*        min-height: 100%;
+        /*        min-height: 100%;
         height: fit-content;
         width: 900px;*/
         /*background-color: red;*/
@@ -450,11 +465,17 @@ ol{
         /*float: left;*/
         width: auto;
         border: 2px dotted #5e5dcd;
-        max-width: 95%;
+        /*background: linear-gradient(to left, rgba(255,255,255,0) 0%, rgb(177, 178, 250, 70%) 100%);*/
+        top: -1px;
+        max-width: 90%;
         margin: 10px;
         margin-left: 20px;
         cursor: pointer;
         margin-bottom: 20px;
+        /*border-left: 2px solid #5e5dcd;*/
+       /* border-left-width: 2px;
+        border-left-style: solid;
+        border-image: linear-gradient( to bottom, #5e5dcd, rgba(0, 0, 0, 0) ) 1 100%;*/
     }
 
     #containers .ph {
@@ -484,6 +505,6 @@ ol{
     overflow: hidden;
 }
 
-.panel ol {
-    list-style: none;
-}
+    .panel ol {
+        list-style: none;
+    }

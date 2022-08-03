@@ -8,7 +8,7 @@
         MA,
         // Essay (Manual Grading)
         ESS,
-        // Short Answer (Manual Grading)
+        // Short Response Answer (Manual Grading)
         SR,
         // TrueFalse
         TF,

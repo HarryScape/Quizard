@@ -39,10 +39,10 @@
                     <div class="pw-instructions">
                         <p>Passwords must contain:</p>
                         <ol>
-                            <li>1 Uppercase</li>
-                            <li>1 Digit</li>
-                            <li>1 Special Character</li>
-                            <li>At Least 6 Characters Long</li>
+                            <li>Minimum 1 Uppercase Letter</li>
+                            <li>Minimum 1 Number</li>
+                            <li>Minimum 1 Special Character</li>
+                            <li>Minimum 6 Characters Long</li>
                         </ol>
                     </div>
 
@@ -69,8 +69,10 @@
                     <br />
 
                     <div class="form-group">
-                        <input class="btn btn-outline-success float-right" type="submit" value="Sign up" />
-                        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Cancel</a>
+                        @*<input class="btn btn-outline-success float-right" type="submit" value="Sign up" />
+                        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Cancel</a>*@
+                        <input class="button-table" type="submit" value="Sign up" />
+                        <button class="button-table" asp-controller="Home" asp-action="Index">Cancel</button>
                     </div>
                 </form>
             </div>
