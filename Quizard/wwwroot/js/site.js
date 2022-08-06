@@ -113,15 +113,22 @@ function SavePosition() {
 
 
 
-$(document).on("click", "#exit-modal", function () {
+$(document).on("click", "#exit-delete-modal", function () {
 
     $("#exampleModalCenter").modal("toggle");
 
 })
 
+//$(document).on("click", "#exit-edit-modal", function () {
+
+//    $("#modal-edit").modal("toggle");
+
+//})
+
 
 function DeleteSection(id) {
     $("#exampleModalCenter").modal("toggle");
+
     UpdateQuestions();
     const button = document.getElementById('del-confirm');
     button.addEventListener('click', function handleClick() {
@@ -222,3 +229,24 @@ for (i = 0; i < acc.length; i++) {
         }
     });
 }
+
+
+
+$(function () {
+    var placeholder = $('#modal-zone');
+    $('a[data-toggle="ajax-edit-modal"]').click(function (event) {
+    //$('.question-edit').click(function (event) {
+        var url = $(this).data('url');
+
+        $.get(url).done(function (data) {
+            placeholder.html(data);
+            placeholder.find('.modal').modal('show');
+        })
+    })
+
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.find('.modal').modal('hide');
+        $('#modal-zone').html("")
+    })
+
+}) 

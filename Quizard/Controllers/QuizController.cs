@@ -139,5 +139,21 @@ namespace Quizard.Controllers
 
             return PartialView("_Section", quizViewModel);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ShowDeleteModal(int id)
+        {
+            Quiz quiz = await _quizRepository.GetQuizById(id);
+            return PartialView("_DeleteModalPartial");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ShowEditModal(int id)
+        {
+            Question question = await _quizRepository.GetQuestionById(id);
+            //Question question = new Question();
+            return PartialView("_EditModalPartial", question);
+        }
+
     }
 }

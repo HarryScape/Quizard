@@ -83,6 +83,9 @@ h3 {
     align-self: auto;
     padding: 20px;
     flex-flow: row wrap;
+    /*overide flex*/
+    position: fixed;
+    right: 50px;
 }
 
 

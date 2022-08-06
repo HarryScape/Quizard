@@ -1,7 +1,6 @@
 ﻿@model Quizard.ViewModels.CreateQuizViewModel
 
-<script src="~/js/site.js" asp-append-version="true"></script>
-
+@*<script src="~/js/site.js" asp-append-version="true"></script>*@
 
 <div id="containers">
     @foreach (var Qsection in Model.Sections.Where(i => i.QuizId.Equals(Model.Quiz.Id)))
@@ -26,9 +25,19 @@
 
             @foreach (var question in Model.ParentQuestions.Where(i => i.SectionId.Equals(Qsection.Id)))
             {
+
+                @*     <a id="question-edit" data-toggle="ajax-edit-modal" data-url="@Url.Action("ShowEditModal")" >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-pencil">
+        <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z" />
+        </svg>
+        </a>*@
+
+
                 <div class="object" id="@(question.Id)">
 
-                    <a id="question-edit" onclick="DeleteSection(@Qsection.Id)">
+                    @*<a id="question-edit" onclick="EditModal(@question.Id)" >*@
+                    @*<a id="question-edit" data-toggle="ajax-edit-modal" data-url="@Url.Action("ShowEditModal")" >*@
+                    <a class="question-edit" id="question-edit" data-toggle="ajax-edit-modal" data-url="@Url.Action("ShowEditModal", "Quiz", new { id = @question.Id  })">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-pencil">
                             <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z" />
                         </svg>
@@ -44,6 +53,8 @@
                     }
 
                     @*@question.QuestionTitle*@
+
+
                     <div class="panel">
                         <ol>
                             @if (question.QuestionAnswers != null)
