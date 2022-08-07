@@ -10,56 +10,64 @@
             </div>
 
             <div class="modal-body">
-                <form>
+                <form action="UpdateQuestion">
                     <div class="form-group">
-                        <label for="question-text" class="col-form-label">Change text:</label>
-                        <textarea class="form-control" id="question-text" placeholder="@Model.QuestionTitle"> @Model.QuestionTitle </textarea>
+                        <label asp-for="QuestionTitle" class="col-form-label">Edit Text:</label>
+                        <textarea asp-for="QuestionTitle" class="form-control" id="question-text" placeholder="@Model.QuestionTitle"> @Model.QuestionTitle </textarea>
                     </div>
 
+                     <input type="hidden" asp-for="Id" name="Id" value="@Model.Id">
 
-                    <div class="form-group">
-                        <label for="question-text" class="col-form-label">Mark Weight:</label>
-                        <input type="text" class="form-control" id="inlineFormInputName" placeholder="5">
-                    </div>
-                    <div class="form-group">
-                        <label class="check-container">
-                            <input checked="checked" type="checkbox">
-                            <div class="checkmark"></div>
-                        </label>
-                        <label for="margin-text" class="col-form-label">Margin of error:</label>
-                        <input type="text" class="form-control" id="inlineFormInputName" placeholder="0.5">
-                    </div>
-                    <div class="form-group">
-                        <label class="check-container">
-                            <input checked="checked" type="checkbox">
-                            <div class="checkmark"></div>
-                        </label>
-                        <label for="question-text" class="col-form-label">Negative Marking</label>
-                        <input type="text" class="form-control" id="inlineFormInputName" placeholder="-20%">
-                    </div>
+                    @if (Model.QuestionType != Quizard.Data.Enum.QuestionType.GROUP)
+                    {
+                        <div class="form-group">
+                            <label for="Mark" class="col-form-label">Mark Weight:</label>
+                            <input for="Mark" type="text" class="form-control" id="inlineFormInputName" placeholder="5">
+                        </div>
+                        <div class="form-group">
+                            <label class="check-container">
+                                <input checked="checked" type="checkbox">
+                                <div class="checkmark"></div>
+                            </label>
+                            <label for="ErrorMargin" class="col-form-label">Margin of error:</label>
+                            <input for="ErrorMargin" type="text" class="form-control" id="inlineFormInputName" placeholder="0.5">
+                        </div>
+                        <div class="form-group">
+                            <label class="check-container">
+                                <input checked="checked" type="checkbox">
+                                <div class="checkmark"></div>
+                            </label>
+                            <label for="NegativeMark" class="col-form-label">Negative Marking</label>
+                            <input for="NegativeMark" type="text" class="form-control" id="inlineFormInputName" placeholder="-20%">
+                        </div>
+                    }
 
-                    <br />
-                    <div class="form-group">
-                        <div class="upload-container">
-                            <label for="question-text" class="col-form-label">Upload supplimentary content:</label>
-                            <div class="mb-3 mt-3">
-                                <form method="post" enctype="multipart/form-data" asp-controller="Dashboard" asp-action="UploadQuiz">
-                                    <input type="hidden" id="UserId" name="UserId" />
-                                    <div class="input-group">
-                                        <input type="file" name="file" id="UploadAlt">
-                                        <input class="button--add" value="Upload" type="submit" id="AddSectionBtn">
-                                    </div>
-                                </form>
+                    @if (Model.QuestionType == Quizard.Data.Enum.QuestionType.GROUP)
+                    {
+                        <br />
+                        <div class="form-group">
+                            <div class="upload-container">
+                                <label for="question-text" class="col-form-label">Upload supplimentary content:</label>
+                                <div class="mb-3 mt-3">
+                                    <form method="post" enctype="multipart/form-data" asp-controller="Dashboard" asp-action="UploadQuiz">
+                                        <input type="hidden" id="UserId" name="UserId" />
+                                        <div class="input-group">
+                                            <input type="file" name="file" id="UploadAlt">
+                                            <input class="button--add" value="Upload" type="submit" id="AddSectionBtn">
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </form>
-            </div>
+                        </div>
+                   
 
             <div class="modal-footer">
                 <div class="col text-center">
                     <button type="button" class="button--save" data-bs-dismiss="modal" id="exit-edit-modal">Cancel</button>
-                    <button type="button" class="button--save" id="del-confirm">Save</button>
+                    <button type="button" class="button--save" data-save="modal" id="save-confirm">Save Changes</button>
                 </div>
             </div>
         </div>

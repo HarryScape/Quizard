@@ -230,12 +230,10 @@ for (i = 0; i < acc.length; i++) {
     });
 }
 
-
-
 $(function () {
     var placeholder = $('#modal-zone');
+
     $('a[data-toggle="ajax-edit-modal"]').click(function (event) {
-    //$('.question-edit').click(function (event) {
         var url = $(this).data('url');
 
         $.get(url).done(function (data) {
@@ -244,9 +242,78 @@ $(function () {
         })
     })
 
-    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+    $(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
+        //placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
         placeholder.find('.modal').modal('hide');
-        $('#modal-zone').html("")
+        $('#modal-zone').html("");
     })
 
+    $(document).on("click", '[data-save="modal"]', function (event) {
+        //placeholder.on('click', '[data-save="modal"]', function (event) {
+        var form = $(this).parents('.modal').find('form');
+        var actionUrl = form.attr('action');
+        var dataPost = form.serialize();
+        //var dataUpdate = "";
+
+        $.post(actionUrl, dataPost).done(function (data) {
+            SavePosition();
+            placeholder.find('.modal').modal('hide');
+            $('#modal-zone').html("");
+            $('.quiz-wrapper').html(data);
+            //dataUpdate = data;
+        })
+    });
 }) 
+
+
+
+//function UpdateQuestion() {
+//    //$("#exampleModalCenter").modal("toggle");
+//    var placeholder = $('#modal-zone');
+//    const button = document.getElementById('save-confirm');
+//    //button.addEventListener('click', function handleClick() {
+//    $(document).on("click", '[data-save="modal"]', function (event) {
+//        //$("#exampleModalCenter").modal("toggle");
+//        console.log("con")
+//        var form = $(this).parents('.modal').find('form').serialize();
+
+//        $.post('/Quiz/UpdateQuestion', form,
+//            function (response) {
+//                //window.location.href = response.redirectToUrl;
+//                placeholder.find('.modal').modal('hide');
+//                $('#modal-zone').html("");
+//                $('.quiz-wrapper').html(response.responseText);
+//            });
+
+//        //$.ajax({
+//        //    type: "POST",
+//        //    data: form,
+//        //    url: "/Quiz/UpdateQuestion",
+//        //    dataType: "json",
+//        //    success: function (response) {
+//        //        if (response != null) {
+//        //            console.log("Sent okay");
+//        //        } else {
+//        //            console.log("Something went wrong");
+//        //        }
+//        //        // var quizUpdate = JSON.stringify(response);
+//        //        //// $('.quiz-wrapper').html(quizUpdate);
+//        //        // //   $('.quiz-wrapper').html(quizUpdate).html();
+//        //        // $('.quiz-wrapper').load(quizUpdate).html();
+
+//        //    },
+//        //    failure: function (response) {
+//        //        //console.log(response.responseText);
+//        //    },
+//        //    error: function (response) {
+//        //        //console.log(response.responseText);
+//        //    },
+//        //    // Working state
+//        //    complete: function (response) {
+//        //        placeholder.find('.modal').modal('hide');
+//        //        $('#modal-zone').html("");
+//        //        $('.quiz-wrapper').html(response.responseText);
+//        //    }
+//        //});
+//    });
+//}
