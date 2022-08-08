@@ -48,7 +48,7 @@
                             <button type="submit" class="button-table" onclick="DeleteQuiz(@item.Id)">Delete</button>
                             <button type="submit" class="button-table">Publish</button>
                             <button type="submit" class="button-table" onclick="location.href='@Url.Action("Create", "Quiz", new { QuizId = item.Id })'">Edit</button>
-                            <button type="submit" class="button-table">Options</button>
+                            <button type="submit" class="button-table" data-toggle="quiz-options-modal" data-url="@Url.Action("ShowOptionsModal", "Dashboard", new { id = @item.Id  })">Options</button>
                         </td>
                     </tr>
                 }
@@ -72,6 +72,8 @@
 </div>
 <br />
 
+
+<div id="modal-zone"></div>
 
 
 <!-- Modal -->

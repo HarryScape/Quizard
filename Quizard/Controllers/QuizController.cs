@@ -101,6 +101,10 @@ namespace Quizard.Controllers
                 _quizRepository.Update(question);
             }
 
+            Quiz quiz = await _quizRepository.GetQuizById(updates[0].QuizId);
+            quiz.DateCreated = DateTime.Now;
+            _quizRepository.Update(quiz);
+
             var message = "State saved";
             return Json(message);
         }

@@ -68,5 +68,27 @@ namespace Quizard.Controllers
             
             return RedirectToAction("Index", "Dashboard");
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> ShowOptionsModal(int id)
+        {
+            Quiz quiz = await _quizRepository.GetQuizById(id);
+            return PartialView("_QuizOptionsPartial", quiz);
+        }
+
+        [ActionName("UpdateQuiz")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateQuiz(Quiz updatedQuiz)
+        {
+            Quiz quiz = await _quizRepository.GetQuizById(updatedQuiz.Id);
+            quiz.QuizName = updatedQuiz.QuizName;
+            quiz.DateCreated = DateTime.Now;
+            _quizRepository.Update(quiz);
+
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+
     }
 }

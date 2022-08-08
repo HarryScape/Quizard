@@ -92,13 +92,14 @@ function SavePosition() {
         var element = questionDivs[i];
         var questionId = element.id;
         var sectionId = element.closest('.popup').id;
+        var quizId = document.getElementById("HiddenQuizId").value;
         var parent = null;
         if (element.parentNode.closest(".object") !== null) {
             parent = element.parentNode.closest('.object').id;
         }
         //console.log(questionId, parent)
 
-        var QuestionJsonHelper = { Id: questionId, SectionId: sectionId, QuestionPosition: count, ParentId: parent };
+        var QuestionJsonHelper = { Id: questionId, SectionId: sectionId, QuestionPosition: count, ParentId: parent, quizId: quizId };
         questionList.push(QuestionJsonHelper);
         count++;
     }
@@ -113,11 +114,11 @@ function SavePosition() {
 
 
 
-$(document).on("click", "#exit-delete-modal", function () {
+//$(document).on("click", "#exit-delete-modal", function () {
 
-    $("#exampleModalCenter").modal("toggle");
+//    $("#exampleModalCenter").modal("toggle");
 
-})
+//})
 
 //$(document).on("click", "#exit-edit-modal", function () {
 
@@ -230,6 +231,8 @@ for (i = 0; i < acc.length; i++) {
     });
 }
 
+
+//Question Options
 $(function () {
     var placeholder = $('#modal-zone');
 
@@ -242,14 +245,14 @@ $(function () {
         })
     })
 
-    $(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
-        //placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+    //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
         placeholder.find('.modal').modal('hide');
         $('#modal-zone').html("");
     })
 
-    $(document).on("click", '[data-save="modal"]', function (event) {
-        //placeholder.on('click', '[data-save="modal"]', function (event) {
+    //$(document).on("click", '[data-save="modal"]', function (event) {
+        placeholder.on('click', '[data-save="modal"]', function (event) {
         var form = $(this).parents('.modal').find('form');
         var actionUrl = form.attr('action');
         var dataPost = form.serialize();
@@ -267,53 +270,34 @@ $(function () {
 
 
 
-//function UpdateQuestion() {
-//    //$("#exampleModalCenter").modal("toggle");
-//    var placeholder = $('#modal-zone');
-//    const button = document.getElementById('save-confirm');
-//    //button.addEventListener('click', function handleClick() {
-//    $(document).on("click", '[data-save="modal"]', function (event) {
-//        //$("#exampleModalCenter").modal("toggle");
-//        console.log("con")
-//        var form = $(this).parents('.modal').find('form').serialize();
+//Quiz Options
+$(function () {
+    var placeholder = $('#modal-zone');
 
-//        $.post('/Quiz/UpdateQuestion', form,
-//            function (response) {
-//                //window.location.href = response.redirectToUrl;
-//                placeholder.find('.modal').modal('hide');
-//                $('#modal-zone').html("");
-//                $('.quiz-wrapper').html(response.responseText);
-//            });
+    $('button[data-toggle="quiz-options-modal"]').click(function (event) {
+        var url = $(this).data('url');
 
-//        //$.ajax({
-//        //    type: "POST",
-//        //    data: form,
-//        //    url: "/Quiz/UpdateQuestion",
-//        //    dataType: "json",
-//        //    success: function (response) {
-//        //        if (response != null) {
-//        //            console.log("Sent okay");
-//        //        } else {
-//        //            console.log("Something went wrong");
-//        //        }
-//        //        // var quizUpdate = JSON.stringify(response);
-//        //        //// $('.quiz-wrapper').html(quizUpdate);
-//        //        // //   $('.quiz-wrapper').html(quizUpdate).html();
-//        //        // $('.quiz-wrapper').load(quizUpdate).html();
+        $.get(url).done(function (data) {
+            placeholder.html(data);
+            placeholder.find('.modal').modal('show');
+        })
+    })
 
-//        //    },
-//        //    failure: function (response) {
-//        //        //console.log(response.responseText);
-//        //    },
-//        //    error: function (response) {
-//        //        //console.log(response.responseText);
-//        //    },
-//        //    // Working state
-//        //    complete: function (response) {
-//        //        placeholder.find('.modal').modal('hide');
-//        //        $('#modal-zone').html("");
-//        //        $('.quiz-wrapper').html(response.responseText);
-//        //    }
-//        //});
-//    });
-//}
+    //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.find('.modal').modal('hide');
+        $('#modal-zone').html("");
+    })
+
+    //$(document).on("click", '[data-save="modal"]', function (event) {
+        placeholder.on('click', '[data-save="modal"]', function (event) {
+        var form = $(this).parents('.modal').find('form');
+        var dataPost = form.serialize();
+
+        $.post('/Dashboard/UpdateQuiz', dataPost).done(function (data) {
+            //placeholder.find('.modal').modal('hide');
+            //$('#modal-zone').html("");
+            location.reload(true);
+        })
+    });
+}) 

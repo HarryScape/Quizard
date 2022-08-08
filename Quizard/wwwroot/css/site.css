@@ -85,7 +85,8 @@ h3 {
     flex-flow: row wrap;
     /*overide flex*/
     position: fixed;
-    right: 50px;
+    /*right: 50px;*/
+    right: 8%;
 }
 
 
@@ -443,6 +444,7 @@ ol {
         padding-left: 50px;
         margin-top: 30px;
         min-height: 200px;
+
     }
 
     #containers .drop {
