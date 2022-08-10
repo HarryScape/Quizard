@@ -2,7 +2,6 @@
 
 
 
-// This func correctly passes data to controller.
 function AddSection() {
     SavePosition();
     var name = document.getElementById("AddSectionName").value;
@@ -82,7 +81,6 @@ function AddQuestionGroup() {
 }
 
 
-/*Version 2*/
 function SavePosition() {
     var questionList = [];
     var questionDivs = document.querySelectorAll(".object"), i;
@@ -114,11 +112,11 @@ function SavePosition() {
 
 
 
-//$(document).on("click", "#exit-delete-modal", function () {
+$(document).on("click", "#exit-modal", function () {
 
-//    $("#exampleModalCenter").modal("toggle");
+    $("#exampleModalCenter").modal("toggle");
 
-//})
+})
 
 //$(document).on("click", "#exit-edit-modal", function () {
 
@@ -127,40 +125,40 @@ function SavePosition() {
 //})
 
 
-function DeleteSection(id) {
-    $("#exampleModalCenter").modal("toggle");
+//function DeleteSection(id) {
+//    $("#exampleModalCenter").modal("toggle");
 
-    UpdateQuestions();
-    const button = document.getElementById('del-confirm');
-    button.addEventListener('click', function handleClick() {
-        console.log('element clicked');
-        $("#exampleModalCenter").modal("toggle");
+//    UpdateQuestions();
+//    const button = document.getElementById('del-confirm');
+//    button.addEventListener('click', function handleClick() {
+//        console.log('element clicked');
+//        $("#exampleModalCenter").modal("toggle");
 
-        $.ajax({
-            type: "POST",
-            data: { sectionId: id },
-            url: "/Quiz/DeleteSection",
-            contentType: 'application/x-www-form-urlencoded',
-            dataType: "json",
-            success: function (response) {
-                if (response != null) {
-                    console.log("Sent okay", response);
-                } else {
-                    console.log("Something went wrong");
-                }
-            },
-            failure: function (response) {
-                console.log(response.responseText);
-            },
-            error: function (response) {
-                console.log(response.responseText);
-            },
-            complete: function (response) {
-                $('.quiz-wrapper').html(response.responseText);
-            }
-        });
-    });
-}
+//        $.ajax({
+//            type: "POST",
+//            data: { sectionId: id },
+//            url: "/Quiz/DeleteSection",
+//            contentType: 'application/x-www-form-urlencoded',
+//            dataType: "json",
+//            success: function (response) {
+//                if (response != null) {
+//                    console.log("Sent okay", response);
+//                } else {
+//                    console.log("Something went wrong");
+//                }
+//            },
+//            failure: function (response) {
+//                console.log(response.responseText);
+//            },
+//            error: function (response) {
+//                console.log(response.responseText);
+//            },
+//            complete: function (response) {
+//                $('.quiz-wrapper').html(response.responseText);
+//            }
+//        });
+//    });
+//}
 
 
 function DeleteQuiz(id) {
@@ -178,7 +176,7 @@ function DeleteQuiz(id) {
 }
 
 
-
+//Drag and drop
 $('#containers .popup, #containers .object ').droppable({
     activeClass: "ui-state-default",
     hoverClass: "ui-state-hover",
@@ -207,7 +205,7 @@ $('#containers .object').draggable({
 });
 
 
-
+//Acordion
 var acc = document.getElementsByClassName("object");
 var i;
 
@@ -215,6 +213,11 @@ for (i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", function () {
         /* Toggle between adding and removing the "active" class,
         to highlight the button that controls the panel */
+
+        $(".question-edit").click(function (e) {
+            e.stopPropagation();
+        });
+
         this.classList.toggle("active");
 
         /* Toggle between hiding and showing the active panel */
@@ -252,18 +255,18 @@ $(function () {
     })
 
     //$(document).on("click", '[data-save="modal"]', function (event) {
-        placeholder.on('click', '[data-save="modal"]', function (event) {
+        placeholder.on('click', '[data-save-question="modal"]', function (event) {
         var form = $(this).parents('.modal').find('form');
         var actionUrl = form.attr('action');
         var dataPost = form.serialize();
-        //var dataUpdate = "";
 
         $.post(actionUrl, dataPost).done(function (data) {
             SavePosition();
             placeholder.find('.modal').modal('hide');
             $('#modal-zone').html("");
-            $('.quiz-wrapper').html(data);
-            //dataUpdate = data;
+            //$('.quiz-wrapper').html(data);
+            SavePosition();
+            location.reload(true);
         })
     });
 }) 
@@ -290,13 +293,49 @@ $(function () {
     })
 
     //$(document).on("click", '[data-save="modal"]', function (event) {
-        placeholder.on('click', '[data-save="modal"]', function (event) {
+        placeholder.on('click', '[data-save-quiz="modal"]', function (event) {
         var form = $(this).parents('.modal').find('form');
         var dataPost = form.serialize();
 
         $.post('/Dashboard/UpdateQuiz', dataPost).done(function (data) {
-            //placeholder.find('.modal').modal('hide');
-            //$('#modal-zone').html("");
+            location.reload(true);
+        })
+    });
+}) 
+
+
+
+//Section Options
+$(function () {
+    var placeholder = $('#modal-zone');
+
+    $('a[data-toggle="section-edit-modal"]').click(function (event) {
+        var url = $(this).data('url');
+
+        $.get(url).done(function (data) {
+            placeholder.html(data);
+            placeholder.find('.modal').modal('show');
+        })
+    })
+
+    //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.find('.modal').modal('hide');
+        $('#modal-zone').html("");
+    })
+
+    //$(document).on("click", '[data-save="modal"]', function (event) {
+    placeholder.on('click', '[data-save-section="modal"]', function (event) {
+        var form = $(this).parents('.modal').find('form');
+        var actionUrl = form.attr('action');
+        var dataPost = form.serialize();
+
+        $.post(actionUrl, dataPost).done(function (data) {
+            SavePosition();
+            placeholder.find('.modal').modal('hide');
+            $('#modal-zone').html("");
+            //$('.quiz-wrapper').html(data);
+            SavePosition();
             location.reload(true);
         })
     });

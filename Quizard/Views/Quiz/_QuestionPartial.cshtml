@@ -5,16 +5,16 @@
 @foreach (var question in Model)
 {
 
-@*    <a class="question-edit" id="question-edit" data-toggle="ajax-edit-modal" data-url="@Url.Action("ShowEditModal")" >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-pencil">
-                <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z" />
-            </svg>
-        </a>*@
-
     <div class="object" id="@(question.Id)">
 
-        <a class="question-edit" id="question-edit" data-toggle="ajax-edit-modal" data-url="@Url.Action("ShowEditModal", "Quiz", new { id = @question.Id  })" >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-pencil">
+        <a class="question-edit" id="sec-del" onclick="DeleteSection()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="hi-trash">
+                <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 6l.934 13.071A1 1 0 007.93 20h8.138a1 1 0 00.997-.929L18 6m-6 5v4m8-9H4m4.5 0l.544-1.632A2 2 0 0110.941 3h2.117a2 2 0 011.898 1.368L15.5 6" />
+            </svg>
+        </a>
+
+        <a class="question-edit" id="question-edit" data-toggle="ajax-edit-modal" data-url="@Url.Action("ShowEditModal", "Quiz", new { id = @question.Id  })">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="hi-pencil">
                 <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z" />
             </svg>
         </a>
@@ -27,6 +27,7 @@
         {
             @question.QuestionTitle
         }
+
 
         <div class="panel">
             <ol>
@@ -45,6 +46,7 @@
                     }
                 }
             </ol>
+            @*<i> 5 Marks </i>*@
         </div>
 
 

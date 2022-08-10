@@ -1,0 +1,37 @@
+﻿@model Section
+
+
+<!-- Large modal -->
+<div class="modal fade bd-example-modal-lg" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center w-100" id="exampleModalLongTitle">Edit Section</h5>
+            </div>
+
+            <div class="modal-body">
+                <form action="UpdateSection">
+                    <div class="form-group">
+                        <label asp-for="SectionName" class="col-form-label">Edit Text:</label>
+                        <textarea asp-for="SectionName" class="form-control" id="question-text" placeholder="@Model.SectionName"> @Model.SectionName </textarea>
+                    </div>
+
+                    <input type="hidden" asp-for="Id" name="Id" value="@Model.Id">
+
+                    <div class="form-group">
+                        <label for="RequiredQuestions" class="col-form-label">Required Amount of Questions to Answer:</label>
+                        <input for="Mark" type="text" class="form-control" id="inlineFormInputName" placeholder="2">
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="modal-footer">
+                <div class="col text-center">
+                    <button type="button" class="button--save" data-bs-dismiss="modal" id="exit-edit-modal">Cancel</button>
+                    <button type="button" class="button--save" data-save-section="modal" id="save-confirm">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

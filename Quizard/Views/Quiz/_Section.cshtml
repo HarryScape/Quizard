@@ -1,6 +1,6 @@
 ﻿@model Quizard.ViewModels.CreateQuizViewModel
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
 
 <div id="containers">
     @foreach (var Qsection in Model.Sections.Where(i => i.QuizId.Equals(Model.Quiz.Id)))
@@ -9,16 +9,17 @@
         <div class="popup" id="@(Qsection.Id)">
 
             <div class="sec-title">
-                <a id="section-edit" onclick="DeleteSection(@Qsection.Id)">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-pencil">
-                        <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z" />
+                @*<h3> @Qsection.SectionName </h3>*@
+                <a id="section-edit" data-toggle="section-edit-modal" data-url="@Url.Action("ShowEditSectionModal", "Quiz", new { id = @Qsection.Id  })">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="hi-pencil">
+                        <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z" />
                     </svg>
                 </a>
-                @*            <a id="sec-del" onclick="DeleteSection(@Qsection.Id)">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-trash">
-            <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l.934 13.071A1 1 0 007.93 20h8.138a1 1 0 00.997-.929L18 6m-6 5v4m8-9H4m4.5 0l.544-1.632A2 2 0 0110.941 3h2.117a2 2 0 011.898 1.368L15.5 6" />
-            </svg>
-            </a>*@
+                <a id="sec-del" onclick="DeleteSection(@Qsection.Id)">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="hi-trash">
+                        <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l.934 13.071A1 1 0 007.93 20h8.138a1 1 0 00.997-.929L18 6m-6 5v4m8-9H4m4.5 0l.544-1.632A2 2 0 0110.941 3h2.117a2 2 0 011.898 1.368L15.5 6" />
+                    </svg>
+                </a>
 
                 <h3> @Qsection.SectionName </h3>
             </div>
@@ -26,19 +27,16 @@
             @foreach (var question in Model.ParentQuestions.Where(i => i.SectionId.Equals(Qsection.Id)))
             {
 
-                @*     <a id="question-edit" data-toggle="ajax-edit-modal" data-url="@Url.Action("ShowEditModal")" >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-pencil">
-        <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z" />
-        </svg>
-        </a>*@
-
-
                 <div class="object" id="@(question.Id)">
 
-                    @*<a id="question-edit" onclick="EditModal(@question.Id)" >*@
-                    @*<a id="question-edit" data-toggle="ajax-edit-modal" data-url="@Url.Action("ShowEditModal")" >*@
+                    <a class="question-edit" id="sec-del" onclick="DeleteSection(@Qsection.Id)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="hi-trash">
+                            <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 6l.934 13.071A1 1 0 007.93 20h8.138a1 1 0 00.997-.929L18 6m-6 5v4m8-9H4m4.5 0l.544-1.632A2 2 0 0110.941 3h2.117a2 2 0 011.898 1.368L15.5 6" />
+                        </svg>
+                    </a>
+
                     <a class="question-edit" id="question-edit" data-toggle="ajax-edit-modal" data-url="@Url.Action("ShowEditModal", "Quiz", new { id = @question.Id  })">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-pencil">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="hi-pencil">
                             <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z" />
                         </svg>
                     </a>
@@ -72,6 +70,7 @@
                                 }
                             }
                         </ol>
+                        @*<i> 5 Marks </i>*@
                     </div>
 
                     @Html.Partial("_QuestionPartial", question.Children)

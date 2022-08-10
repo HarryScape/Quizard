@@ -63,6 +63,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxfRWRpdE1vZGFsUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Quiz/_EditSectionModalPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxfRWRpdFNlY3Rpb25Nb2RhbFBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Quiz/_QuestionPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxfUXVlc3Rpb25QYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

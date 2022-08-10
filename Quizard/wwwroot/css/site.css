@@ -1,4 +1,6 @@
 
+/*GLOBAL*/
+
 * {
     font-family: 'Inter', sans-serif;
 }
@@ -18,7 +20,28 @@ h3 {
     background-image: none;
 }
 
-.humbleicons {
+/*QUIZ EDIT*/
+
+/*.humbleicons {
+    width: 1.5em;
+    height: 1.5em;
+    display: inline-block;
+    align-self: center;
+    vertical-align: middle;
+    margin-top: -0.1em;
+    padding: 0;
+    border: none;
+    position: absolute;*/
+    /*position: relative;*/
+    /*right: 20px;*/
+    /*left: 95%;*/
+    /*background: transparent;
+    cursor: pointer;
+    color: black;
+}*/
+
+
+.hi-pencil {
     width: 1.5em;
     height: 1.5em;
     display: inline-block;
@@ -28,18 +51,37 @@ h3 {
     padding: 0;
     border: none;
     position: absolute;
-    right: 20px;
-    /*left: 40px;*/
+    right: 5px;
     background: transparent;
     cursor: pointer;
-    color: black;
+    color: #5e5dcd;
 }
 
-.sec-title {
-    padding-bottom: 50px;
-    margin-left: 30px;
-    margin-top: 10px;
+.hi-trash {
+    width: 1.5em;
+    height: 1.5em;
+    display: inline-block;
+    align-self: center;
+    vertical-align: middle;
+    margin-top: -0.1em;
+    padding: 0;
+    border: none;
+    position: absolute;
+    right: 30px;
+    background: transparent;
+    cursor: pointer;
+    color: #5e5dcd;
 }
+
+/*.humbleicons {
+    width: 1.5em;
+    height: 1.5em;
+    color: black;
+    align-self: center;
+    position: absolute;
+    right: 50px;
+}*/
+
 
 
 .flex-container {
@@ -95,142 +137,6 @@ h3 {
     padding: 20px;
     border-radius: 0.5rem;
 }
-
-/* ACORDION STYLING */
-
-.accordion-section-item {
-    /*border-left: 15px solid rgb(177, 178, 250);*/
-    border-left: 15px solid #5e4dcd;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0, 0.5);
-    position: relative;
-}
-
-.accordion-section-button {
-    margin-bottom: 20px;
-}
-
-.accordion-section-item {
-    background-color: rgb(217, 217, 245);
-    padding: 20px;
-    margin-top: 10px;
-    border-radius: 0.5rem;
-    padding-left: 60px;
-}
-
-.accordion-question-item {
-    /*background-color: #fff;*/
-    margin-bottom: 20px;
-    border-radius: 0.5rem;
-}
-
-.accordion-question-button,
-.accordion-section-button {
-    border: none;
-    background: transparent;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1rem;
-    cursor: pointer;
-    display: block;
-    /*width: 100%;*/
-    text-align: left;
-}
-
-.accordion-question-body {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.9rem;
-    line-height: 1.4;
-    border-bottom: 1px solid rgb(177, 178, 250, 70%);
-    padding-bottom: 1rem;
-    margin-top: 10px;
-}
-
-    .accordion-question-body ol {
-        list-style: none;
-    }
-
-/* .accordion-question-item h2 {
-  margin-bottom: 0;
-} */
-.accordion-question-item {
-    margin-left: 20px;
-    /*padding: 20px;*/
-    border-radius: 0.5rem;
-}
-
-/* ACCORDION BEHAVIOUR  */
-
-.accordion-question-button::after {
-    /*content: "\002B";*/
-    font-size: 1rem;
-    position: absolute;
-    /*right: 10rem;*/
-    left: 25rem;
-    transition: transform 300ms ease-in-out;
-}
-
-.accordion-question-button.open {
-    font-weight: bold;
-}
-
-    .accordion-question-button.open::after {
-        transform: rotate(180 deg);
-    }
-
-.accordion-question-button:focus,
-.accordion-question-button:focus-visible {
-    border: none;
-    outline: dashed 1px rgb(177, 178, 250, 0.5);
-}
-
-.accordion-question-button.open {
-}
-
-.accordion-question-collapse {
-    transition: height 300ms ease;
-}
-
-    .accordion-question-collapse.collapse {
-        display: none;
-    }
-
-    .accordion-question-collapse.collapsing {
-        height: 0;
-        overflow: hidden;
-    }
-
-    .accordion-question-collapse.open {
-        display: block;
-    }
-
-/* .accordion-section-collapse {
-  transition: height 300ms ease;
-}
-
-.accordion-section-collapse.collapse {
-  display: none;
-}
-
-.accordion-section-collapse.collapsing {
-  height: 0;
-  overflow: hidden;
-}
-
-.accordion-section-collapse.open {
-  display: none;
-} */
-
-/* DRAG AND DROP */
-
-.accordion-question-item.dragging {
-    opacity: 0.5;
-}
-
-.accordion-section-item.dragging {
-    opacity: 0.5;
-}
-
-
 
 
 /*QUIZ CONTROLS*/
@@ -293,6 +199,9 @@ h3 {
     text-align: center;
     margin-bottom: 40px;
 }
+
+
+/*DASHBOARD*/
 
 #UploadAlt {
     cursor: pointer;
@@ -378,14 +287,8 @@ ol {
 
 
 
-/*test drag command drop*/
+/* DRAG AND DROP */
 
-
-
-/** {
-    font-family: sans-serif;
-    font-size: 12px;
-}*/
 
 .tool, .object, .popup, .drop {
     /*border: 1px solid #888;*/
@@ -404,12 +307,12 @@ ol {
 }
 
 .tools {
-    width: 100px;
+    /*width: 200px;*/
     /*position: relative;*/
 }
 
 .drop {
-    max-width: 100%;
+    /*max-width: 100%;*/
 }
 
 #containers {
@@ -436,7 +339,7 @@ ol {
     #containers .popup {
         /*min-height: 20px;*/
         /*float: left;*/
-        position: inline-block;
+        /*position: absolute;*/
         /*min-width: 100px;*/
         width: 100%;
         background-color: rgb(217, 217, 245);
@@ -444,7 +347,7 @@ ol {
         padding-left: 50px;
         margin-top: 30px;
         min-height: 200px;
-
+        /*position: absolute;*/
     }
 
     #containers .drop {
@@ -478,9 +381,10 @@ ol {
         cursor: pointer;
         margin-bottom: 20px;
         /*border-left: 2px solid #5e5dcd;*/
-       /* border-left-width: 2px;
+        /* border-left-width: 2px;
         border-left-style: solid;
         border-image: linear-gradient( to bottom, #5e5dcd, rgba(0, 0, 0, 0) ) 1 100%;*/
+        /*position: relative;*/
     }
 
     #containers .ph {
@@ -501,8 +405,11 @@ ol {
 .insidePopup {
     /*border: 2px solid #0ff;*/
     height: auto;
+    width: 10px;
 }
 
+
+/*ACCORDION*/
 
 .panel {
     padding: 0 18px;

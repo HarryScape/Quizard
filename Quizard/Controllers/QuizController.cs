@@ -155,19 +155,37 @@ namespace Quizard.Controllers
         public async Task<IActionResult> ShowEditModal(int id)
         {
             Question question = await _quizRepository.GetQuestionById(id);
-            //Question question = new Question();
             return PartialView("_EditModalPartial", question);
         }
 
         [HttpPost]
         public async Task<IActionResult> UpdateQuestion(Question updatedQuestion)
         {
-            // its not a real question, have to pass in quiz id.
             Question question = await _quizRepository.GetQuestionById(updatedQuestion.Id);
             question.QuestionTitle = updatedQuestion.QuestionTitle;
             var section = await _quizRepository.GetSectionById(question.SectionId);
 
             _quizRepository.Update(question);
+
+            var quizViewModel = await _quizParserService.GenerateQuizViewModel(section.QuizId);
+            return PartialView("_Section", quizViewModel);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> ShowEditSectionModal(int id)
+        {
+            Section section = await _quizRepository.GetSectionById(id);
+            return PartialView("_EditSectionModalPartial", section);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateSection(Section updatedSection)
+        {
+            Section section = await _quizRepository.GetSectionById(updatedSection.Id);
+            section.SectionName = updatedSection.SectionName;
+
+            _quizRepository.Update(section);
 
             var quizViewModel = await _quizParserService.GenerateQuizViewModel(section.QuizId);
             return PartialView("_Section", quizViewModel);
