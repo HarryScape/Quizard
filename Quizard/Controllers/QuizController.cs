@@ -132,9 +132,18 @@ namespace Quizard.Controllers
             var section = await _quizRepository.GetSectionById(sectionId);
             int quizId = section.QuizId;
 
+
             IEnumerable<Question> questions = await _quizRepository.GetQuestionBySectionID(sectionId);
             if (questions != null)
             {
+                foreach(Question item in questions)
+                {
+                    IEnumerable<Answer> answers = await _quizRepository.GetAnswersByQuestion(item.Id);
+                    if (answers != null)
+                    {
+                        _quizRepository.DeleteAns(answers);
+                    }
+                }
                 _quizRepository.DeleteQuestions(questions);
             }
             _quizRepository.Delete(section);
@@ -144,7 +153,33 @@ namespace Quizard.Controllers
             return PartialView("_Section", quizViewModel);
         }
 
-        [HttpGet]
+        [HttpPost]
+        public async Task<IActionResult> DeleteQuestion(int questionId, int quizId)
+        {
+            Question question = await _quizRepository.GetQuestionById(questionId);
+            var children = await _quizRepository.GetChildQuestions(questionId);
+
+            if (children.Any())
+            {
+                foreach (Question item in question.Children)
+                {
+                    item.ParentId = question.ParentId;
+                    _quizRepository.Update(item);
+                }
+            }
+            
+            IEnumerable<Answer> answers = await _quizRepository.GetAnswersByQuestion(questionId);
+            if (answers != null)
+            {
+                _quizRepository.DeleteAns(answers);
+            }
+            _quizRepository.Delete(question);
+
+            var quizViewModel = await _quizParserService.GenerateQuizViewModel(quizId);
+            return PartialView("_Section", quizViewModel);
+        }
+
+            [HttpGet]
         public async Task<IActionResult> ShowDeleteModal(int id)
         {
             Quiz quiz = await _quizRepository.GetQuizById(id);

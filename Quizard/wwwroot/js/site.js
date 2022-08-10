@@ -118,47 +118,89 @@ $(document).on("click", "#exit-modal", function () {
 
 })
 
-//$(document).on("click", "#exit-edit-modal", function () {
+$(document).on("click", "#exit-delete-modal", function () {
 
-//    $("#modal-edit").modal("toggle");
+    $("#exampleModalCenter").modal("toggle");
 
-//})
+})
 
 
-//function DeleteSection(id) {
-//    $("#exampleModalCenter").modal("toggle");
 
-//    UpdateQuestions();
-//    const button = document.getElementById('del-confirm');
-//    button.addEventListener('click', function handleClick() {
-//        console.log('element clicked');
-//        $("#exampleModalCenter").modal("toggle");
+function DeleteSection(id) {
+    $("#exampleModalCenter").modal("toggle");
 
-//        $.ajax({
-//            type: "POST",
-//            data: { sectionId: id },
-//            url: "/Quiz/DeleteSection",
-//            contentType: 'application/x-www-form-urlencoded',
-//            dataType: "json",
-//            success: function (response) {
-//                if (response != null) {
-//                    console.log("Sent okay", response);
-//                } else {
-//                    console.log("Something went wrong");
-//                }
-//            },
-//            failure: function (response) {
-//                console.log(response.responseText);
-//            },
-//            error: function (response) {
-//                console.log(response.responseText);
-//            },
-//            complete: function (response) {
-//                $('.quiz-wrapper').html(response.responseText);
-//            }
-//        });
-//    });
-//}
+    SavePosition();
+    const button = document.getElementById('del-confirm');
+    button.addEventListener('click', function handleClick() {
+        console.log('element clicked');
+        $("#exampleModalCenter").modal("toggle");
+
+        $.ajax({
+            type: "POST",
+            data: { sectionId: id },
+            url: "/Quiz/DeleteSection",
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: "json",
+            success: function (response) {
+                if (response != null) {
+                    console.log("Sent okay", response);
+                } else {
+                    console.log("Something went wrong");
+                }
+            },
+            failure: function (response) {
+                console.log(response.responseText);
+            },
+            error: function (response) {
+                console.log(response.responseText);
+            },
+            complete: function (response) {
+                $('.quiz-wrapper').html(response.responseText);
+                SavePosition();
+                location.reload(true);
+            }
+        });
+    });
+}
+
+function DeleteQuestion(id) {
+    SavePosition();
+    var quizId = document.getElementById("HiddenQuizId").value;
+
+    $("#exampleModalCenter").modal("toggle");
+
+    const button = document.getElementById('del-confirm');
+    button.addEventListener('click', function handleClick() {
+        //console.log('element clicked');
+        $("#exampleModalCenter").modal("toggle");
+
+        $.ajax({
+            type: "POST",
+            data: { questionId: id, quizId: quizId },
+            url: "/Quiz/DeleteQuestion",
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: "json",
+            success: function (response) {
+                if (response != null) {
+                    console.log("Sent okay");
+                } else {
+                    console.log("Something went wrong");
+                }
+            },
+            failure: function (response) {
+                //console.log(response.responseText);
+            },
+            error: function (response) {
+                //console.log(response.responseText);
+            },
+            complete: function (response) {
+                $('.quiz-wrapper').html(response.responseText);
+                SavePosition();
+                location.reload(true);
+            }
+        });
+    });
+}
 
 
 function DeleteQuiz(id) {
