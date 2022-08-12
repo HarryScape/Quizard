@@ -46,9 +46,12 @@
                     }
                 }
             </ol>
-            @*<i> 5 Marks </i>*@
         </div>
 
+        @if (question.Mark != null)
+        {
+            <br> <i> @question.Mark Marks </i>
+        }
 
         @if (question.Children != null)
         {

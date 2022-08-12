@@ -83,12 +83,14 @@ namespace Quizard.Controllers
         {
             Quiz quiz = await _quizRepository.GetQuizById(updatedQuiz.Id);
             quiz.QuizName = updatedQuiz.QuizName;
+            quiz.TimeLimit = updatedQuiz.TimeLimit;
+            quiz.Shuffled = updatedQuiz.Shuffled;
+            quiz.Deployed = updatedQuiz.Deployed;
             quiz.DateCreated = DateTime.Now;
             _quizRepository.Update(quiz);
 
             return RedirectToAction("Index", "Dashboard");
         }
-
 
     }
 }

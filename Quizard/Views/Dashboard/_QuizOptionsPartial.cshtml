@@ -23,27 +23,30 @@
                         <input for="Module" type="text" class="form-control" id="inlineFormInputName" placeholder="CS101">
                     </div>
                     <div class="form-group">
-                        <label for="TimeLimit" class="col-form-label">Quiz Duration:</label>
-                        <input for="TimeLimit" type="text" class="form-control" id="inlineFormInputName" placeholder="45">
+                        <label asp-for="TimeLimit" class="col-form-label">Quiz Duration:</label>
+                        <input asp-for="TimeLimit" type="text" class="form-control" id="inlineFormInputName" placeholder="45" value="@Model.TimeLimit">
                     </div>
+
+                    <br />
+
                     <div class="form-group">
                         <label class="check-container">
-                            <input checked="checked" type="checkbox">
-                            <div class="checkmark"></div>
+                        @Html.CheckBoxFor(model => model.Shuffled)
+                        <label asp-for="Shuffled" class="col-form-label">Shuffle Questions</label>
+                        <div class="checkmark"></div>
                         </label>
-                        <label for="isShuffled" class="col-form-label">Shuffle Questions</label>
                     </div>
+
                     <div class="form-group">
                         <label class="check-container">
-                            <input checked="checked" type="checkbox">
-                            <div class="checkmark"></div>
+                        @Html.CheckBoxFor(model => model.Deployed)
+                        <label asp-for="Deployed" class="col-form-label">Quiz Deployed</label>
+                        <div class="checkmark"></div>
                         </label>
-                        <label for="isActive" class="col-form-label">Quiz Active</label>
                     </div>
 
                 </form>
             </div>
-
 
             <div class="modal-footer">
                 <div class="col text-center">

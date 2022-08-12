@@ -56,7 +56,6 @@
 
                     @*@question.QuestionTitle*@
 
-
                     <div class="panel">
                         <ol>
                             @if (question.QuestionAnswers != null)
@@ -74,7 +73,6 @@
                                 }
                             }
                         </ol>
-                        @*<i> 5 Marks </i>*@
                     </div>
 
                     @Html.Partial("_QuestionPartial", question.Children)
@@ -83,10 +81,7 @@
             }
 
         </div>
-        @*</div>*@
     }
-
-    @*  </ol>*@
 
 </div>
 

@@ -24,5 +24,9 @@ namespace Quizard.Models
         public Question? ParentQuestion { get; set; }
         public ICollection<Question> Children { get; set; }
 
+        public int? Mark { get; set; }
+        public double? NegativeMark { get; set; }
+        public double? ErrorMargin { get; set; }
+
     }
 }

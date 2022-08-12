@@ -190,6 +190,15 @@ namespace Quizard.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<double?>("ErrorMargin")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("Mark")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("NegativeMark")
+                        .HasColumnType("float");
+
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
@@ -226,12 +235,21 @@ namespace Quizard.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("Deployed")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Module")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("QuizName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Shuffled")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("TimeLimit")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -252,6 +270,9 @@ namespace Quizard.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("QuizId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RequiredQuestions")
                         .HasColumnType("int");
 
                     b.Property<string>("SectionName")

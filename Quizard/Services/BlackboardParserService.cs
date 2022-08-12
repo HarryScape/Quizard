@@ -20,6 +20,8 @@ namespace Quizard.Services
             quiz.QuizName = file.FileName;
             quiz.DateCreated = DateTime.Now;
             quiz.UserId = dashboardViewModel.UserId;
+            quiz.Shuffled = false;
+            quiz.Deployed = false;
             _quizRepository.Add(quiz);
 
             Section section = new Section();

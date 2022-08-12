@@ -21,24 +21,16 @@
                     @if (Model.QuestionType != Quizard.Data.Enum.QuestionType.GROUP)
                     {
                         <div class="form-group">
-                            <label for="Mark" class="col-form-label">Mark Weight:</label>
-                            <input for="Mark" type="text" class="form-control" id="inlineFormInputName" placeholder="5">
+                            <label asp-for="Mark" class="col-form-label">Mark Weight:</label>
+                            <input asp-for="Mark" type="text" class="form-control" id="inlineFormInputName" placeholder="5" value="@Model.Mark">
                         </div>
                         <div class="form-group">
-                            <label class="check-container">
-                                <input checked="checked" type="checkbox">
-                                <div class="checkmark"></div>
-                            </label>
-                            <label for="ErrorMargin" class="col-form-label">Margin of error:</label>
-                            <input for="ErrorMargin" type="text" class="form-control" id="inlineFormInputName" placeholder="0.5">
+                            <label asp-for="ErrorMargin" class="col-form-label">Margin of error:</label>
+                            <input asp-for="ErrorMargin" type="text" class="form-control" id="inlineFormInputName" placeholder="0.5" value="@Model.ErrorMargin">
                         </div>
                         <div class="form-group">
-                            <label class="check-container">
-                                <input checked="checked" type="checkbox">
-                                <div class="checkmark"></div>
-                            </label>
-                            <label for="NegativeMark" class="col-form-label">Negative Marking %</label>
-                            <input for="NegativeMark" type="text" class="form-control" id="inlineFormInputName" placeholder="20">
+                            <label asp-for="NegativeMark" class="col-form-label">Negative Marking</label>
+                            <input asp-for="NegativeMark" type="text" class="form-control" id="inlineFormInputName" placeholder="0.25" value="@Model.NegativeMark">
                         </div>
                     }
 

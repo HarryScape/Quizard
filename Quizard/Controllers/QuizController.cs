@@ -198,6 +198,9 @@ namespace Quizard.Controllers
         {
             Question question = await _quizRepository.GetQuestionById(updatedQuestion.Id);
             question.QuestionTitle = updatedQuestion.QuestionTitle;
+            question.Mark = updatedQuestion.Mark;
+            question.NegativeMark = updatedQuestion.NegativeMark;
+            question.ErrorMargin = updatedQuestion.ErrorMargin;
             var section = await _quizRepository.GetSectionById(question.SectionId);
 
             _quizRepository.Update(question);
@@ -219,6 +222,7 @@ namespace Quizard.Controllers
         {
             Section section = await _quizRepository.GetSectionById(updatedSection.Id);
             section.SectionName = updatedSection.SectionName;
+            section.RequiredQuestions = updatedSection.RequiredQuestions;
 
             _quizRepository.Update(section);
 

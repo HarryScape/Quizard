@@ -19,8 +19,8 @@
                     <input type="hidden" asp-for="Id" name="Id" value="@Model.Id">
 
                     <div class="form-group">
-                        <label for="RequiredQuestions" class="col-form-label">Required Amount of Questions to Answer:</label>
-                        <input for="Mark" type="text" class="form-control" id="inlineFormInputName" placeholder="2">
+                        <label asp-for="RequiredQuestions" class="col-form-label">Required Amount of Questions to Answer:</label>
+                        <input asp-for="RequiredQuestions" type="text" class="form-control" id="inlineFormInputName" placeholder="2?" value="@Model.RequiredQuestions">
                     </div>
                 </form>
             </div>

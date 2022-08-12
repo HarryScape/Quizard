@@ -12,7 +12,7 @@ namespace Quizard.Models
         [ForeignKey("Quiz")]
         public int QuizId { get; set; }
         public Quiz Quiz { get; set; }
-
+        public int? RequiredQuestions { get; set; }
 
         // Section can have many questions
         public ICollection<Question> QuizQuestions { get; set; }
