@@ -101,6 +101,10 @@ namespace Quizard.Controllers
                 _quizRepository.Update(question);
             }
 
+            Quiz quiz = await _quizRepository.GetQuizById(updates[0].QuizId);
+            quiz.DateCreated = DateTime.Now;
+            _quizRepository.Update(quiz);
+
             var message = "State saved";
             return Json(message);
         }
@@ -128,9 +132,18 @@ namespace Quizard.Controllers
             var section = await _quizRepository.GetSectionById(sectionId);
             int quizId = section.QuizId;
 
+
             IEnumerable<Question> questions = await _quizRepository.GetQuestionBySectionID(sectionId);
             if (questions != null)
             {
+                foreach(Question item in questions)
+                {
+                    IEnumerable<Answer> answers = await _quizRepository.GetAnswersByQuestion(item.Id);
+                    if (answers != null)
+                    {
+                        _quizRepository.DeleteAns(answers);
+                    }
+                }
                 _quizRepository.DeleteQuestions(questions);
             }
             _quizRepository.Delete(section);
@@ -139,5 +152,83 @@ namespace Quizard.Controllers
 
             return PartialView("_Section", quizViewModel);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteQuestion(int questionId, int quizId)
+        {
+            Question question = await _quizRepository.GetQuestionById(questionId);
+            var children = await _quizRepository.GetChildQuestions(questionId);
+
+            if (children.Any())
+            {
+                foreach (Question item in question.Children)
+                {
+                    item.ParentId = question.ParentId;
+                    _quizRepository.Update(item);
+                }
+            }
+            
+            IEnumerable<Answer> answers = await _quizRepository.GetAnswersByQuestion(questionId);
+            if (answers != null)
+            {
+                _quizRepository.DeleteAns(answers);
+            }
+            _quizRepository.Delete(question);
+
+            var quizViewModel = await _quizParserService.GenerateQuizViewModel(quizId);
+            return PartialView("_Section", quizViewModel);
+        }
+
+            [HttpGet]
+        public async Task<IActionResult> ShowDeleteModal(int id)
+        {
+            Quiz quiz = await _quizRepository.GetQuizById(id);
+            return PartialView("_DeleteModalPartial");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ShowEditModal(int id)
+        {
+            Question question = await _quizRepository.GetQuestionById(id);
+            return PartialView("_EditModalPartial", question);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateQuestion(Question updatedQuestion)
+        {
+            Question question = await _quizRepository.GetQuestionById(updatedQuestion.Id);
+            question.QuestionTitle = updatedQuestion.QuestionTitle;
+            question.Mark = updatedQuestion.Mark;
+            question.NegativeMark = updatedQuestion.NegativeMark;
+            question.ErrorMargin = updatedQuestion.ErrorMargin;
+            var section = await _quizRepository.GetSectionById(question.SectionId);
+
+            _quizRepository.Update(question);
+
+            var quizViewModel = await _quizParserService.GenerateQuizViewModel(section.QuizId);
+            return PartialView("_Section", quizViewModel);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> ShowEditSectionModal(int id)
+        {
+            Section section = await _quizRepository.GetSectionById(id);
+            return PartialView("_EditSectionModalPartial", section);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateSection(Section updatedSection)
+        {
+            Section section = await _quizRepository.GetSectionById(updatedSection.Id);
+            section.SectionName = updatedSection.SectionName;
+            section.RequiredQuestions = updatedSection.RequiredQuestions;
+
+            _quizRepository.Update(section);
+
+            var quizViewModel = await _quizParserService.GenerateQuizViewModel(section.QuizId);
+            return PartialView("_Section", quizViewModel);
+        }
+
     }
 }

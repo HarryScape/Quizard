@@ -2,34 +2,87 @@
 
 <script src="~/js/site.js" asp-append-version="true"></script>
 
-
 <div id="containers">
+
+    @*    <ol>*@
+
     @foreach (var Qsection in Model.Sections.Where(i => i.QuizId.Equals(Model.Quiz.Id)))
     {
         @*<div class="frame">*@
-            <div class="popup" id="@(Qsection.Id)">
+        <div class="popup" id="@(Qsection.Id)">
+
+            <div class="sec-title">
+                @*<h3> @Qsection.SectionName </h3>*@
+                <a id="section-edit" data-toggle="section-edit-modal" data-url="@Url.Action("ShowEditSectionModal", "Quiz", new { id = @Qsection.Id  })">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="hi-pencil">
+                        <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z" />
+                    </svg>
+                </a>
+                <a id="sec-del" onclick="DeleteSection(@Qsection.Id)">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="hi-trash">
+                        <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l.934 13.071A1 1 0 007.93 20h8.138a1 1 0 00.997-.929L18 6m-6 5v4m8-9H4m4.5 0l.544-1.632A2 2 0 0110.941 3h2.117a2 2 0 011.898 1.368L15.5 6" />
+                    </svg>
+                </a>
+
                 <h3> @Qsection.SectionName </h3>
-                @foreach (var question in Model.ParentQuestions.Where(i => i.SectionId.Equals(Qsection.Id)))
-                {
-                    <div class="object" id="@(question.Id)">
-                        @question.QuestionTitle
-                        @*<div class="panel">
-                        @if(question.QuestionAnswers != null)
-                        {
-                            foreach(Answer ans in question.QuestionAnswers)
-                            {
-                                <li> @ans.QuestionAnswer </li>
-                            }
-                        }
-                        </div>*@
-
-                        @Html.Partial("_QuestionPartial", question.Children)
-
-                    </div>
-                }
             </div>
-        @*</div>*@
+
+
+            @foreach (var question in Model.ParentQuestions.Where(i => i.SectionId.Equals(Qsection.Id)))
+            {
+
+                <div class="object" id="@(question.Id)">
+
+                    <a class="question-edit" id="sec-del" onclick="DeleteQuestion(@question.Id)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="hi-trash">
+                            <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 6l.934 13.071A1 1 0 007.93 20h8.138a1 1 0 00.997-.929L18 6m-6 5v4m8-9H4m4.5 0l.544-1.632A2 2 0 0110.941 3h2.117a2 2 0 011.898 1.368L15.5 6" />
+                        </svg>
+                    </a>
+
+                    <a class="question-edit" id="question-edit" data-toggle="ajax-edit-modal" data-url="@Url.Action("ShowEditModal", "Quiz", new { id = @question.Id  })">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="hi-pencil">
+                            <path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z" />
+                        </svg>
+                    </a>
+
+                    @if (question.QuestionType == Quizard.Data.Enum.QuestionType.GROUP)
+                    {
+                        <strong>@question.QuestionTitle</strong>
+                    }
+                    else
+                    {
+                        @question.QuestionTitle
+                    }
+
+                    @*@question.QuestionTitle*@
+
+                    <div class="panel">
+                        <ol>
+                            @if (question.QuestionAnswers != null)
+                            {
+                                foreach (var ans in question.QuestionAnswers)
+                                {
+                                    @if (ans.isCorrect == true)
+                                    {
+                                        <li class="correct-ans"> <strong> @ans.QuestionAnswer </strong> </li>
+                                    }
+                                    else
+                                    {
+                                        <li> @ans.QuestionAnswer </li>
+                                    }
+                                }
+                            }
+                        </ol>
+                    </div>
+
+                    @Html.Partial("_QuestionPartial", question.Children)
+
+                </div>
+            }
+
+        </div>
     }
+
 </div>
 
 
