@@ -2,6 +2,8 @@
 
 
 @Html.HiddenFor(x => x.Quiz.Id, new { id = "HiddenQuizId" })
+<body>
+
 
 
 <div class="flex-container">
@@ -13,25 +15,30 @@
             <input type="text" class="input" id="AddSectionName" placeholder="Add Section" autocomplete="off">
             <input class="button--add" value="Add" type="submit" id="AddSectionBtn" onclick="AddSection()">
         </div>
+        <div class="input-group">
+            <input type="text" class="input" id="AddGroupName" placeholder="Add Question Group" autocomplete="off">
+            <input class="button--add" value="Add" type="submit" id="AddSectionBtn" onclick="AddQuestionGroup()">
+        </div>
 
-        <input class="button--save" value="Save" type="submit" onclick="UpdateQuestions()">
+        <input class="button--save" value="Save" type="submit" onclick="SavePosition()">
         <input class="button--save" value="Dashboard" type="submit" onclick="location.href='@Url.Action("Index", "Dashboard")'">
         <input class="button--save" value="Delete Quiz" type="submit" id="del-quiz" onclick="DeleteQuiz(@Model.Quiz.Id)">
 
     </div>
 
     <div class="quiz-wrapper" id="partialZone">
-
         @{
             Html.RenderPartial("_Section");
         }
-
     </div>
+
 </div>
 
+<div id="modal-zone"></div>
 
+</body>
 
-<!-- Modal -->
+<!-- Delete Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -46,10 +53,11 @@
             </div>
             <div class="modal-footer">
                 <div class="col text-center">
-                    <button type="button" class="button--save" data-dismiss="modal" id="exit-modal">Close</button>
+                    <button type="button" class="button--save" data-dismiss="modal" id="exit-delete-modal">Cancel</button>
                     <button type="button" class="button--save" id="del-confirm">Delete</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+

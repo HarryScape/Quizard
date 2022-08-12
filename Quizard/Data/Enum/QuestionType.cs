@@ -8,7 +8,7 @@
         MA,
         // Essay (Manual Grading)
         ESS,
-        // Short Answer (Manual Grading)
+        // Short Response Answer (Manual Grading)
         SR,
         // TrueFalse
         TF,
@@ -19,7 +19,9 @@
         // Order answers (Manual Grading)
         ORD,
         // Numeric (Manual Grading?)
-        NUM
+        NUM,
+        // Question Group
+        GROUP
 
     }
 }

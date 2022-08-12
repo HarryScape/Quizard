@@ -17,6 +17,9 @@ namespace Quizard.Models
         public string? UserId { get; set; }
         public User? User { get; set; }
         // prop LMS?
+        public int? TimeLimit { get; set; }
+        public bool Shuffled { get; set; }
+        public bool Deployed { get; set; }
 
         // Quiz can have many sections
         public ICollection<Section> QuizSections { get; set; }

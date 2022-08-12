@@ -190,6 +190,18 @@ namespace Quizard.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<double?>("ErrorMargin")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("Mark")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("NegativeMark")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("QuestionPosition")
                         .HasColumnType("int");
 
@@ -204,6 +216,8 @@ namespace Quizard.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
 
                     b.HasIndex("SectionId");
 
@@ -221,12 +235,21 @@ namespace Quizard.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("Deployed")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Module")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("QuizName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Shuffled")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("TimeLimit")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -247,6 +270,9 @@ namespace Quizard.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("QuizId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RequiredQuestions")
                         .HasColumnType("int");
 
                     b.Property<string>("SectionName")
@@ -399,11 +425,17 @@ namespace Quizard.Migrations
 
             modelBuilder.Entity("Quizard.Models.Question", b =>
                 {
+                    b.HasOne("Quizard.Models.Question", "ParentQuestion")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+
                     b.HasOne("Quizard.Models.Section", "Section")
                         .WithMany("QuizQuestions")
                         .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ParentQuestion");
 
                     b.Navigation("Section");
                 });
@@ -430,6 +462,8 @@ namespace Quizard.Migrations
 
             modelBuilder.Entity("Quizard.Models.Question", b =>
                 {
+                    b.Navigation("Children");
+
                     b.Navigation("QuestionAnswers");
                 });
 

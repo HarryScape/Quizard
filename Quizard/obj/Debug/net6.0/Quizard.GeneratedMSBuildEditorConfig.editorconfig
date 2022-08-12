@@ -27,6 +27,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Dashboard/_QuizOptionsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXF9RdWl6T3B0aW9uc1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -53,6 +57,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Quiz/_DeleteConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxfRGVsZXRlQ29uZmlybWF0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Quiz/_EditModalPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxfRWRpdE1vZGFsUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Quiz/_EditSectionModalPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxfRWRpdFNlY3Rpb25Nb2RhbFBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Quiz/_QuestionPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxfUXVlc3Rpb25QYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Quiz/_Section.cshtml]

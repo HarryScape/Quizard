@@ -65,6 +65,15 @@ namespace Quizard.Repository
         {
             return await _context.Questions.FirstOrDefaultAsync(i => i.Id == id);
         }
+        public async Task<IEnumerable<Question>> GetParentQuestions(int quizId)
+        {
+            return await _context.Questions.Where(i => i.SectionId == i.Section.Id).Where(j => j.Section.Quiz.Id == quizId).Where(i => i.ParentId == null).ToListAsync();
+        }
+        public async Task<IEnumerable<Question>> GetChildQuestions(int id)
+        {
+            return await _context.Questions.Where(i => i.ParentId == id).ToListAsync();
+        }
+
 
 
         // Get Answer
@@ -78,6 +87,10 @@ namespace Quizard.Repository
             return await _context.Answers.Where(i => i.QuestionId == i.Question.Id)
                 .Where(j => j.Question.SectionId == j.Question.Section.Id)
                 .Where(c => c.Question.Section.QuizId == QuizId).ToListAsync();
+        }
+        public async Task<IEnumerable<Answer>> GetAnswersByQuestion(int id)
+        {
+            return await _context.Answers.Where(i => i.QuestionId == id).ToListAsync();
         }
 
 
