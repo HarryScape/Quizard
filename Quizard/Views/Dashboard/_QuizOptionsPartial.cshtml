@@ -1,5 +1,6 @@
-﻿@model Quiz
-
+﻿@*@model Quiz*@
+@using Quizard.ViewModels
+@model EditQuizViewModel
 
 <!-- Large modal -->
 <div class="modal fade bd-example-modal-lg" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -12,19 +13,28 @@
             <div class="modal-body">
                 <form action="UpdateQuiz">
                     <div class="form-group">
-                        <label asp-for="QuizName" class="col-form-label">Edit Text:</label>
-                        <textarea asp-for="QuizName" class="form-control" id="quiz-text" placeholder="@Model.QuizName"> @Model.QuizName </textarea>
+                        <label asp-for="@Model.Quiz.QuizName" class="col-form-label">Edit Text:</label>
+                        <textarea asp-for="@Model.Quiz.QuizName" class="form-control" id="quiz-text" placeholder="@Model.Quiz.QuizName"> @Model.Quiz.QuizName </textarea>
                     </div>
 
-                    <input type="hidden" asp-for="Id" name="Id" value="@Model.Id">
+                    <input type="hidden" asp-for="@Model.Quiz.Id" name="Id" value="@Model.Quiz.Id">
 
                     <div class="form-group">
                         <label for="Module" class="col-form-label">Module:</label>
                         <input for="Module" type="text" class="form-control" id="inlineFormInputName" placeholder="CS101">
                     </div>
                     <div class="form-group">
-                        <label asp-for="TimeLimit" class="col-form-label">Quiz Duration:</label>
-                        <input asp-for="TimeLimit" type="text" class="form-control" id="inlineFormInputName" placeholder="45" value="@Model.TimeLimit">
+                        <label asp-for="@Model.Quiz.TimeLimit" class="col-form-label">Quiz Duration:</label>
+                        <input asp-for="@Model.Quiz.TimeLimit" type="text" class="form-control" id="inlineFormInputName" placeholder="45" value="@Model.Quiz.TimeLimit">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Module" class="col-md-2"></label>
+                        <div class="col-md-10">
+                            <select asp-for="@Model.Quiz.ModuleId" asp-items="@Model.ModuleList" class="form-control">
+                                <option disabled selected>--Select Module--</option>
+                            </select>
+                        </div>
                     </div>
 
                     <br />
@@ -32,17 +42,17 @@
 
                     <div class="form-group">
                         <label class="check-container">
-                        @Html.CheckBoxFor(model => model.Shuffled)
-                        <label asp-for="Shuffled" class="col-form-label">Shuffle Questions</label>
-                        <div class="checkmark"></div>
+                            @Html.CheckBoxFor(model => @Model.Quiz.Shuffled)
+                            <label asp-for="@Model.Quiz.Shuffled" class="col-form-label">Shuffle Questions</label>
+                            <div class="checkmark"></div>
                         </label>
                     </div>
 
                     <div class="form-group">
                         <label class="check-container">
-                        @Html.CheckBoxFor(model => model.Deployed)
-                        <label asp-for="Deployed" class="col-form-label">Quiz Deployed</label>
-                        <div class="checkmark"></div>
+                            @Html.CheckBoxFor(model => @Model.Quiz.Deployed)
+                            <label asp-for="@Model.Quiz.Deployed" class="col-form-label">Quiz Deployed</label>
+                            <div class="checkmark"></div>
                         </label>
                     </div>
 

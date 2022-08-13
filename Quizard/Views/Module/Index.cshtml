@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@model Quizard.ViewModels.ModuleViewModel
+
+<h1> Modules </h1>
+
+
+<br />
+
+<body>
+    <div class="quiz-table">
+        <table id="example" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Module</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Modules)
+                {
+                    <tr class="table-row">
+                        <td>@item.ModuleCode</td>
+                        <td>@item.Description <br /></td>
+                        <td>
+                            <button type="submit" class="button-table" onclick="DeleteModule(@item.Id)">Delete</button>
+                            <button type="submit" class="button-table">Edit</button>
+                            <button type="submit" class="button-table">Enroll Students</button>
+                            <button type="submit" class="button-table">Remove Students</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<br />
+
+<button type="submit" class="button-table" id="add-mod-btn" data-toggle="add-module-modal" data-url="@Url.Action("ShowAddModuleModal", "Module")"> + Add New Module </button>
+
+
+<div id="modal-zone"></div>

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Quizard.styles.css" asp-append-version="true" />
-@*    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @*    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="//code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>*@
 
@@ -33,9 +33,15 @@
 
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-                            </li>
+                            @if (User.IsInRole("teacher"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Module" asp-action="Index">Modules</a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                             </li>

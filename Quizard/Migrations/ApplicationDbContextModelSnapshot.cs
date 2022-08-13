@@ -182,6 +182,31 @@ namespace Quizard.Migrations
                     b.ToTable("Answers");
                 });
 
+            modelBuilder.Entity("Quizard.Models.Module", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModuleCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Modules");
+                });
+
             modelBuilder.Entity("Quizard.Models.Question", b =>
                 {
                     b.Property<int>("Id")
@@ -238,8 +263,8 @@ namespace Quizard.Migrations
                     b.Property<bool>("Deployed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Module")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ModuleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("QuizName")
                         .IsRequired()
@@ -255,6 +280,8 @@ namespace Quizard.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ModuleId");
 
                     b.HasIndex("UserId");
 
@@ -423,6 +450,15 @@ namespace Quizard.Migrations
                     b.Navigation("Question");
                 });
 
+            modelBuilder.Entity("Quizard.Models.Module", b =>
+                {
+                    b.HasOne("Quizard.Models.User", "ModuleLeader")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("ModuleLeader");
+                });
+
             modelBuilder.Entity("Quizard.Models.Question", b =>
                 {
                     b.HasOne("Quizard.Models.Question", "ParentQuestion")
@@ -442,9 +478,15 @@ namespace Quizard.Migrations
 
             modelBuilder.Entity("Quizard.Models.Quiz", b =>
                 {
+                    b.HasOne("Quizard.Models.Module", "Module")
+                        .WithMany()
+                        .HasForeignKey("ModuleId");
+
                     b.HasOne("Quizard.Models.User", "User")
                         .WithMany("UserQuizzes")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Module");
 
                     b.Navigation("User");
                 });
