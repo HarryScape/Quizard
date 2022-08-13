@@ -91,6 +91,5 @@ namespace Quizard.Controllers
 
             return RedirectToAction("Index", "Dashboard");
         }
-
     }
 }
