@@ -12,5 +12,9 @@ namespace Quizard.Models
         [ForeignKey(nameof(ModuleLeader))]
         public string? UserId { get; set; }
         public User? ModuleLeader { get; set; }
+        //[ForeignKey("Quiz")]
+        //public int? QuizId { get; set; }
+        //public Quiz? Quiz { get; set; }
+        public ICollection<Quiz> ModuleQuizzes { get; set; }
     }
 }

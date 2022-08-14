@@ -42,8 +42,16 @@ namespace Quizard.Controllers
             var dashboardViewModel = new DashboardViewModel()
             {
                 Quizzes = userQuizes,
-                UserId = currentUser
+                UserId = currentUser,
             };
+            foreach(var item in dashboardViewModel.Quizzes)
+            {
+                if(item.ModuleId != null)
+                {
+                    int modId = Convert.ToInt32(item.ModuleId);
+                    item.Module = await _moduleRepository.GetModuleById(modId);
+                }
+            }
             return View(dashboardViewModel);
         }
 
@@ -96,7 +104,9 @@ namespace Quizard.Controllers
             EditQuizViewModel editQuizViewModel = new EditQuizViewModel()
             {
                 Quiz = quiz,
-                ModuleList = listItems
+                ModuleList = listItems,
+                Deployed = quiz.Deployed,
+                Shuffled = quiz.Shuffled
             };
 
             return PartialView("_QuizOptionsPartial", editQuizViewModel);
@@ -110,12 +120,14 @@ namespace Quizard.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateQuiz(Quiz updatedQuiz)
         {
+            int modId = Convert.ToInt32(updatedQuiz.ModuleId);
             Quiz quiz = await _quizRepository.GetQuizById(updatedQuiz.Id);
             quiz.QuizName = updatedQuiz.QuizName;
             quiz.TimeLimit = updatedQuiz.TimeLimit;
             quiz.Shuffled = updatedQuiz.Shuffled;
             quiz.Deployed = updatedQuiz.Deployed;
             quiz.ModuleId = updatedQuiz.ModuleId;
+            quiz.Module = await _moduleRepository.GetModuleById(modId);
             quiz.DateCreated = DateTime.Now;
             _quizRepository.Update(quiz);
 

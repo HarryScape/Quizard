@@ -43,7 +43,12 @@
                     <tr class="table-row">
                         <td>@item.QuizName</td>
                         <td>@item.DateCreated <br /></td>
-                        <td></td>
+                        <td> 
+                            @if(item.ModuleId != null)
+                            {
+                                @(item.Module.ModuleCode)
+                            }
+                        </td>
                         <td>
                             <button type="submit" class="button-table" onclick="DeleteQuiz(@item.Id)">Delete</button>
                             <button type="submit" class="button-table">Publish</button>

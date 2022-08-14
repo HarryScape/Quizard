@@ -179,7 +179,7 @@ namespace Quizard.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Answers");
+                    b.ToTable("Answers", (string)null);
                 });
 
             modelBuilder.Entity("Quizard.Models.Module", b =>
@@ -204,7 +204,7 @@ namespace Quizard.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Modules");
+                    b.ToTable("Modules", (string)null);
                 });
 
             modelBuilder.Entity("Quizard.Models.Question", b =>
@@ -246,7 +246,7 @@ namespace Quizard.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("Questions");
+                    b.ToTable("Questions", (string)null);
                 });
 
             modelBuilder.Entity("Quizard.Models.Quiz", b =>
@@ -285,7 +285,7 @@ namespace Quizard.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Quizzes");
+                    b.ToTable("Quizzes", (string)null);
                 });
 
             modelBuilder.Entity("Quizard.Models.Section", b =>
@@ -313,7 +313,7 @@ namespace Quizard.Migrations
 
                     b.HasIndex("QuizId");
 
-                    b.ToTable("Sections");
+                    b.ToTable("Sections", (string)null);
                 });
 
             modelBuilder.Entity("Quizard.Models.User", b =>

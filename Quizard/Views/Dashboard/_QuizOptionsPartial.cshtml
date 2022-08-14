@@ -14,47 +14,54 @@
                 <form action="UpdateQuiz">
                     <div class="form-group">
                         <label asp-for="@Model.Quiz.QuizName" class="col-form-label">Edit Text:</label>
-                        <textarea asp-for="@Model.Quiz.QuizName" class="form-control" id="quiz-text" placeholder="@Model.Quiz.QuizName"> @Model.Quiz.QuizName </textarea>
+                        <textarea asp-for="@Model.Quiz.QuizName" name="QuizName" class="form-control" id="quiz-text" placeholder="@Model.Quiz.QuizName"> @Model.Quiz.QuizName </textarea>
                     </div>
 
                     <input type="hidden" asp-for="@Model.Quiz.Id" name="Id" value="@Model.Quiz.Id">
 
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <label for="Module" class="col-form-label">Module:</label>
                         <input for="Module" type="text" class="form-control" id="inlineFormInputName" placeholder="CS101">
-                    </div>
+                    </div>*@
                     <div class="form-group">
                         <label asp-for="@Model.Quiz.TimeLimit" class="col-form-label">Quiz Duration:</label>
-                        <input asp-for="@Model.Quiz.TimeLimit" type="text" class="form-control" id="inlineFormInputName" placeholder="45" value="@Model.Quiz.TimeLimit">
+                        <input asp-for="@Model.Quiz.TimeLimit" type="text" name="TimeLimit" class="form-control" id="inlineFormInputName" placeholder="45" value="@Model.Quiz.TimeLimit">
                     </div>
 
                     <div class="form-group">
                         <label for="Module" class="col-md-2"></label>
                         <div class="col-md-10">
-                            <select asp-for="@Model.Quiz.ModuleId" asp-items="@Model.ModuleList" class="form-control">
+                            <select asp-for="@Model.Quiz.ModuleId" asp-items="@Model.ModuleList" class="form-control" name="ModuleId">
                                 <option disabled selected>--Select Module--</option>
                             </select>
                         </div>
                     </div>
 
                     <br />
-                    @*<p> WHY HAVE YOU BROKE</p>*@
 
                     <div class="form-group">
                         <label class="check-container">
-                            @Html.CheckBoxFor(model => @Model.Quiz.Shuffled)
-                            <label asp-for="@Model.Quiz.Shuffled" class="col-form-label">Shuffle Questions</label>
+                            @Html.CheckBoxFor(model => model.Shuffled)
+                            <label asp-for="@Model.Quiz.Shuffled" class="col-form-label" name="Shuffled">Shuffle Questions</label>
                             <div class="checkmark"></div>
                         </label>
                     </div>
 
                     <div class="form-group">
                         <label class="check-container">
-                            @Html.CheckBoxFor(model => @Model.Quiz.Deployed)
+                            @Html.CheckBoxFor(model => model.Deployed)
                             <label asp-for="@Model.Quiz.Deployed" class="col-form-label">Quiz Deployed</label>
                             <div class="checkmark"></div>
                         </label>
                     </div>
+
+                   @* <div class="form-group">
+                        <label class="check-container">
+                             <input type="checkbox" name="Deployed" asp-for="@Model.Quiz.Deployed" value="@Model.Quiz.Deployed" checked="@Model.Quiz.Deployed"/>
+                            <label asp-for="@Model.Quiz.Deployed" class="col-form-label">Quiz Deployed</label>
+                            <div class="checkmark"></div>
+                        </label>
+                    </div>*@
 
                 </form>
             </div>
