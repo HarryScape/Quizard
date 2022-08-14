@@ -415,6 +415,53 @@ $(function () {
     });
 }) 
 
+
+
+
+//Edit Modal
+$(function () {
+    var placeholder = $('#modal-zone');
+
+    $('button[data-toggle="module-edit-modal"]').click(function (event) {
+        var url = $(this).data('url');
+
+        $.get(url).done(function (data) {
+            placeholder.html(data);
+            placeholder.find('.modal').modal('show');
+        })
+    })
+
+    //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.find('.modal').modal('hide');
+        $('#modal-zone').html("");
+    })
+
+    //$(document).on("click", '[data-save="modal"]', function (event) {
+    placeholder.on('click', '[data-edit-module="modal"]', function (event) {
+        var form = $(this).parents('.modal').find('form');
+        var dataPost = form.serialize();
+
+        $.post('/Module/EditModule', dataPost).done(function (data) {
+            location.reload(true);
+        })
+    });
+}) 
+
+
 function DeleteModule(id) {
-    console.log("hi");
+    console.log("hi", id);
+
+    $("#exampleModalCenter").modal("toggle");
+
+    const button = document.getElementById('del-confirm');
+    button.addEventListener('click', function handleClick() {
+        $("#exampleModalCenter").modal("toggle");
+
+        $.post('/Module/DeleteModule', { id: id },
+            function (response) {
+                //window.location.href = response.redirectToUrl;
+                location.reload(true);
+            });
+    });
 }

@@ -9,10 +9,15 @@ namespace Quizard.Controllers
     {
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly IModuleRepository _moduleRepository;
-        public ModuleController(IHttpContextAccessor contextAccessor, IModuleRepository moduleRepository)
+        private readonly IQuizRepository _quizRepository;
+        private readonly IDashboardRepository _dashboardRepository;
+        public ModuleController(IHttpContextAccessor contextAccessor, IModuleRepository moduleRepository, 
+            IQuizRepository quizRepository, IDashboardRepository dashboardRepository)
         {
             _contextAccessor = contextAccessor;
             _moduleRepository = moduleRepository;
+            _quizRepository = quizRepository;
+            _dashboardRepository = dashboardRepository;
         }
 
 
@@ -51,12 +56,47 @@ namespace Quizard.Controllers
             return RedirectToAction("Index", "Module");
         }
 
-        //public async Task<IActionResult> EditModule()
 
-        //public async Task<IActionResult> DeleteModule()
+        [HttpGet]
+        public async Task<IActionResult> ShowEditModuleModal(int id)
+        {
+            Module module = await _moduleRepository.GetModuleById(id);
+            return PartialView("_EditModuleModalPartial", module);
+        }
+
+        [ActionName("EditModule")]
+        [HttpPost]
+        public async Task<IActionResult> EditModule(Module updatedModule)
+        {
+            Module module = await _moduleRepository.GetModuleById(updatedModule.Id);
+            module.Description = updatedModule.Description;
+            module.ModuleCode = updatedModule.ModuleCode;
+            _moduleRepository.Update(module);
+
+            return RedirectToAction("Index", "Module");
+        }
+
+        public async Task<IActionResult> DeleteModule(int id)
+        {
+            // REMEMBER TO UNENROLL STUDENTS,
+
+            Module module = await _moduleRepository.GetModuleById(id);
+            var userQuizes = await _dashboardRepository.GetAllTeacherQuizzes();
+
+            foreach (var userQuiz in userQuizes.Where(i => i.ModuleId == module.Id))
+            {
+                userQuiz.ModuleId = null;
+                _quizRepository.Update(userQuiz);
+            }
+            _moduleRepository.Delete(module);
+
+            return RedirectToAction("Index", "Module");
+        }
 
         //public async Task<IActionResult> EnrollStudents()
+        // input csv
 
         //public async Task<IActionResult> RemoveStudents()
+        // table to remove
     }
 }
