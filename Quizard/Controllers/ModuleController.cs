@@ -52,9 +52,7 @@ namespace Quizard.Controllers
                 Id = newModule.Id,
                 Description = newModule.Description,
                 ModuleCode = newModule.ModuleCode,
-                //UserId = _contextAccessor.HttpContext.User.GetUserId()
                 ModuleLeaderId = _contextAccessor.HttpContext.User.GetUserId(),
-                //ModuleUsers = new List<User>()
             };
             _moduleRepository.Add(module);
 
@@ -147,10 +145,50 @@ namespace Quizard.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> ShowRemoveStudentModal(int id)
+        {
+            Module module = await _moduleRepository.GetModuleById(id);
+            EnrollmentViewModel enrollmentViewModel = new EnrollmentViewModel();
+            enrollmentViewModel.Module = module;
+            IEnumerable<User> students = await _moduleRepository.GetStudentsByModule(module.Id);
+
+            if (students.Any())
+            {
+                enrollmentViewModel.Students = students.ToList();
+            }
+
+            return PartialView("_RemoveStudentsModalPartial", enrollmentViewModel);
+        }
 
 
-        //public async Task<IActionResult> RemoveStudents()
-        // table to remove
+        [ActionName("RemoveStudents")]
+        [HttpPost]
+        public async Task<IActionResult> RemoveStudents(string studentEmail, int moduleId)
+        {
+            // table to remove
+            var user = await _userManager.FindByEmailAsync(studentEmail);
+            if (user != null)
+            {
+                UserModule userModule = await _moduleRepository.GetSpecificUserModule(user.Id, moduleId);
+                int r = 4;
+                _moduleRepository.Delete(userModule);
+            }
+
+            Module module = await _moduleRepository.GetModuleById(moduleId);
+            EnrollmentViewModel enrollmentViewModel = new EnrollmentViewModel();
+            enrollmentViewModel.Module = module;
+            IEnumerable<User> students = await _moduleRepository.GetStudentsByModule(module.Id);
+
+            if (students.Any())
+            {
+                enrollmentViewModel.Students = students.ToList();
+            }
+
+            return PartialView("_RemoveStudentsModalPartial", enrollmentViewModel);
+            //return RedirectToAction("Index", "Module");
+        }
+
     }
 }
 

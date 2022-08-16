@@ -27,7 +27,7 @@
                             <button type="submit" class="button-table" onclick="DeleteModule(@item.Id)">Delete</button>
                             <button type="submit" class="button-table" data-toggle="module-edit-modal" data-url="@Url.Action("ShowEditModuleModal", "Module", new { id = @item.Id  })">Edit</button>
                             <button type="submit" class="button-table" data-toggle="student-enroll-modal" data-url="@Url.Action("ShowEnrollModuleModal", "Module", new { id = @item.Id })">Enroll Students</button>
-                            <button type="submit" class="button-table">Remove Students</button>
+                            <button type="submit" class="button-table" data-toggle="student-remove-modal" data-url="@Url.Action("ShowRemoveStudentModal", "Module", new { id = @item.Id })">View and Remove Students</button>
                         </td>
                     </tr>
                 }

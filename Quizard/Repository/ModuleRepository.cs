@@ -35,12 +35,16 @@ namespace Quizard.Repository
         //    return await _context.Modules.FirstOrDefaultAsync(i => i.Id = id);
         //}
 
-
         public async Task<IEnumerable<User>> GetStudentsByModule(int moduleId)
         {
-            // kinda working one
             return await _context.Users.Where(i => i.Modules.Any(m => m.ModuleId == moduleId)).ToListAsync();
-            //return await _context.Users.Where(i => i.Modules.Select(m => m.ModuleId == moduleId))
+        }
+
+        public async Task<UserModule> GetSpecificUserModule(string userId, int moduleId)
+        {
+            return await _context.UserModules.FirstOrDefaultAsync(i => i.UserId == userId && i.ModuleId == moduleId);
+            //return await _context.
+            //return null;
         }
 
 

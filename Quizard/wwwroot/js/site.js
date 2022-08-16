@@ -495,3 +495,56 @@ $(function () {
         })
     });
 }) 
+
+
+// Remove Students
+$(function () {
+    var placeholder = $('#modal-zone');
+
+    $('button[data-toggle="student-remove-modal"]').click(function (event) {
+        var url = $(this).data('url');
+
+        $.get(url).done(function (data) {
+            placeholder.html(data);
+            placeholder.find('.modal').modal('show');
+        })
+    })
+
+    //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.find('.modal').modal('hide');
+        $('#modal-zone').html("");
+    })
+}) 
+
+
+function RemoveStudent(studentEmail, moduleId) {
+    console.log(studentEmail)
+    console.log(moduleId)
+
+    $.ajax({
+        type: "POST",
+        data: {studentEmail: studentEmail, moduleId: moduleId},
+        url: "/Module/RemoveStudents",
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: "json",
+        success: function (response) {
+            if (response != null) {
+                console.log("Sent okay");
+            } else {
+                console.log("Something went wrong");
+            }
+        },
+        failure: function (response) {
+            //console.log('error 1');
+        },
+        error: function (response) {
+            //console.log('error 2');
+        },
+        complete: function (response) {
+            $('#modal-zone').find('.modal').modal('hide');
+            $('#modal-zone').html("");
+
+        }
+    });
+}

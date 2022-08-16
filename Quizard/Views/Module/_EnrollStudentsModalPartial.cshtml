@@ -20,16 +20,22 @@
                     <input type="hidden" for="moduleId" name="moduleId" value="@Model.Module.Id">
 
                 </form>
-
-                <ol>
-                    @if (Model.Students != null)
-                    {
-                        @foreach (var student in Model.Students)
+                <div class="module-classroom">
+                    <h3>
+                        Your Class:
+                        <br />
+                    </h3>
+                    <ol>
+                        @if (Model.Students != null)
                         {
-                            <li>@student.Email</li>
+                            @foreach (var student in Model.Students)
+                            {
+                                <li>@student.Email</li>
+                            }
                         }
-                    }
-                </ol>
+                    </ol>
+                </div>
+
 
             </div>
 

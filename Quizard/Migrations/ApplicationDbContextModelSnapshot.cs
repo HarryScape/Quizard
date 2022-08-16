@@ -398,7 +398,7 @@ namespace Quizard.Migrations
 
                     b.HasIndex("ModuleId");
 
-                    b.ToTable("UserModule");
+                    b.ToTable("UserModules");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

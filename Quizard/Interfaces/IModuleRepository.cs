@@ -7,6 +7,7 @@ namespace Quizard.Interfaces
         Task<List<Module>> GetUserModules();
         Task<Module> GetModuleById(int id);
         Task<IEnumerable<User>> GetStudentsByModule(int moduleId);
+        Task<UserModule> GetSpecificUserModule(string userId, int moduleId);
 
         public bool Save();
         public bool Add(Module module);
