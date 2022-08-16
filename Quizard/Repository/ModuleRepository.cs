@@ -20,7 +20,8 @@ namespace Quizard.Repository
         public async Task<List<Module>> GetUserModules()
         {
             var currentUser = _httpContextAccessor.HttpContext?.User.GetUserId();
-            var userModules = _context.Modules.Where(i => i.ModuleLeader.Id == currentUser);
+            //var userModules = _context.Modules.Where(i => i.ModuleLeader.Id == currentUser);
+            var userModules = _context.Modules.Where(i => i.ModuleLeaderId == currentUser);
             return userModules.ToList();
         }
 
@@ -33,6 +34,14 @@ namespace Quizard.Repository
         //{
         //    return await _context.Modules.FirstOrDefaultAsync(i => i.Id = id);
         //}
+
+
+        public async Task<IEnumerable<User>> GetStudentsByModule(int moduleId)
+        {
+            // kinda working one
+            return await _context.Users.Where(i => i.Modules.Any(m => m.ModuleId == moduleId)).ToListAsync();
+            //return await _context.Users.Where(i => i.Modules.Select(m => m.ModuleId == moduleId))
+        }
 
 
 
@@ -57,6 +66,30 @@ namespace Quizard.Repository
         public bool Delete(Module module)
         {
             _context.Remove(module);
+            return Save();
+        }
+
+        public bool Update(User user)
+        {
+            _context.Update(user);
+            return Save();
+        }
+
+        public bool Add(UserModule userModule)
+        {
+            _context.Add(userModule);
+            return Save();
+        }
+
+        public bool Update(UserModule userModule)
+        {
+            _context.Update(userModule);
+            return Save();
+        }
+
+        public bool Delete(UserModule userModule)
+        {
+            _context.Remove(userModule);
             return Save();
         }
     }

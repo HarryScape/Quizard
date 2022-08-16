@@ -418,7 +418,7 @@ $(function () {
 
 
 
-//Edit Modal
+//Edit Module
 $(function () {
     var placeholder = $('#modal-zone');
 
@@ -450,8 +450,6 @@ $(function () {
 
 
 function DeleteModule(id) {
-    console.log("hi", id);
-
     $("#exampleModalCenter").modal("toggle");
 
     const button = document.getElementById('del-confirm');
@@ -465,3 +463,35 @@ function DeleteModule(id) {
             });
     });
 }
+
+
+// Enroll Students
+$(function () {
+    var placeholder = $('#modal-zone');
+
+    $('button[data-toggle="student-enroll-modal"]').click(function (event) {
+        var url = $(this).data('url');
+
+        $.get(url).done(function (data) {
+            placeholder.html(data);
+            placeholder.find('.modal').modal('show');
+        })
+    })
+
+    //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.find('.modal').modal('hide');
+        $('#modal-zone').html("");
+    })
+
+    //$(document).on("click", '[data-save="modal"]', function (event) {
+    placeholder.on('click', '[data-add-students="modal"]', function (event) {
+        var form = $(this).parents('.modal').find('form');
+        var actionUrl = form.attr('action');
+        var dataPost = form.serialize();
+
+        $.post('/Module/EnrollStudents', dataPost).done(function (data) {
+            location.reload(true);
+        })
+    });
+}) 

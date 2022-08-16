@@ -93,7 +93,8 @@ namespace Quizard.Controllers
                 Email = registerViewModel.EmailAddress,
                 UserName = registerViewModel.EmailAddress,
                 Name = registerViewModel.Name,
-                DateRegistered = DateTime.Now
+                DateRegistered = DateTime.Now,
+                //UserModules = new List<Module>()
             };
             var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.Password);
 

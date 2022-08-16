@@ -14,5 +14,6 @@ namespace Quizard.Models
         public DateTime DateRegistered { get; set; }
 
         public ICollection<Quiz> UserQuizzes { get; set; }
+        public ICollection<UserModule> Modules { get; set; }
     }
 }

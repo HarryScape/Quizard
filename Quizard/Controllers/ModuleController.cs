@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Quizard.Interfaces;
 using Quizard.Models;
 using Quizard.ViewModels;
@@ -11,13 +12,15 @@ namespace Quizard.Controllers
         private readonly IModuleRepository _moduleRepository;
         private readonly IQuizRepository _quizRepository;
         private readonly IDashboardRepository _dashboardRepository;
+        private readonly UserManager<User> _userManager;
         public ModuleController(IHttpContextAccessor contextAccessor, IModuleRepository moduleRepository, 
-            IQuizRepository quizRepository, IDashboardRepository dashboardRepository)
+            IQuizRepository quizRepository, IDashboardRepository dashboardRepository, UserManager<User> userManager)
         {
             _contextAccessor = contextAccessor;
             _moduleRepository = moduleRepository;
             _quizRepository = quizRepository;
             _dashboardRepository = dashboardRepository;
+            _userManager = userManager;
         }
 
 
@@ -49,8 +52,10 @@ namespace Quizard.Controllers
                 Id = newModule.Id,
                 Description = newModule.Description,
                 ModuleCode = newModule.ModuleCode,
-                UserId = _contextAccessor.HttpContext.User.GetUserId()
-        };
+                //UserId = _contextAccessor.HttpContext.User.GetUserId()
+                ModuleLeaderId = _contextAccessor.HttpContext.User.GetUserId(),
+                //ModuleUsers = new List<User>()
+            };
             _moduleRepository.Add(module);
 
             return RedirectToAction("Index", "Module");
@@ -93,10 +98,62 @@ namespace Quizard.Controllers
             return RedirectToAction("Index", "Module");
         }
 
-        //public async Task<IActionResult> EnrollStudents()
-        // input csv
+
+
+        [HttpGet]
+        public async Task<IActionResult> ShowEnrollModuleModal(int id)
+        {
+            Module module = await _moduleRepository.GetModuleById(id);
+            EnrollmentViewModel enrollmentViewModel = new EnrollmentViewModel();
+            enrollmentViewModel.Module = module;
+            IEnumerable<User> students = await _moduleRepository.GetStudentsByModule(module.Id);
+
+            if (students.Any())
+            {
+                enrollmentViewModel.Students = students.ToList();
+            }
+
+            return PartialView("_EnrollStudentsModalPartial", enrollmentViewModel);
+        }
+
+
+        [ActionName("EnrollStudents")]
+        [HttpPost]
+        public async Task<IActionResult> EnrollStudents(string studentForm, int moduleId)
+        {
+            // harry@student.edu, leo@student.edu, bob@bob.com, cat@cat.cat, random@goblin.com, student@student.com
+            Module module = await _moduleRepository.GetModuleById(moduleId);
+            List<string> studentList = studentForm.Split(',').ToList<string>();
+
+            for (int i = 0; i < studentList.Count; i++)
+            {
+                studentList[i] = string.Concat(studentList[i].Where(c => !char.IsWhiteSpace(c)));
+            }
+
+            foreach(var studentEmail in studentList)
+            {
+                var user = await _userManager.FindByEmailAsync(studentEmail);
+                if (user != null)
+                {
+                    UserModule userModule = new UserModule()
+                    {
+                        UserId = user.Id,
+                        ModuleId = moduleId,
+                    };                   
+                    _moduleRepository.Add(userModule);
+                }
+            }
+            return RedirectToAction("Index", "Module");
+        }
+
+
+
 
         //public async Task<IActionResult> RemoveStudents()
         // table to remove
     }
 }
+
+
+
+
