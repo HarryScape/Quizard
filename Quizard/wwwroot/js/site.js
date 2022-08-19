@@ -382,3 +382,169 @@ $(function () {
         })
     });
 }) 
+
+
+// Add Module
+$(function () {
+    var placeholder = $('#modal-zone');
+
+    $('button[data-toggle="add-module-modal"]').click(function (event) {
+        var url = $(this).data('url');
+
+        $.get(url).done(function (data) {
+            placeholder.html(data);
+            placeholder.find('.modal').modal('show');
+        })
+    })
+
+    //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.find('.modal').modal('hide');
+        $('#modal-zone').html("");
+    })
+
+    //$(document).on("click", '[data-save="modal"]', function (event) {
+    placeholder.on('click', '[data-add-module="modal"]', function (event) {
+        var form = $(this).parents('.modal').find('form');
+        var actionUrl = form.attr('action');
+        var dataPost = form.serialize();
+
+        $.post(actionUrl, dataPost).done(function (data) {
+            location.reload(true);
+        })
+    });
+}) 
+
+
+
+
+//Edit Module
+$(function () {
+    var placeholder = $('#modal-zone');
+
+    $('button[data-toggle="module-edit-modal"]').click(function (event) {
+        var url = $(this).data('url');
+
+        $.get(url).done(function (data) {
+            placeholder.html(data);
+            placeholder.find('.modal').modal('show');
+        })
+    })
+
+    //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.find('.modal').modal('hide');
+        $('#modal-zone').html("");
+    })
+
+    //$(document).on("click", '[data-save="modal"]', function (event) {
+    placeholder.on('click', '[data-edit-module="modal"]', function (event) {
+        var form = $(this).parents('.modal').find('form');
+        var dataPost = form.serialize();
+
+        $.post('/Module/EditModule', dataPost).done(function (data) {
+            location.reload(true);
+        })
+    });
+}) 
+
+
+function DeleteModule(id) {
+    $("#exampleModalCenter").modal("toggle");
+
+    const button = document.getElementById('del-confirm');
+    button.addEventListener('click', function handleClick() {
+        $("#exampleModalCenter").modal("toggle");
+
+        $.post('/Module/DeleteModule', { id: id },
+            function (response) {
+                //window.location.href = response.redirectToUrl;
+                location.reload(true);
+            });
+    });
+}
+
+
+// Enroll Students
+$(function () {
+    var placeholder = $('#modal-zone');
+
+    $('button[data-toggle="student-enroll-modal"]').click(function (event) {
+        var url = $(this).data('url');
+
+        $.get(url).done(function (data) {
+            placeholder.html(data);
+            placeholder.find('.modal').modal('show');
+        })
+    })
+
+    //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.find('.modal').modal('hide');
+        $('#modal-zone').html("");
+    })
+
+    //$(document).on("click", '[data-save="modal"]', function (event) {
+    placeholder.on('click', '[data-add-students="modal"]', function (event) {
+        var form = $(this).parents('.modal').find('form');
+        var actionUrl = form.attr('action');
+        var dataPost = form.serialize();
+
+        $.post('/Module/EnrollStudents', dataPost).done(function (data) {
+            location.reload(true);
+        })
+    });
+}) 
+
+
+// Remove Students
+$(function () {
+    var placeholder = $('#modal-zone');
+
+    $('button[data-toggle="student-remove-modal"]').click(function (event) {
+        var url = $(this).data('url');
+
+        $.get(url).done(function (data) {
+            placeholder.html(data);
+            placeholder.find('.modal').modal('show');
+        })
+    })
+
+    //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.find('.modal').modal('hide');
+        $('#modal-zone').html("");
+    })
+}) 
+
+
+function RemoveStudent(studentEmail, moduleId) {
+    console.log(studentEmail)
+    console.log(moduleId)
+
+    $.ajax({
+        type: "POST",
+        data: {studentEmail: studentEmail, moduleId: moduleId},
+        url: "/Module/RemoveStudents",
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: "json",
+        success: function (response) {
+            if (response != null) {
+                console.log("Sent okay");
+            } else {
+                console.log("Something went wrong");
+            }
+        },
+        failure: function (response) {
+            //console.log('error 1');
+        },
+        error: function (response) {
+            //console.log('error 2');
+        },
+        complete: function (response) {
+            $('#modal-zone').find('.modal').modal('hide');
+            $('#modal-zone').html("");
+
+        }
+    });
+}

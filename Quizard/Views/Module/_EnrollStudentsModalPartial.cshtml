@@ -1,0 +1,51 @@
+﻿@using Quizard.ViewModels
+@model EnrollmentViewModel
+
+
+<!-- Large modal -->
+<div class="modal fade bd-example-modal-lg" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center w-100" id="exampleModalLongTitle">Enroll Students</h5>
+            </div>
+
+            <div class="modal-body">
+                <form action="Module/EnrollStudents">
+                    <div class="form-group">
+                        <label for="studentForm" class="col-form-label">Enroll Studens Via Email Address:</label>
+                        <textarea for="studentForm" name="studentForm" class="form-control" placeholder="harry@aston.edu, leo@aston.edu"></textarea>
+                    </div>
+
+                    <input type="hidden" for="moduleId" name="moduleId" value="@Model.Module.Id">
+
+                </form>
+                <div class="module-classroom">
+                    <h3>
+                        Your Class:
+                        <br />
+                    </h3>
+                    <ol>
+                        @if (Model.Students != null)
+                        {
+                            @foreach (var student in Model.Students)
+                            {
+                                <li>@student.Email</li>
+                            }
+                        }
+                    </ol>
+                </div>
+
+
+            </div>
+
+            <div class="modal-footer">
+                <div class="col text-center">
+                    <button type="button" class="button--save" data-bs-dismiss="modal" id="exit-edit-modal">Cancel</button>
+                    <button type="button" class="button--save" data-add-students="modal" id="save-options-confirm">Save Changes</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

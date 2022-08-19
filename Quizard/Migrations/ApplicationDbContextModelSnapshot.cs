@@ -182,6 +182,29 @@ namespace Quizard.Migrations
                     b.ToTable("Answers");
                 });
 
+            modelBuilder.Entity("Quizard.Models.Module", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModuleCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModuleLeaderId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Modules");
+                });
+
             modelBuilder.Entity("Quizard.Models.Question", b =>
                 {
                     b.Property<int>("Id")
@@ -238,8 +261,8 @@ namespace Quizard.Migrations
                     b.Property<bool>("Deployed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Module")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ModuleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("QuizName")
                         .IsRequired()
@@ -255,6 +278,8 @@ namespace Quizard.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ModuleId");
 
                     b.HasIndex("UserId");
 
@@ -361,6 +386,21 @@ namespace Quizard.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Quizard.Models.UserModule", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "ModuleId");
+
+                    b.HasIndex("ModuleId");
+
+                    b.ToTable("UserModules");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -442,9 +482,15 @@ namespace Quizard.Migrations
 
             modelBuilder.Entity("Quizard.Models.Quiz", b =>
                 {
+                    b.HasOne("Quizard.Models.Module", "Module")
+                        .WithMany("ModuleQuizzes")
+                        .HasForeignKey("ModuleId");
+
                     b.HasOne("Quizard.Models.User", "User")
                         .WithMany("UserQuizzes")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Module");
 
                     b.Navigation("User");
                 });
@@ -458,6 +504,32 @@ namespace Quizard.Migrations
                         .IsRequired();
 
                     b.Navigation("Quiz");
+                });
+
+            modelBuilder.Entity("Quizard.Models.UserModule", b =>
+                {
+                    b.HasOne("Quizard.Models.Module", "Module")
+                        .WithMany("Users")
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Quizard.Models.User", "User")
+                        .WithMany("Modules")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Module");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Quizard.Models.Module", b =>
+                {
+                    b.Navigation("ModuleQuizzes");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Quizard.Models.Question", b =>
@@ -479,6 +551,8 @@ namespace Quizard.Migrations
 
             modelBuilder.Entity("Quizard.Models.User", b =>
                 {
+                    b.Navigation("Modules");
+
                     b.Navigation("UserQuizzes");
                 });
 #pragma warning restore 612, 618

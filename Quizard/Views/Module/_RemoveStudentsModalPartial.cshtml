@@ -1,0 +1,63 @@
+﻿@using Quizard.ViewModels
+@model EnrollmentViewModel
+
+<div id="remove-container>">
+    <!-- Large modal -->
+    <div class="modal fade bd-example-modal-lg" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center w-100" id="exampleModalLongTitle">Remove Students</h5>
+                </div>
+
+                <div class="modal-body">
+
+                    <input type="hidden" for="moduleId" name="moduleId" value="@Model.Module.Id">
+
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Student Email</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @{
+                                int i = 1;
+                            }
+
+                            @if (Model.Students != null)
+                            {
+                                @foreach (var student in Model.Students)
+                                {
+                                    <tr>
+                                        <th scope="row">@i</th>
+                                        <td>@student.Email</td>
+                                        <td>@student.Name</td>
+                                        <td>
+                                            <button class="button-table" onclick="RemoveStudent('@student.Email', '@Model.Module.Id')">Remove</button>
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="col text-center">
+                        <button type="button" class="button--save" data-bs-dismiss="modal" id="exit-edit-modal">Close</button>
+                        @*<button type="button" class="button--save" data-remove-students="modal" id="save-options-confirm">Save Changes</button>*@
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@model Quizard.ViewModels.ModuleViewModel
+
+<h1> Modules </h1>
+
+
+<br />
+
+<body>
+    <div class="quiz-table">
+        <table id="example" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Module</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Modules)
+                {
+                    <tr class="table-row">
+                        <td>@item.ModuleCode</td>
+                        <td>@item.Description <br /></td>
+                        <td>
+                            <button type="submit" class="button-table" onclick="DeleteModule(@item.Id)">Delete</button>
+                            <button type="submit" class="button-table" data-toggle="module-edit-modal" data-url="@Url.Action("ShowEditModuleModal", "Module", new { id = @item.Id  })">Edit</button>
+                            <button type="submit" class="button-table" data-toggle="student-enroll-modal" data-url="@Url.Action("ShowEnrollModuleModal", "Module", new { id = @item.Id })">Enroll Students</button>
+                            <button type="submit" class="button-table" data-toggle="student-remove-modal" data-url="@Url.Action("ShowRemoveStudentModal", "Module", new { id = @item.Id })">View and Remove Students</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<br />
+
+<button type="submit" class="button-table" id="add-mod-btn" data-toggle="add-module-modal" data-url="@Url.Action("ShowAddModuleModal", "Module")"> + Add New Module </button>
+
+
+<div id="modal-zone"></div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center w-100" id="exampleModalLongTitle">Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="exit-modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center w-100">
+                This module will be permanently deleted, are you sure?
+            </div>
+            <div class="modal-footer">
+                <div class="col text-center">
+                    <button type="button" class="button--save" data-dismiss="modal" id="exit-modal">Cancel</button>
+                    <button type="button" class="button--save" id="del-confirm">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
