@@ -38,12 +38,23 @@ namespace Quizard.Controllers
         public async Task<IActionResult> Index()
         {
             var currentUser = _contextAccessor.HttpContext.User.GetUserId();
-            var userQuizes = await _dashboardRepository.GetAllTeacherQuizzes();
-            var dashboardViewModel = new DashboardViewModel()
+
+            var userQuizes = new List<Quiz>();
+            if (User.IsInRole("teacher"))
+            {
+                userQuizes = await _dashboardRepository.GetAllTeacherQuizzes();
+            }
+            else if (User.IsInRole("student"))
+            {
+                userQuizes = await _dashboardRepository.GetAllStudentQuizzes();
+            }
+
+                var dashboardViewModel = new DashboardViewModel()
             {
                 Quizzes = userQuizes,
                 UserId = currentUser,
             };
+
             foreach(var item in dashboardViewModel.Quizzes)
             {
                 if(item.ModuleId != null)
