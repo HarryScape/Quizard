@@ -114,8 +114,6 @@ namespace Quizard.Controllers
         }
 
 
-
-
         [ActionName("UpdateQuiz")]
         [HttpPost]
         public async Task<IActionResult> UpdateQuiz(Quiz updatedQuiz)
@@ -129,6 +127,15 @@ namespace Quizard.Controllers
             quiz.ModuleId = updatedQuiz.ModuleId;
             quiz.Module = await _moduleRepository.GetModuleById(modId);
             quiz.DateCreated = DateTime.Now;
+            _quizRepository.Update(quiz);
+
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+        public async Task<IActionResult> QuizDeployment(int quizId)
+        {
+            Quiz quiz = await _quizRepository.GetQuizById(quizId);
+            quiz.Deployed = !quiz.Deployed;
             _quizRepository.Update(quiz);
 
             return RedirectToAction("Index", "Dashboard");

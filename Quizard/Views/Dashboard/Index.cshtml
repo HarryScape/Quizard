@@ -43,17 +43,35 @@
                     <tr class="table-row">
                         <td>@item.QuizName</td>
                         <td>@item.DateCreated <br /></td>
-                        <td> 
-                            @if(item.ModuleId != null)
+                        <td>
+                            @if (item.ModuleId != null)
                             {
                                 @(item.Module.ModuleCode)
                             }
                         </td>
                         <td>
-                            <button type="submit" class="button-table" onclick="DeleteQuiz(@item.Id)">Delete</button>
-                            <button type="submit" class="button-table">Publish</button>
-                            <button type="submit" class="button-table" onclick="location.href='@Url.Action("Create", "Quiz", new { QuizId = item.Id })'">Edit</button>
-                            <button type="submit" class="button-table" data-toggle="quiz-options-modal" data-url="@Url.Action("ShowOptionsModal", "Dashboard", new { id = @item.Id  })">Options</button>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                @if (User.IsInRole("teacher"))
+                                {
+                                    <button type="submit" class="button-table" onclick="DeleteQuiz(@item.Id)">Delete</button>
+                                    @*<button type="submit" class="button-table">Publish</button>*@
+                                    <button type="submit" class="button-table" onclick="location.href='@Url.Action("Create", "Quiz", new { QuizId = item.Id })'">Edit</button>
+                                    <button type="submit" class="button-table" data-toggle="quiz-options-modal" data-url="@Url.Action("ShowOptionsModal", "Dashboard", new { id = @item.Id  })">Options</button>
+                                    @if (item.Deployed)
+                                    {
+                                        <button type="submit" class="button-table" onclick="location.href='@Url.Action("QuizDeployment", "Dashboard", new { QuizId = item.Id })'">Undeploy</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="button-table" onclick="location.href='@Url.Action("QuizDeployment", "Dashboard", new { QuizId = item.Id })'">Deploy</button>
+                                    }
+                                }
+                                else if (User.IsInRole("student"))
+                                {
+                                    <button type="submit" class="button-table">Take Quiz</button>
+                                }
+                            }
                         </td>
                     </tr>
                 }
