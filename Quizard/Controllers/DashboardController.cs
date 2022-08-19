@@ -38,12 +38,23 @@ namespace Quizard.Controllers
         public async Task<IActionResult> Index()
         {
             var currentUser = _contextAccessor.HttpContext.User.GetUserId();
-            var userQuizes = await _dashboardRepository.GetAllTeacherQuizzes();
-            var dashboardViewModel = new DashboardViewModel()
+
+            var userQuizes = new List<Quiz>();
+            if (User.IsInRole("teacher"))
+            {
+                userQuizes = await _dashboardRepository.GetAllTeacherQuizzes();
+            }
+            else if (User.IsInRole("student"))
+            {
+                userQuizes = await _dashboardRepository.GetAllStudentQuizzes();
+            }
+
+                var dashboardViewModel = new DashboardViewModel()
             {
                 Quizzes = userQuizes,
                 UserId = currentUser,
             };
+
             foreach(var item in dashboardViewModel.Quizzes)
             {
                 if(item.ModuleId != null)
@@ -114,8 +125,6 @@ namespace Quizard.Controllers
         }
 
 
-
-
         [ActionName("UpdateQuiz")]
         [HttpPost]
         public async Task<IActionResult> UpdateQuiz(Quiz updatedQuiz)
@@ -129,6 +138,15 @@ namespace Quizard.Controllers
             quiz.ModuleId = updatedQuiz.ModuleId;
             quiz.Module = await _moduleRepository.GetModuleById(modId);
             quiz.DateCreated = DateTime.Now;
+            _quizRepository.Update(quiz);
+
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+        public async Task<IActionResult> QuizDeployment(int quizId)
+        {
+            Quiz quiz = await _quizRepository.GetQuizById(quizId);
+            quiz.Deployed = !quiz.Deployed;
             _quizRepository.Update(quiz);
 
             return RedirectToAction("Index", "Dashboard");

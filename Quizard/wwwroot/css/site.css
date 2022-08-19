@@ -243,7 +243,7 @@ h3 {
         background-color: #5e5dcd;
     }
 
-table th {
+.quiz-table table th {
     background-color: rgb(217, 217, 245);
     border-radius: 6px;
     margin: 20px;
@@ -257,7 +257,13 @@ table th:nth-child(1) {
     text-align: left;
 }*/
 
-table {
+.quiz-table table td:nth-child(4) {
+    text-align: left;
+    padding-left: 9%;
+}
+
+
+.quiz-table table {
     text-align: center;
     border-collapse: separate;
     border: solid rgb(217, 217, 245) 1px;

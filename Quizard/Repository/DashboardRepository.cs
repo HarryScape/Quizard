@@ -22,7 +22,14 @@ namespace Quizard.Repository
             return userQuizes.ToList();
         }
 
-        // TODO: return quizzes for student module.
-        // public async Task<List<Quiz>> GetAllStudentQuizzes()
+        public async Task<List<Quiz>> GetAllStudentQuizzes()
+        {
+            var currentUser = _httpContextAccessor.HttpContext?.User.GetUserId();
+            var studentModules = _context.UserModules.Where(i => i.UserId == currentUser);
+            var studentQuizzes = _context.Quizzes.OrderByDescending(j => j.DateCreated).Where(i => i.Deployed && studentModules.Any(m => m.ModuleId == i.ModuleId));
+
+            return studentQuizzes.ToList();
+        }
+
     }
 }
