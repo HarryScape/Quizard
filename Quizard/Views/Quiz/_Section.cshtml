@@ -75,6 +75,11 @@
                         </ol>
                     </div>
 
+                    @if (question.Mark != null)
+                    {
+                        <br> <i> @question.Mark Marks </i>
+                    }
+
                     @Html.Partial("_QuestionPartial", question.Children)
 
                 </div>

@@ -136,7 +136,7 @@ namespace Quizard.Controllers
             IEnumerable<Question> questions = await _quizRepository.GetQuestionBySectionID(sectionId);
             if (questions != null)
             {
-                foreach(Question item in questions)
+                foreach (Question item in questions)
                 {
                     IEnumerable<Answer> answers = await _quizRepository.GetAnswersByQuestion(item.Id);
                     if (answers != null)
@@ -167,7 +167,7 @@ namespace Quizard.Controllers
                     _quizRepository.Update(item);
                 }
             }
-            
+
             IEnumerable<Answer> answers = await _quizRepository.GetAnswersByQuestion(questionId);
             if (answers != null)
             {
@@ -179,7 +179,7 @@ namespace Quizard.Controllers
             return PartialView("_Section", quizViewModel);
         }
 
-            [HttpGet]
+        [HttpGet]
         public async Task<IActionResult> ShowDeleteModal(int id)
         {
             Quiz quiz = await _quizRepository.GetQuizById(id);
@@ -237,11 +237,51 @@ namespace Quizard.Controllers
             var addQuestionViewModel = new AddQuestionViewModel();
             addQuestionViewModel.Quiz = await _quizRepository.GetQuizById(id);
             addQuestionViewModel.QuestionTypeList = await _quizParserService.GenerateQuestionTypes();
-            //addQuestionViewModel.Question = new Question()
-            //{
-            //    SectionId = addQuestionViewModel.Quiz.QuizSections.First<Section>().Id
-            //};
             return PartialView("_AddQuestionModalPartial", addQuestionViewModel);
         }
+
+        [ActionName("AddQuestion")]
+        [HttpPost]
+        public async Task<IActionResult> AddQuestion(List<string> questionBody, List<string> answers, List<string> answersCheck)
+        {
+            Question question = new Question()
+            {
+                SectionId = Int32.Parse(questionBody[5]),
+                QuestionTitle = questionBody[0],
+                QuestionType = Enum.Parse<QuestionType>(questionBody[6]),
+            };
+            if (questionBody[1] != null)
+            {
+                question.Mark = Int32.Parse(questionBody[1]);
+            }
+            if (questionBody[2] != null)
+            {
+                question.ErrorMargin = Int32.Parse(questionBody[2]);
+            }
+            if (questionBody[3] != null)
+            {
+                question.NegativeMark = Int32.Parse(questionBody[3]);
+            }
+
+            _quizRepository.Add(question);
+
+            for (int i = 0; i < answers.Count; i++)
+            {
+                Answer answer = new Answer()
+                {
+                    QuestionAnswer = answers[i],
+                    QuestionId = question.Id,
+                };
+                if (answersCheck[i].Equals("true"))
+                {
+                    answer.isCorrect = true;
+                }
+                _quizRepository.Add(answer);
+            }
+
+            var quizViewModel = await _quizParserService.GenerateQuizViewModel(Int32.Parse(questionBody[4]));
+            return PartialView("_Section", quizViewModel);
+        }
+
     }
 }

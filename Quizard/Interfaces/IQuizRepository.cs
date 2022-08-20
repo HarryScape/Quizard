@@ -28,6 +28,7 @@ namespace Quizard.Interfaces
         bool Add(Quiz quiz);
         bool Add(Section section);
         bool Add(Question quiz);
+        bool Add(Answer answer);
         bool Add(List<Answer> answers);
         bool Update(Quiz quiz);
         bool Update(Question question);
