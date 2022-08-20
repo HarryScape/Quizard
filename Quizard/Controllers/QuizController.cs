@@ -230,5 +230,18 @@ namespace Quizard.Controllers
             return PartialView("_Section", quizViewModel);
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> ShowAddQuestionModal(int id)
+        {
+            var addQuestionViewModel = new AddQuestionViewModel();
+            addQuestionViewModel.Quiz = await _quizRepository.GetQuizById(id);
+            addQuestionViewModel.QuestionTypeList = await _quizParserService.GenerateQuestionTypes();
+            //addQuestionViewModel.Question = new Question()
+            //{
+            //    SectionId = addQuestionViewModel.Quiz.QuizSections.First<Section>().Id
+            //};
+            return PartialView("_AddQuestionModalPartial", addQuestionViewModel);
+        }
     }
 }

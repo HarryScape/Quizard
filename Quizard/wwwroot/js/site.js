@@ -291,13 +291,13 @@ $(function () {
     })
 
     //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
-        placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
         placeholder.find('.modal').modal('hide');
         $('#modal-zone').html("");
     })
 
     //$(document).on("click", '[data-save="modal"]', function (event) {
-        placeholder.on('click', '[data-save-question="modal"]', function (event) {
+    placeholder.on('click', '[data-save-question="modal"]', function (event) {
         var form = $(this).parents('.modal').find('form');
         var actionUrl = form.attr('action');
         var dataPost = form.serialize();
@@ -311,7 +311,7 @@ $(function () {
             location.reload(true);
         })
     });
-}) 
+})
 
 
 
@@ -329,13 +329,13 @@ $(function () {
     })
 
     //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
-        placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
         placeholder.find('.modal').modal('hide');
         $('#modal-zone').html("");
     })
 
     //$(document).on("click", '[data-save="modal"]', function (event) {
-        placeholder.on('click', '[data-save-quiz="modal"]', function (event) {
+    placeholder.on('click', '[data-save-quiz="modal"]', function (event) {
         var form = $(this).parents('.modal').find('form');
         var dataPost = form.serialize();
 
@@ -343,7 +343,7 @@ $(function () {
             location.reload(true);
         })
     });
-}) 
+})
 
 
 
@@ -381,7 +381,7 @@ $(function () {
             location.reload(true);
         })
     });
-}) 
+})
 
 
 // Add Module
@@ -413,7 +413,7 @@ $(function () {
             location.reload(true);
         })
     });
-}) 
+})
 
 
 
@@ -446,7 +446,7 @@ $(function () {
             location.reload(true);
         })
     });
-}) 
+})
 
 
 function DeleteModule(id) {
@@ -494,7 +494,7 @@ $(function () {
             location.reload(true);
         })
     });
-}) 
+})
 
 
 // Remove Students
@@ -515,7 +515,7 @@ $(function () {
         placeholder.find('.modal').modal('hide');
         $('#modal-zone').html("");
     })
-}) 
+})
 
 
 function RemoveStudent(studentEmail, moduleId) {
@@ -524,7 +524,7 @@ function RemoveStudent(studentEmail, moduleId) {
 
     $.ajax({
         type: "POST",
-        data: {studentEmail: studentEmail, moduleId: moduleId},
+        data: { studentEmail: studentEmail, moduleId: moduleId },
         url: "/Module/RemoveStudents",
         contentType: 'application/x-www-form-urlencoded',
         dataType: "json",
@@ -548,3 +548,54 @@ function RemoveStudent(studentEmail, moduleId) {
         }
     });
 }
+
+//Add Question
+$(function () {
+    var placeholder = $('#modal-zone');
+
+    $('button[data-toggle="add-question-modal"]').click(function (event) {
+        var url = $(this).data('url');
+
+        $.get(url).done(function (data) {
+            placeholder.html(data);
+            placeholder.find('.modal').modal('show');
+        })
+    })
+
+    //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.find('.modal').modal('hide');
+        $('#modal-zone').html("");
+    })
+
+    //$(document).on("click", '[data-save="modal"]', function (event) {
+    placeholder.on('click', '[data-add-students="modal"]', function (event) {
+        var form = $(this).parents('.modal').find('form');
+        var actionUrl = form.attr('action');
+        var dataPost = form.serialize();
+
+        $.post('/Module/EnrollStudents', dataPost).done(function (data) {
+            location.reload(true);
+        })
+    });
+})
+
+
+
+$(document).on('click', '#add-ans', function (e) {
+    e.preventDefault();
+    var template = $('#custom-add-box').get(0).outerHTML;
+    let count = $("div[id*='custom-add-box']").length;
+    if (count < 50) {
+        $(".add-ans").append(template).html();
+    }
+});
+
+$(document).on('click', '#del-ans', function (e) {
+    e.preventDefault();
+    let count = $("div[id*='custom-add-box']").length;
+    if (count > 1) {
+        $('.add-ans').children().last().remove();
+    }
+});
+

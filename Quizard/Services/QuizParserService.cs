@@ -5,6 +5,7 @@ using Quizard.Models;
 using Quizard.Interfaces;
 using Quizard.Data.Enum;
 using Quizard.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Quizard.Services
 {
@@ -70,6 +71,39 @@ namespace Quizard.Services
             return quizViewModel;
         }
 
+        public async Task<List<SelectListItem>> GenerateQuestionTypes()
+        {
+            List<SelectListItem> questionTypes = new List<SelectListItem>();
+
+            questionTypes.Add(new SelectListItem()
+            {
+                Value = "MC",
+                Text = "Multiple Choice"
+            });
+            questionTypes.Add(new SelectListItem()
+            {
+                Value = "MA",
+                Text = "Multiple Answer"
+            });
+            questionTypes.Add(new SelectListItem()
+            {
+                Value = "ESS",
+                Text = "Essay"
+            });
+            questionTypes.Add(new SelectListItem()
+            {
+                Value = "TF",
+                Text = "True or False"
+            });
+            questionTypes.Add(new SelectListItem()
+            {
+                Value = "FIB",
+                Text = "Fill in the Blank"
+            });
+
+
+            return (questionTypes);
+        }
 
     }
 }

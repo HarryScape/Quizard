@@ -1,4 +1,5 @@
-﻿using Quizard.ViewModels;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Quizard.ViewModels;
 
 namespace Quizard.Interfaces
 {
@@ -6,5 +7,6 @@ namespace Quizard.Interfaces
     {
         Task<string> GetQuizLMS(IFormFile file);
         Task<CreateQuizViewModel> GenerateQuizViewModel(int id);
+        Task<List<SelectListItem>> GenerateQuestionTypes();
     }
 }
