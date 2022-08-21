@@ -256,11 +256,11 @@ namespace Quizard.Controllers
             }
             if (questionBody[2] != null)
             {
-                question.ErrorMargin = Int32.Parse(questionBody[2]);
+                question.ErrorMargin = double.Parse(questionBody[2]);
             }
             if (questionBody[3] != null)
             {
-                question.NegativeMark = Int32.Parse(questionBody[3]);
+                question.NegativeMark = double.Parse(questionBody[3]);
             }
 
             _quizRepository.Add(question);
