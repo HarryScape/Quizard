@@ -291,13 +291,13 @@ $(function () {
     })
 
     //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
-        placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
         placeholder.find('.modal').modal('hide');
         $('#modal-zone').html("");
     })
 
     //$(document).on("click", '[data-save="modal"]', function (event) {
-        placeholder.on('click', '[data-save-question="modal"]', function (event) {
+    placeholder.on('click', '[data-save-question="modal"]', function (event) {
         var form = $(this).parents('.modal').find('form');
         var actionUrl = form.attr('action');
         var dataPost = form.serialize();
@@ -311,7 +311,7 @@ $(function () {
             location.reload(true);
         })
     });
-}) 
+})
 
 
 
@@ -329,13 +329,13 @@ $(function () {
     })
 
     //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
-        placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
         placeholder.find('.modal').modal('hide');
         $('#modal-zone').html("");
     })
 
     //$(document).on("click", '[data-save="modal"]', function (event) {
-        placeholder.on('click', '[data-save-quiz="modal"]', function (event) {
+    placeholder.on('click', '[data-save-quiz="modal"]', function (event) {
         var form = $(this).parents('.modal').find('form');
         var dataPost = form.serialize();
 
@@ -343,7 +343,7 @@ $(function () {
             location.reload(true);
         })
     });
-}) 
+})
 
 
 
@@ -381,7 +381,7 @@ $(function () {
             location.reload(true);
         })
     });
-}) 
+})
 
 
 // Add Module
@@ -413,7 +413,7 @@ $(function () {
             location.reload(true);
         })
     });
-}) 
+})
 
 
 
@@ -446,7 +446,7 @@ $(function () {
             location.reload(true);
         })
     });
-}) 
+})
 
 
 function DeleteModule(id) {
@@ -494,7 +494,7 @@ $(function () {
             location.reload(true);
         })
     });
-}) 
+})
 
 
 // Remove Students
@@ -515,7 +515,7 @@ $(function () {
         placeholder.find('.modal').modal('hide');
         $('#modal-zone').html("");
     })
-}) 
+})
 
 
 function RemoveStudent(studentEmail, moduleId) {
@@ -524,7 +524,7 @@ function RemoveStudent(studentEmail, moduleId) {
 
     $.ajax({
         type: "POST",
-        data: {studentEmail: studentEmail, moduleId: moduleId},
+        data: { studentEmail: studentEmail, moduleId: moduleId },
         url: "/Module/RemoveStudents",
         contentType: 'application/x-www-form-urlencoded',
         dataType: "json",
@@ -548,3 +548,108 @@ function RemoveStudent(studentEmail, moduleId) {
         }
     });
 }
+
+//Add Question
+$(function () {
+    var placeholder = $('#modal-zone');
+
+    $('button[data-toggle="add-question-modal"]').click(function (event) {
+        var url = $(this).data('url');
+
+        $.get(url).done(function (data) {
+            placeholder.html(data);
+            placeholder.find('.modal').modal('show');
+        })
+    })
+
+    //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.find('.modal').modal('hide');
+        $('#modal-zone').html("");
+    })
+
+    //$(document).on("click", '[data-save="modal"]', function (event) {
+    placeholder.on('click', '[data-new-question="modal"]', function (event) {
+        var form = $(this).parents('.modal').find('form');
+        var actionUrl = form.attr('action');
+        var dataPost = form.serialize();
+
+        //custom
+        var ansCorrect = [];
+        var ansCheck = $('input[type="checkbox"]')
+        var ansText = Array.from(document.querySelectorAll('#ans-txt')).map(v => v.value);
+        var ansCheck = $('input[type="checkbox"]')
+        for (var i = 0; ansCheck[i]; ++i) {
+            if (ansCheck[i].checked) {
+                ansCorrect.push('true');
+            }
+            else {
+                ansCorrect.push('false');
+            }
+        }
+        var questionBody = [];
+        questionBody[0] = document.getElementById("question-name-text").value;
+        questionBody[1] = document.getElementById("inlineFormInputMark").value;
+        questionBody[2] = document.getElementById("inlineFormInputMargin").value;
+        questionBody[3] = document.getElementById("inlineFormInputNegative").value;
+        questionBody[4] = document.getElementById("HiddenQuizId").value;
+        questionBody[5] = document.getElementsByClassName("popup")[0].id;
+        questionBody[6] = document.getElementById("QuestionType").value;
+        //console.log(questionBody);
+        //custom
+
+        var data = { questionBody: questionBody, answers: ansText, answersCheck: ansCorrect };
+
+        //$.post('/Quiz/AddQuestion', data).done(function (data) {
+        //    //location.reload(true);
+        //    $('.quiz-wrapper').html(response.responseText);
+        //})
+        $.ajax({
+            type: "POST",
+            data: data,
+            url: "/Quiz/AddQuestion",
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: "json",
+            success: function (response) {
+                if (response != null) {
+                    console.log("Sent okay");
+                } else {
+                    console.log("Something went wrong");
+                }
+            },
+            failure: function (response) {
+                //console.log(response.responseText);
+            },
+            error: function (response) {
+                //console.log(response.responseText);
+            },
+            complete: function (response) {
+                $('.quiz-wrapper').html(response.responseText);
+                SavePosition();
+                placeholder.find('.modal').modal('hide');
+                $('#modal-zone').html("");
+                //location.reload(true);
+            }
+        });
+    });
+})
+
+
+
+$(document).on('click', '#add-ans', function (e) {
+    e.preventDefault();
+    var template = $('#custom-add-box').get(0).outerHTML;
+    let count = $("div[id*='custom-add-box']").length;
+    if (count < 50) {
+        $(".add-ans").append(template).html();
+    }
+});
+
+$(document).on('click', '#del-ans', function (e) {
+    e.preventDefault();
+    let count = $("div[id*='custom-add-box']").length;
+    if (count > 1) {
+        $('.add-ans').children().last().remove();
+    }
+});
+

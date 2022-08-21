@@ -19,6 +19,10 @@
             <input type="text" class="input" id="AddGroupName" placeholder="Add Question Group" autocomplete="off">
             <input class="button--add" value="Add" type="submit" id="AddSectionBtn" onclick="AddQuestionGroup()">
         </div>
+        <div>
+            <button type="submit" class="button--save" data-toggle="add-question-modal" data-url="@Url.Action("ShowAddQuestionModal", "Quiz", new { id = @Model.Quiz.Id  })">Add Question</button>
+            @*<input class="button--save" value="Add Question" data-toggle="add-question-modal" data-url="@Url.Action("ShowAddQuestionModal", "Quiz", new { id = @Model.Quiz.Id  })">*@
+        </div>
 
         <input class="button--save" value="Save" type="submit" onclick="SavePosition()">
         <input class="button--save" value="Dashboard" type="submit" onclick="location.href='@Url.Action("Index", "Dashboard")'">
