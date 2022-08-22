@@ -4,7 +4,35 @@
 
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome To Quizard</h1>
+    <p>Build online quizzes with advanced structuring and customisation!</p>
 </div>
 
+
+<div class="home-container">
+    <div class="home-panel" id="left-panel">
+
+        @*<img src="/Images/QuizardAnim.svg" />*@
+
+        <object type="image/svg+xml" data="/Images/QuizardAnim.svg">
+            <img src="sample.svg" />
+        </object>
+
+    </div>
+    <div class="home-panel" id="right-panel">
+        <div class="home-buttons">
+            @if (!(User.Identity.IsAuthenticated))
+            {
+            <p>Already a member? Sign in!</p>
+            <button type="submit" class="home-btn" onclick="location.href='@Url.Action("Login", "Account")'">Log In</button>
+            <p>New member? Create a free account today!</p>
+                <button type="submit" class="home-btn" onclick="location.href='@Url.Action("Register", "Account")'">Sign Up</button>
+            }
+            else if (User.Identity.IsAuthenticated)
+            {
+                <p>Continue building quizzes!</p>
+            <button type="submit" class="home-btn" onclick="location.href='@Url.Action("Index", "Dashboard")'">Dashboard</button>
+            }
+        </div>
+    </div>
+</div>

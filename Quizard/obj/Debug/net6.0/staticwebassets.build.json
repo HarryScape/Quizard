@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "/YXhNJC3o5THCcnbqFvIkj06juJw5Xh4hsDnZIOUvWc=",
+  "Hash": "GogM52iRnyU+zRGZxoVKNb9/qNpOeOdODR0MFVB7fdY=",
   "Source": "Quizard",
   "BasePath": "_content/Quizard",
   "Mode": "Default",
@@ -100,6 +100,23 @@
       "CopyToOutputDirectory": "Always",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\delbin.png"
+    },
+    {
+      "Identity": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\Images\\QuizardAnim.svg",
+      "SourceId": "Quizard",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\",
+      "BasePath": "_content/Quizard",
+      "RelativePath": "Images/QuizardAnim.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Always",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\QuizardAnim.svg"
     },
     {
       "Identity": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\js\\site.js",
