@@ -628,7 +628,7 @@ $(function () {
                 SavePosition();
                 placeholder.find('.modal').modal('hide');
                 $('#modal-zone').html("");
-                //location.reload(true);
+                location.reload(true);
             }
         });
     });
