@@ -67,3 +67,5 @@ C:\Users\IvanU\Code\DOTNET\Quizard\Quizard\bin\Debug\net6.0\Microsoft.Extensions
 C:\Users\IvanU\Code\DOTNET\Quizard\Quizard\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\IvanU\Code\DOTNET\Quizard\Quizard\bin\Debug\net6.0\Content\Images\delbin.png
 C:\Users\IvanU\Code\DOTNET\Quizard\Quizard\bin\Debug\net6.0\wwwroot\Images\delbin.png
+C:\Users\IvanU\Code\DOTNET\Quizard\Quizard\bin\Debug\net6.0\Content\Images\QuizardAnim.svg
+C:\Users\IvanU\Code\DOTNET\Quizard\Quizard\bin\Debug\net6.0\wwwroot\Images\QuizardAnim.svg
