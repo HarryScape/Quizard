@@ -6,39 +6,40 @@
 
 
 
-<div class="flex-container">
+    <div class="flex-container">
 
-    <div class="controls">
-        <h4 class="quizName"> @Model.Quiz.QuizName </h4>
+        <div class="controls">
+            <h4 class="quizName"> @Model.Quiz.QuizName </h4>
 
-        <div class="input-group">
-            <input type="text" class="input" id="AddSectionName" placeholder="Add Section" autocomplete="off">
-            <input class="button--add" value="Add" type="submit" id="AddSectionBtn" onclick="AddSection()">
-        </div>
-        <div class="input-group">
-            <input type="text" class="input" id="AddGroupName" placeholder="Add Question Group" autocomplete="off">
-            <input class="button--add" value="Add" type="submit" id="AddSectionBtn" onclick="AddQuestionGroup()">
-        </div>
-        <div>
-            <button type="submit" class="button--save" data-toggle="add-question-modal" data-url="@Url.Action("ShowAddQuestionModal", "Quiz", new { id = @Model.Quiz.Id  })">Add Question</button>
-            @*<input class="button--save" value="Add Question" data-toggle="add-question-modal" data-url="@Url.Action("ShowAddQuestionModal", "Quiz", new { id = @Model.Quiz.Id  })">*@
+            <div class="input-group">
+                <input type="text" class="input" id="AddSectionName" placeholder="Add Section" autocomplete="off">
+                <input class="button--add" value="Add" type="submit" id="AddSectionBtn" onclick="AddSection()">
+            </div>
+            <div class="input-group">
+                <input type="text" class="input" id="AddGroupName" placeholder="Add Question Group" autocomplete="off">
+                <input class="button--add" value="Add" type="submit" id="AddSectionBtn" onclick="AddQuestionGroup()">
+            </div>
+            <div class="input-group">
+                <button type="submit" class="button--save" data-toggle="add-question-modal" data-url="@Url.Action("ShowAddQuestionModal", "Quiz", new { id = @Model.Quiz.Id  })">Add Question</button>
+            </div>
+
+            <div class="input-group">
+                <input class="button--save" value="Save" type="submit" onclick="SavePosition()">
+                <input class="button--save" value="Dashboard" type="submit" onclick="location.href='@Url.Action("Index", "Dashboard")'">
+                <input class="button--save" value="Delete Quiz" type="submit" id="del-quiz" onclick="DeleteQuiz(@Model.Quiz.Id)">
+            </div>
+
         </div>
 
-        <input class="button--save" value="Save" type="submit" onclick="SavePosition()">
-        <input class="button--save" value="Dashboard" type="submit" onclick="location.href='@Url.Action("Index", "Dashboard")'">
-        <input class="button--save" value="Delete Quiz" type="submit" id="del-quiz" onclick="DeleteQuiz(@Model.Quiz.Id)">
+        <div class="quiz-wrapper" id="partialZone">
+            @{
+                Html.RenderPartial("_Section");
+            }
+        </div>
 
     </div>
 
-    <div class="quiz-wrapper" id="partialZone">
-        @{
-            Html.RenderPartial("_Section");
-        }
-    </div>
-
-</div>
-
-<div id="modal-zone"></div>
+    <div id="modal-zone"></div>
 
 </body>
 
