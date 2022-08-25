@@ -11,7 +11,7 @@ namespace Quizard.Controllers
 {
     public class DashboardController : Controller
     {
-
+        private readonly IQuizExportService _quizExportService;
         private readonly IDashboardRepository _dashboardRepository;
         private readonly IModuleRepository _moduleRepository;
         private readonly IQuizRepository _quizRepository;
@@ -23,7 +23,8 @@ namespace Quizard.Controllers
 
         public DashboardController(IDashboardRepository dashboardRepository, IQuizRepository quizRepository,
             IHttpContextAccessor contextAccessor, IQuizParserService quizParserService, IBlackboardParserService blackboardParserService,
-            ICanvasParserService canvasParserService, IMoodleParserService moodleParserService, IModuleRepository moduleRepository)
+            ICanvasParserService canvasParserService, IMoodleParserService moodleParserService, IModuleRepository moduleRepository, 
+            IQuizExportService quizExportService)
         {
             _dashboardRepository = dashboardRepository;
             _quizRepository = quizRepository;
@@ -33,6 +34,7 @@ namespace Quizard.Controllers
             _canvasParserService = canvasParserService;
             _moodleParserService = moodleParserService;
             _moduleRepository = moduleRepository;
+            _quizExportService = quizExportService;
         }
 
         public async Task<IActionResult> Index()
@@ -149,6 +151,13 @@ namespace Quizard.Controllers
             quiz.Deployed = !quiz.Deployed;
             _quizRepository.Update(quiz);
 
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+        public async Task<IActionResult> ExportQuiz(int quizId)
+        {
+            var exportQuizViewModel = await _quizExportService.GenerateQuizViewModel(quizId);
+            _quizExportService.GenerateDocx(exportQuizViewModel);
             return RedirectToAction("Index", "Dashboard");
         }
     }
