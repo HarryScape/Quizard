@@ -40,32 +40,16 @@ namespace Quizard.Services
             return quizViewModel;
         }
 
-        //public FileResult GenerateDocx(ExportQuizViewModel exportQuizViewModel)
-        //{
-        //    //string docPath = "~/Content/";
-        //    //Byte[] file;
 
-        //    //using (MemoryStream mem = new MemoryStream())
-        //    //{
-        //    //    using (WordprocessingDocument wordDocument =
-        //    //        WordprocessingDocument.Create(docPath, WordprocessingDocumentType.Document))
-        //    //    {
-        //    //        // Insert other code here. 
-        //    //    }
-        //    //    file = mem.ToArray();
-        //    //}
-
-        //}
-
-
+        //string path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "TempUpload")).ToString();
 
 
         public byte[] GenerateDocx(ExportQuizViewModel exportQuizViewModel)
         {
-            //string path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "TempUpload")).ToString();
-            Run lineBreak = new Run(new Break());
-            int sectionCount = 1, questionCount = 1, questionChildCount = 1, answerCount = 1;
+            //Run lineBreak = new Run(new Break());
+            int sectionCount = 1, questionCount = 1, questionChildCount = 0, answerCount = 1;
             var alphabetLabel = Enumerable.Range('a', 'z' - 'a' + 1).Select(c => (char)c).ToList();
+            Indentation indentation1 = new Indentation() { Left = "1440", Hanging = "720" };
 
             using (MemoryStream mem = new MemoryStream())
             {
@@ -78,29 +62,98 @@ namespace Quizard.Services
                     mainPart.Document = new Document();
                     Body body = mainPart.Document.AppendChild(new Body());
                     Paragraph para = body.AppendChild(new Paragraph());
+
+                    RunProperties runProperties1 = new RunProperties();
+                    FontSize fontSize1 = new FontSize() { Val = "36" };
+                    runProperties1.Append(fontSize1);
+
                     Run run = para.AppendChild(new Run());
+                    run.Append(runProperties1);
                     run.AppendChild(new Text(exportQuizViewModel.Quiz.QuizName));
+                    run.AppendChild(new Break());
 
                     foreach(var section in exportQuizViewModel.Sections)
                     {
                         Paragraph paragraph = body.AppendChild(new Paragraph());
+                        RunProperties runProperties2 = new RunProperties();
+                        FontSize fontSize2 = new FontSize() { Val = "28" };
+                        runProperties2.Append(fontSize2);
                         Run runName = paragraph.AppendChild(new Run());
+                        runName.Append(runProperties2);
+                        runName.AppendChild(new Break());
                         runName.AppendChild(new Text($"Section {sectionCount}: {section.SectionName}"));
+                        runName.AppendChild(new Break());
 
                         // question loop here
                         foreach(var questionParent in exportQuizViewModel.ParentQuestions.Where(i => i.SectionId == section.Id)){
                             Paragraph paragraphParent = body.AppendChild(new Paragraph());
                             Run runParent = paragraphParent.AppendChild(new Run());
+                            runParent.Append(new Break());
                             runParent.AppendChild(new Text($"{questionCount}) {questionParent.QuestionTitle}"));
-                            // recursion for children...
 
+                            foreach(var questionChild in questionParent.Children)
+                            {
+                                Paragraph paragraphChild = body.AppendChild(new Paragraph());
+                                Run runChild = paragraphChild.AppendChild(new Run());
+                                runChild.Append(new Break());
+                                runChild.AppendChild(new Text($"{alphabetLabel[questionChildCount]}) {questionChild.QuestionTitle}"));
+                                questionChildCount++;
+                                // answers
+                                if(questionChild.QuestionAnswers != null)
+                                {
+                                    foreach (var ans in questionChild.QuestionAnswers)
+                                    {
+                                        if (ans.isCorrect == true)
+                                        {
+                                            Paragraph paragraphAnswer = body.AppendChild(new Paragraph());
+                                            Run runAnswer = paragraphAnswer.AppendChild(new Run());
+                                            runAnswer.AppendChild(new Text($"* {answerCount}. {ans.QuestionAnswer}"));
+                                            answerCount++;
+                                        }
+                                        else
+                                        {
+                                            Paragraph paragraphAnswer = body.AppendChild(new Paragraph());
+                                            Run runAnswer = paragraphAnswer.AppendChild(new Run());
+                                            runAnswer.AppendChild(new Text($"{answerCount}. {ans.QuestionAnswer}"));
+                                            answerCount++;
+                                        }
+                                    }
+                                    answerCount = 1;
+                                }
+                            }
+                            questionChildCount = 0;
                             questionCount++;
+
+                            if (questionParent.QuestionAnswers != null)
+                            {
+                                foreach (var ans in questionParent.QuestionAnswers)
+                                {
+                                    if (ans.isCorrect == true)
+                                    {
+                                        Paragraph paragraphAnswer = body.AppendChild(new Paragraph());
+                                        Run runAnswer = paragraphAnswer.AppendChild(new Run());
+                                        runAnswer.AppendChild(new Text($"   * {answerCount}. {ans.QuestionAnswer}"));
+                                        answerCount++;
+                                    }
+                                    else
+                                    {
+                                        Paragraph paragraphAnswer = body.AppendChild(new Paragraph());
+                                        Run runAnswer = paragraphAnswer.AppendChild(new Run());
+                                        runAnswer.AppendChild(new Text($"   {answerCount}. {ans.QuestionAnswer}"));
+                                        answerCount++;
+                                    }
+                                }
+                                answerCount = 1;
+                            }
+                            //if(questionParent.QuestionType == Data.Enum.QuestionType.GROUP)
+                            //{
+                            //    //append space
+                            //    runParent.AppendChild(new Break());
+                            //}
                         }
                         questionCount = 1;
                         sectionCount++;
                     }
-
-
                     wordDocument.MainDocumentPart.Document.Save();
                     wordDocument.Close();
                     File.WriteAllBytes("C:\\data\\newFileName.docx", mem.ToArray());
@@ -110,7 +163,16 @@ namespace Quizard.Services
         }
 
 
-
+        //public void DocxChildQuestions(IEnumerable<Question> questionChild)
+        //{
+        //    // do something here to add child questions to the document...
+        //    foreach(var question in questionChild)
+        //    {
+        //        Paragraph paragraphParent = body.AppendChild(new Paragraph());
+        //        Run runParent = paragraphParent.AppendChild(new Run());
+        //        runParent.AppendChild(new Text($"{questionCount}) {question.QuestionTitle}"));
+        //    }
+        //}
 
 
 
