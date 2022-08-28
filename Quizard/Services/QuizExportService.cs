@@ -89,14 +89,30 @@ namespace Quizard.Services
                             Paragraph paragraphParent = body.AppendChild(new Paragraph());
                             Run runParent = paragraphParent.AppendChild(new Run());
                             runParent.Append(new Break());
-                            runParent.AppendChild(new Text($"{questionCount}) {questionParent.QuestionTitle}"));
+                            //runParent.AppendChild(new Text($"{questionCount}) {questionParent.QuestionTitle}"));
+                            if(questionParent.Mark != null)
+                            {
+                                runParent.AppendChild(new Text($"{questionCount}) {questionParent.QuestionTitle} [{questionParent.Mark}]"));
+                            }
+                            else
+                            {
+                                runParent.AppendChild(new Text($"{questionCount}) {questionParent.QuestionTitle}"));
+                            }
 
-                            foreach(var questionChild in questionParent.Children)
+                            foreach (var questionChild in questionParent.Children)
                             {
                                 Paragraph paragraphChild = body.AppendChild(new Paragraph());
                                 Run runChild = paragraphChild.AppendChild(new Run());
                                 runChild.Append(new Break());
-                                runChild.AppendChild(new Text($"{alphabetLabel[questionChildCount]}) {questionChild.QuestionTitle}"));
+                                //runChild.AppendChild(new Text($"{alphabetLabel[questionChildCount]}) {questionChild.QuestionTitle}"));
+                                if (questionParent.Mark != 0 || questionParent.Mark != null)
+                                {
+                                    runChild.AppendChild(new Text($"{alphabetLabel[questionChildCount]}) {questionChild.QuestionTitle} [{questionChild.Mark}]"));
+                                }
+                                else
+                                {
+                                    runChild.AppendChild(new Text($"{alphabetLabel[questionChildCount]}) {questionChild.QuestionTitle}"));
+                                }
                                 questionChildCount++;
                                 // answers
                                 if(questionChild.QuestionAnswers != null)
@@ -144,6 +160,7 @@ namespace Quizard.Services
                                     }
                                 }
                                 answerCount = 1;
+
                             }
                             //if(questionParent.QuestionType == Data.Enum.QuestionType.GROUP)
                             //{
