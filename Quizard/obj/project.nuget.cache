@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "MoudUdCctY6jkvBwKpyXquCPF4DK2H5wghipsZavKuaP7rzjsV5Mu9sLZDz6yieTir0Qi7sF0V1zljVqrqU+uw==",
+  "dgSpecHash": "7SXYGLjJoFJL7SBJko72VzIierPU/4qP3PgzFtqnImOXzXuNOYOOVYmm4LZfuhQSejt+Ggsedfcu4sH6QEBsVQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\Quizard.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\IvanU\\.nuget\\packages\\documentformat.openxml\\2.17.1\\documentformat.openxml.2.17.1.nupkg.sha512",
     "C:\\Users\\IvanU\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\IvanU\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.6\\microsoft.aspnetcore.cryptography.internal.6.0.6.nupkg.sha512",
     "C:\\Users\\IvanU\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\6.0.6\\microsoft.aspnetcore.cryptography.keyderivation.6.0.6.nupkg.sha512",
@@ -44,6 +45,7 @@
     "C:\\Users\\IvanU\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.0\\system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
     "C:\\Users\\IvanU\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
     "C:\\Users\\IvanU\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.8.0\\system.identitymodel.tokens.jwt.6.8.0.nupkg.sha512",
+    "C:\\Users\\IvanU\\.nuget\\packages\\system.io.packaging\\4.7.0\\system.io.packaging.4.7.0.nupkg.sha512",
     "C:\\Users\\IvanU\\.nuget\\packages\\system.runtime.caching\\4.7.0\\system.runtime.caching.4.7.0.nupkg.sha512",
     "C:\\Users\\IvanU\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "C:\\Users\\IvanU\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
