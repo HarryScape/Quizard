@@ -6,16 +6,20 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml.InkML;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Quizard.Services
 {
     public class QuizExportService : IQuizExportService
     {
         private readonly IQuizRepository _quizRepository;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public QuizExportService(IQuizRepository quizRepository)
+        public QuizExportService(IQuizRepository quizRepository, IHttpClientFactory httpClientFactory)
         {
             _quizRepository = quizRepository;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<ExportQuizViewModel> GenerateQuizViewModel(int id)
@@ -44,7 +48,9 @@ namespace Quizard.Services
         //string path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "TempUpload")).ToString();
 
 
-        public byte[] GenerateDocx(ExportQuizViewModel exportQuizViewModel)
+        //public byte[] GenerateDocx(ExportQuizViewModel exportQuizViewModel)
+        public async Task<ActionResult> GenerateDocx(ExportQuizViewModel exportQuizViewModel)
+
         {
             //Run lineBreak = new Run(new Break());
             int sectionCount = 1, questionCount = 1, questionChildCount = 0, answerCount = 1;
@@ -72,7 +78,7 @@ namespace Quizard.Services
                     run.AppendChild(new Text(exportQuizViewModel.Quiz.QuizName));
                     run.AppendChild(new Break());
 
-                    foreach(var section in exportQuizViewModel.Sections)
+                    foreach (var section in exportQuizViewModel.Sections)
                     {
                         Paragraph paragraph = body.AppendChild(new Paragraph());
                         RunProperties runProperties2 = new RunProperties();
@@ -85,12 +91,13 @@ namespace Quizard.Services
                         runName.AppendChild(new Break());
 
                         // question loop here
-                        foreach(var questionParent in exportQuizViewModel.ParentQuestions.Where(i => i.SectionId == section.Id)){
+                        foreach (var questionParent in exportQuizViewModel.ParentQuestions.Where(i => i.SectionId == section.Id))
+                        {
                             Paragraph paragraphParent = body.AppendChild(new Paragraph());
                             Run runParent = paragraphParent.AppendChild(new Run());
                             runParent.Append(new Break());
                             //runParent.AppendChild(new Text($"{questionCount}) {questionParent.QuestionTitle}"));
-                            if(questionParent.Mark != null)
+                            if (questionParent.Mark != null)
                             {
                                 runParent.AppendChild(new Text($"{questionCount}) {questionParent.QuestionTitle} [{questionParent.Mark}]"));
                             }
@@ -115,7 +122,7 @@ namespace Quizard.Services
                                 }
                                 questionChildCount++;
                                 // answers
-                                if(questionChild.QuestionAnswers != null)
+                                if (questionChild.QuestionAnswers != null)
                                 {
                                     foreach (var ans in questionChild.QuestionAnswers)
                                     {
@@ -173,7 +180,12 @@ namespace Quizard.Services
                     }
                     wordDocument.MainDocumentPart.Document.Save();
                     wordDocument.Close();
-                    File.WriteAllBytes("C:\\data\\newFileName.docx", mem.ToArray());
+                    //string file = $"C:\\data\\newFileName.docx";
+                    //File.WriteAllBytes("C:\\data\\newFileName.docx", mem.ToArray());
+                    return new FileStreamResult(mem, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                    {
+                        FileDownloadName = "test.docx"
+                    };
                 }
             }
             return null;
@@ -190,6 +202,49 @@ namespace Quizard.Services
         //        runParent.AppendChild(new Text($"{questionCount}) {question.QuestionTitle}"));
         //    }
         //}
+
+
+        public async Task<string> GenerateQTI()
+        {
+            var docToSend = "replace later";
+            var qtiUrl = "";
+
+            // Configure httpClient
+            string createURL = $"https://digitaliser.getmarked.ai/api/v1.0/job/create_job/";
+            var httpClient = _httpClientFactory.CreateClient();
+            httpClient.BaseAddress = new Uri(createURL);
+            httpClient.Timeout = new TimeSpan(0, 0, 30);
+            httpClient.DefaultRequestHeaders.Clear();
+
+            // CREATE JOB
+            string privatekey = "test1234";
+            var headers = $"AUTHORIZATION: {privatekey}";
+            var response = await httpClient.GetAsync(createURL + docToSend + headers);
+
+            response.EnsureSuccessStatusCode();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Parse response
+                using var contentStream = await response.Content.ReadAsStreamAsync();
+                JsonNode endpointNode = JsonNode.Parse(contentStream)!;
+                string endpoint = endpointNode!["data"]["result_endpoint"]!.ToString();
+                // GET JSON QUIZ VIA POLLING
+                var quizJson = await httpClient.GetAsync(endpoint + headers);
+                // Parse response
+                quizJson.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
+                {
+                    using var qtiStream = await response.Content.ReadAsStreamAsync();
+                    JsonNode urlNode = JsonNode.Parse(qtiStream)!;
+                    qtiUrl = urlNode!["data"]["url"]!.ToString();
+                }
+                // Return QTI Quiz zip file
+
+            }
+            return qtiUrl;
+            //return null;
+        }
 
 
 

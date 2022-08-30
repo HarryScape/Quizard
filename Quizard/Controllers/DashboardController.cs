@@ -20,11 +20,12 @@ namespace Quizard.Controllers
         private readonly IBlackboardParserService _blackboardParserService;
         private readonly ICanvasParserService _canvasParserService;
         private readonly IMoodleParserService _moodleParserService;
+        private readonly IHttpClientFactory _httpClientFactory;
 
         public DashboardController(IDashboardRepository dashboardRepository, IQuizRepository quizRepository,
             IHttpContextAccessor contextAccessor, IQuizParserService quizParserService, IBlackboardParserService blackboardParserService,
             ICanvasParserService canvasParserService, IMoodleParserService moodleParserService, IModuleRepository moduleRepository, 
-            IQuizExportService quizExportService)
+            IQuizExportService quizExportService, IHttpClientFactory httpClientFactory)
         {
             _dashboardRepository = dashboardRepository;
             _quizRepository = quizRepository;
@@ -35,6 +36,7 @@ namespace Quizard.Controllers
             _moodleParserService = moodleParserService;
             _moduleRepository = moduleRepository;
             _quizExportService = quizExportService;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<IActionResult> Index()
@@ -157,7 +159,11 @@ namespace Quizard.Controllers
         public async Task<IActionResult> ExportQuiz(int quizId)
         {
             var exportQuizViewModel = await _quizExportService.GenerateQuizViewModel(quizId);
-            _quizExportService.GenerateDocx(exportQuizViewModel);
+            //_quizExportService.GenerateDocx(exportQuizViewModel);
+            var docToSend = _quizExportService.GenerateDocx(exportQuizViewModel);
+
+            //return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "test.docx");
+
             return RedirectToAction("Index", "Dashboard");
         }
     }
