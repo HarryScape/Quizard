@@ -162,8 +162,10 @@ namespace Quizard.Controllers
             //_quizExportService.GenerateDocx(exportQuizViewModel);
             var docToSend = _quizExportService.GenerateDocx(exportQuizViewModel);
 
-            //return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "test.docx");
+            string downloadUrl = await _quizExportService.GenerateQTI();
 
+
+            //return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "test.docx");
             return RedirectToAction("Index", "Dashboard");
         }
     }

@@ -8,6 +8,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml.InkML;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text;
 
 namespace Quizard.Services
 {
@@ -208,42 +209,58 @@ namespace Quizard.Services
         {
             var docToSend = "replace later";
             var qtiUrl = "";
+            string key = "test1234"; // fake placeholder private key
 
             // Configure httpClient
-            string createURL = $"https://digitaliser.getmarked.ai/api/v1.0/job/create_job/";
             var httpClient = _httpClientFactory.CreateClient();
-            httpClient.BaseAddress = new Uri(createURL);
             httpClient.Timeout = new TimeSpan(0, 0, 30);
             httpClient.DefaultRequestHeaders.Clear();
+            httpClient.DefaultRequestHeaders.Add("AUTHORIZATION: Api-Key", key);
 
             // CREATE JOB
-            string privatekey = "test1234";
-            var headers = $"AUTHORIZATION: {privatekey}";
-            var response = await httpClient.GetAsync(createURL + docToSend + headers);
+            string createURL = $"https://digitaliser.getmarked.ai/api/v1.0/job/create_job/";
+            //var headers = $"AUTHORIZATION: Api-Key {key}";
+            // POST your file using multipart/form-data
+            var multipartContent = new MultipartFormDataContent();
+            var file = File.ReadAllBytes(docToSend);
+            var byteArrayContent = new ByteArrayContent(file);
+            multipartContent.Add(byteArrayContent, "docx", "quiz.docx");
 
+            var response = await httpClient.PostAsync(createURL, multipartContent);
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)
             {
-                // Parse response
+                // Parse response to get endpoint
                 using var contentStream = await response.Content.ReadAsStreamAsync();
                 JsonNode endpointNode = JsonNode.Parse(contentStream)!;
                 string endpoint = endpointNode!["data"]["result_endpoint"]!.ToString();
+
                 // GET JSON QUIZ VIA POLLING
-                var quizJson = await httpClient.GetAsync(endpoint + headers);
-                // Parse response
+                var quizJson = await httpClient.GetAsync(endpoint);
                 quizJson.EnsureSuccessStatusCode();
+
+                // POST JSON QUIZ TO GET QTI URL
                 if (response.IsSuccessStatusCode)
                 {
-                    using var qtiStream = await response.Content.ReadAsStreamAsync();
-                    JsonNode urlNode = JsonNode.Parse(qtiStream)!;
-                    qtiUrl = urlNode!["data"]["url"]!.ToString();
-                }
-                // Return QTI Quiz zip file
+                    StringContent jsonQuizContent = new StringContent(quizJson.ToString(), Encoding.UTF8, "application/json");
+                    string convertURL = $"https://digitaliser.getmarked.ai/api/v1.0/json_conversion/";
+                    var quizUrl = await httpClient.PostAsync(convertURL, jsonQuizContent); // plus the json quiz how????
+                    quizUrl.EnsureSuccessStatusCode();
 
+                    // Parse response
+                    if (quizUrl.IsSuccessStatusCode)
+                    {
+                        using var qtiStream = await quizUrl.Content.ReadAsStreamAsync();
+                        JsonNode urlNode = JsonNode.Parse(qtiStream)!;
+                        qtiUrl = urlNode!["data"]["url"]!.ToString();
+
+                        // Return QTI quiz.zip file url
+                        return qtiUrl;
+                    }
+                }
             }
-            return qtiUrl;
-            //return null;
+            return null;
         }
 
 
