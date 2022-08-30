@@ -9,6 +9,7 @@ using DocumentFormat.OpenXml.InkML;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text;
+using System.Net.Http.Headers;
 
 namespace Quizard.Services
 {
@@ -50,7 +51,7 @@ namespace Quizard.Services
 
 
         //public byte[] GenerateDocx(ExportQuizViewModel exportQuizViewModel)
-        public async Task<ActionResult> GenerateDocx(ExportQuizViewModel exportQuizViewModel)
+        public async Task<byte[]> GenerateDocx(ExportQuizViewModel exportQuizViewModel)
 
         {
             //Run lineBreak = new Run(new Break());
@@ -183,10 +184,12 @@ namespace Quizard.Services
                     wordDocument.Close();
                     //string file = $"C:\\data\\newFileName.docx";
                     //File.WriteAllBytes("C:\\data\\newFileName.docx", mem.ToArray());
-                    return new FileStreamResult(mem, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-                    {
-                        FileDownloadName = "test.docx"
-                    };
+                    //return new FileStreamResult(mem, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                    //{
+                    //    FileDownloadName = "test.docx"
+                    //};
+                    byte[] rawBytes = mem.ToArray();
+                    return rawBytes;
                 }
             }
             return null;
@@ -205,28 +208,30 @@ namespace Quizard.Services
         //}
 
 
-        public async Task<string> GenerateQTI()
+        public async Task<string> GenerateQTI(byte[] doc)
         {
-            var docToSend = "replace later";
+            //var docToSend = "replace later";
             var qtiUrl = "";
             string key = "test1234"; // fake placeholder private key
+            var headers = $"AUTHORIZATION: Api-Key {key}";
 
             // Configure httpClient
             var httpClient = _httpClientFactory.CreateClient();
             httpClient.Timeout = new TimeSpan(0, 0, 30);
             httpClient.DefaultRequestHeaders.Clear();
-            httpClient.DefaultRequestHeaders.Add("AUTHORIZATION: Api-Key", key);
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(headers);
+            //httpClient.DefaultRequestHeaders.Add("AUTHORIZATION: Api-Key", key);
 
             // CREATE JOB
             string createURL = $"https://digitaliser.getmarked.ai/api/v1.0/job/create_job/";
             //var headers = $"AUTHORIZATION: Api-Key {key}";
             // POST your file using multipart/form-data
-            var multipartContent = new MultipartFormDataContent();
-            var file = File.ReadAllBytes(docToSend);
-            var byteArrayContent = new ByteArrayContent(file);
-            multipartContent.Add(byteArrayContent, "docx", "quiz.docx");
+            var content = new MultipartFormDataContent("------------" + Guid.NewGuid());
+            var byteArrayContent = new ByteArrayContent(doc);
+            byteArrayContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+            content.Add(byteArrayContent, "\"file\"", $"\"quiz.docx\"");
 
-            var response = await httpClient.PostAsync(createURL, multipartContent);
+            var response = await httpClient.PostAsync(createURL, content);
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)

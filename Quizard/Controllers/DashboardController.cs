@@ -160,13 +160,13 @@ namespace Quizard.Controllers
         {
             var exportQuizViewModel = await _quizExportService.GenerateQuizViewModel(quizId);
             //_quizExportService.GenerateDocx(exportQuizViewModel);
-            var docToSend = _quizExportService.GenerateDocx(exportQuizViewModel);
+            byte[] docToSend = await _quizExportService.GenerateDocx(exportQuizViewModel);
 
-            string downloadUrl = await _quizExportService.GenerateQTI();
+            string downloadUrl = await _quizExportService.GenerateQTI(docToSend);
 
-
+            return Redirect(downloadUrl);
             //return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "test.docx");
-            return RedirectToAction("Index", "Dashboard");
+            //return RedirectToAction("Index", "Dashboard");
         }
     }
 }
