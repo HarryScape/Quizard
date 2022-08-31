@@ -658,6 +658,7 @@ $(document).on('click', '#del-ans', function (e) {
 // COUNTDOWN
 const countdown = document.getElementById('timer');
 const minuteDuration = countdown.getAttribute('time');
+
 let time = minuteDuration * 60;
 
 function Countdown() {
@@ -674,7 +675,10 @@ function UpdateCountdown() {
     countdown.innerHTML = `${hours} : ${minutes} : ${seconds}`
     time--;
 
-    // if time = zero submit page and load completed page...
+    // if time = zero submit page and load completed page.
+    if (time === 0) {
+        window.location.href = '/TakeQuiz/Completed/';
+    }
 }
 
 function BeginQuiz() {

@@ -21,5 +21,12 @@ namespace Quizard.Controllers
 
             return View(quizViewModel);
         }
+
+        public async Task<IActionResult> Completed(int quizId)
+        {
+            var quizViewModel = await _quizParserService.GenerateQuizViewModel(quizId);
+
+            return View(quizViewModel);
+        }
     }
 }

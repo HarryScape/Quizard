@@ -12,9 +12,13 @@
 
     <div class="description-outer">
         <div class="description-box">
-            <p> You will have blah blah blah...</p>
-            <p> Random Description...</p>
-            <p> Random instructions when you're done'...</p>
+            <h1> @Model.Quiz.QuizName </h1>
+            <br />
+            <p> You will have <strong>@Model.Quiz.TimeLimit minutes</strong> to complete the quiz.</p>
+            <p> Answer all the <strong>required questions</strong>. When you are done, click next to continue to the next page. </p>
+            <p> If the time limit runs out before you are finished, it will save the progress you have made and close the quiz. </p>
+            <p> When you are finished, click <strong>submit</strong> to end the quiz.</p>
+            <p><strong>Good luck!</strong></p>
             <div class="take-description-buttons">
                 <button type="submit" class="button--save" onclick="location.href='@Url.Action("Index", "Dashboard")'">Go Back</button>
                 <button type="submit" class="button--save" onclick="BeginQuiz()">Begin Quiz</button>
