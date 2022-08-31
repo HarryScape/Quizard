@@ -28,5 +28,7 @@ namespace Quizard.Models
         public double? NegativeMark { get; set; }
         public double? ErrorMargin { get; set; }
 
+        public ICollection<UserQuestionResponse> QuestionResponses { get; set; }
+
     }
 }

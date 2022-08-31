@@ -15,5 +15,7 @@ namespace Quizard.Models
 
         public ICollection<Quiz> UserQuizzes { get; set; }
         public ICollection<UserModule> Modules { get; set; }
+        public ICollection<UserQuizAttempt> UserQuizAttempts { get; set; }
+
     }
 }

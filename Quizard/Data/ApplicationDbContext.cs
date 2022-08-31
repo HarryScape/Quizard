@@ -19,6 +19,8 @@ namespace Quizard.Data
         public DbSet<Answer> Answers { get; set; }
 
         public DbSet<UserModule> UserModules { get; set; }
+        public DbSet<UserQuizAttempt> UserQuizAttempts { get; set; }
+        public DbSet<UserQuestionResponse> UserQuestionResponses { get; set; }
 
         //public DbSet<User> Users { get; set; }
 
@@ -26,6 +28,7 @@ namespace Quizard.Data
         {
             base.OnModelCreating(builder);
 
+            // USER MODULES
             // Composite key
             builder.Entity<UserModule>()
                 .HasKey(um => new { um.UserId, um.ModuleId });
@@ -41,7 +44,40 @@ namespace Quizard.Data
                 .HasOne(um => um.User)
                 .WithMany(um => um.Modules)
                 .HasForeignKey(um => um.UserId);
+
+
+            // USER QUIZ ATTEMPTS
+            // Relation for user to have many quiz attempts
+            builder.Entity<UserQuizAttempt>()
+                .HasOne(um => um.Quiz)
+                .WithMany(um => um.UserQuizAttempts)
+                .HasForeignKey(um => um.UserId);
+
+            // Relation for quiz to have many user attempts
+            builder.Entity<UserQuizAttempt>()
+                .HasOne(um => um.User)
+                .WithMany(um => um.UserQuizAttempts)
+                .HasForeignKey(um => um.QuizId);
+
+
+
+
+
+            // responses
+            builder.Entity<UserQuestionResponse>()
+                .HasOne(um => um.Quiz)
+                .WithMany(um => um.UserQuizAttempts)
+                .HasForeignKey(um => um.UserId);
+
+            // Relation for quiz to have many user attempts
+            builder.Entity<UserQuestionResponse>()
+                .HasOne(um => um.User)
+                .WithMany(um => um.UserQuizAttempts)
+                .HasForeignKey(um => um.QuizId);
+
         }
+
+
 
     }
 }
