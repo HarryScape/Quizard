@@ -11,7 +11,7 @@ namespace Quizard.Controllers
 {
     public class DashboardController : Controller
     {
-
+        private readonly IQuizExportService _quizExportService;
         private readonly IDashboardRepository _dashboardRepository;
         private readonly IModuleRepository _moduleRepository;
         private readonly IQuizRepository _quizRepository;
@@ -20,10 +20,12 @@ namespace Quizard.Controllers
         private readonly IBlackboardParserService _blackboardParserService;
         private readonly ICanvasParserService _canvasParserService;
         private readonly IMoodleParserService _moodleParserService;
+        private readonly IHttpClientFactory _httpClientFactory;
 
         public DashboardController(IDashboardRepository dashboardRepository, IQuizRepository quizRepository,
             IHttpContextAccessor contextAccessor, IQuizParserService quizParserService, IBlackboardParserService blackboardParserService,
-            ICanvasParserService canvasParserService, IMoodleParserService moodleParserService, IModuleRepository moduleRepository)
+            ICanvasParserService canvasParserService, IMoodleParserService moodleParserService, IModuleRepository moduleRepository, 
+            IQuizExportService quizExportService, IHttpClientFactory httpClientFactory)
         {
             _dashboardRepository = dashboardRepository;
             _quizRepository = quizRepository;
@@ -33,6 +35,8 @@ namespace Quizard.Controllers
             _canvasParserService = canvasParserService;
             _moodleParserService = moodleParserService;
             _moduleRepository = moduleRepository;
+            _quizExportService = quizExportService;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<IActionResult> Index()
@@ -150,6 +154,19 @@ namespace Quizard.Controllers
             _quizRepository.Update(quiz);
 
             return RedirectToAction("Index", "Dashboard");
+        }
+
+        public async Task<IActionResult> ExportQuiz(int quizId)
+        {
+            var exportQuizViewModel = await _quizExportService.GenerateQuizViewModel(quizId);
+            //_quizExportService.GenerateDocx(exportQuizViewModel);
+            byte[] docToSend = await _quizExportService.GenerateDocx(exportQuizViewModel);
+
+            string downloadUrl = await _quizExportService.GenerateQTI(docToSend);
+
+            return Redirect(downloadUrl);
+            //return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "test.docx");
+            //return RedirectToAction("Index", "Dashboard");
         }
     }
 }

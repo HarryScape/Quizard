@@ -69,3 +69,5 @@ C:\Users\IvanU\Code\DOTNET\Quizard\Quizard\bin\Debug\net6.0\Content\Images\delbi
 C:\Users\IvanU\Code\DOTNET\Quizard\Quizard\bin\Debug\net6.0\wwwroot\Images\delbin.png
 C:\Users\IvanU\Code\DOTNET\Quizard\Quizard\bin\Debug\net6.0\Content\Images\QuizardAnim.svg
 C:\Users\IvanU\Code\DOTNET\Quizard\Quizard\bin\Debug\net6.0\wwwroot\Images\QuizardAnim.svg
+C:\Users\IvanU\Code\DOTNET\Quizard\Quizard\bin\Debug\net6.0\DocumentFormat.OpenXml.dll
+C:\Users\IvanU\Code\DOTNET\Quizard\Quizard\bin\Debug\net6.0\System.IO.Packaging.dll
