@@ -70,7 +70,7 @@
                                 }
                                 else if (User.IsInRole("student"))
                                 {
-                                    <button type="submit" class="button-table">Take Quiz</button>
+                                    <button type="submit" class="button-table" onclick="location.href='@Url.Action("Index", "TakeQuiz", new { QuizId = item.Id })'">Take Quiz</button>
                                 }
                             }
                         </td>

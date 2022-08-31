@@ -657,3 +657,52 @@ ol {
 .home-buttons > p:first-child {
     margin-top: 50px;
 }
+
+
+
+
+/*TAKE QUIZ*/
+.countdown-outer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.countdown {
+    width: 400px;
+    height: 100px;
+    background-color: #5e4dcd;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    position: absolute;
+    top: 56px;
+    display: inline-block;
+}
+
+.description-outer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.description-box {
+    /*border: solid black 1px;*/
+    padding: 30px;
+    margin-top: 150px;
+    width: 80%;
+    height: 80%;
+    text-align: center;
+    /*background-color: #5e4dcd;*/
+    background-color: rgba(94, 77, 205, .3);
+    border-radius: 6px;
+}
+
+.take-description-buttons .button--save{
+    margin: 30px;
+}
+
+#timer {
+    color: #fff;
+    font-size: 55px;
+    text-align: center;
+}

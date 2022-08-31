@@ -653,3 +653,30 @@ $(document).on('click', '#del-ans', function (e) {
     }
 });
 
+
+
+// COUNTDOWN
+const countdown = document.getElementById('timer');
+const minuteDuration = countdown.getAttribute('time');
+let time = minuteDuration * 60;
+
+function Countdown() {
+    setInterval(UpdateCountdown, 1000);
+}
+
+function UpdateCountdown() {
+    const minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+    var hours = Math.floor(minutes / 60);
+
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    countdown.innerHTML = `${hours} : ${minutes} : ${seconds}`
+    time--;
+
+    // if time = zero submit page and load completed page...
+}
+
+function BeginQuiz() {
+    Countdown();
+}

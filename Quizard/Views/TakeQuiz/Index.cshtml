@@ -1,0 +1,28 @@
+﻿@model Quizard.ViewModels.CreateQuizViewModel
+
+<div class="take-container">
+
+    <div class="countdown-outer">
+        <div class="countdown">
+            <p id="timer" time="@Model.Quiz.TimeLimit">
+                 @Model.Quiz.TimeLimit Minutes      
+            </p>
+        </div>
+    </div>
+
+    <div class="description-outer">
+        <div class="description-box">
+            <p> You will have blah blah blah...</p>
+            <p> Random Description...</p>
+            <p> Random instructions when you're done'...</p>
+            <div class="take-description-buttons">
+                <button type="submit" class="button--save" onclick="location.href='@Url.Action("Index", "Dashboard")'">Go Back</button>
+                <button type="submit" class="button--save" onclick="BeginQuiz()">Begin Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="take-quiz-container"></div>
+
+
+</div>
