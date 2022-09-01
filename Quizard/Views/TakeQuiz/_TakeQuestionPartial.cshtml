@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Question>
+
+@foreach (var question in Model)
+{
+    <div class="child-question" id="@(question.Id)">
+
+        @if (question.QuestionType == Quizard.Data.Enum.QuestionType.GROUP)
+        {
+            <strong>@question.QuestionTitle</strong>
+        }
+        else
+        {
+            @question.QuestionTitle
+        }
+
+        @if (question.QuestionType == Quizard.Data.Enum.QuestionType.ESS || question.QuestionType == Quizard.Data.Enum.QuestionType.SR)
+        {
+            <div class="form-group">
+                @*<label for="@question.QuestionAnswers" class="col-form-label">Answer:</label>*@
+                <textarea for="@question.QuestionAnswers" class="form-control" id="answer" placeholder="Answer Here:"></textarea>
+            </div>
+        }
+        else if (question.QuestionType == Quizard.Data.Enum.QuestionType.FIB || question.QuestionType == Quizard.Data.Enum.QuestionType.NUM)
+        {
+            <div class="form-group">
+                @*<label for="@question.QuestionAnswers" class="col-form-label">Answer:</label>*@
+                <input for="@question.QuestionAnswers" type="text" class="form-control" placeholder="Answer Here:" autocomplete="off">
+            </div>
+        }
+
+        @if (question.Mark != null)
+        {
+            <i> @question.Mark Marks </i>
+        }
+
+
+        @if (question.Children != null)
+        {
+            @Html.Partial("_TakeQuestionPartial", question.Children)
+        }
+    </div>
+}
+
+

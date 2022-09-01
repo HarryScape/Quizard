@@ -658,7 +658,6 @@ $(document).on('click', '#del-ans', function (e) {
 // COUNTDOWN
 const countdown = document.getElementById('timer');
 const minuteDuration = countdown.getAttribute('time');
-
 let time = minuteDuration * 60;
 
 function Countdown() {
@@ -666,6 +665,10 @@ function Countdown() {
 }
 
 function UpdateCountdown() {
+    //const countdown = document.getElementById('timer');
+    //const minuteDuration = countdown.getAttribute('time');
+    //let time = minuteDuration * 60;
+
     const minutes = Math.floor(time / 60);
     let seconds = time % 60;
     var hours = Math.floor(minutes / 60);
@@ -683,4 +686,34 @@ function UpdateCountdown() {
 
 function BeginQuiz() {
     Countdown();
+
+    var quizId = document.getElementById("HiddenQuizId").value;
+    var description = document.getElementById('description');
+
+    $.ajax({
+        type: "POST",
+        data: { quizId: quizId },
+        url: "/TakeQuiz/BeginQuiz",
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: "json",
+        success: function (response) {
+            if (response != null) {
+                console.log("Sent okay");
+            } else {
+                console.log("Something went wrong");
+            }
+        },
+        failure: function (response) {
+            //console.log(response.responseText);
+        },
+        error: function (response) {
+            //console.log(response.responseText);
+        },
+        complete: function (response) {
+            //Countdown();
+            $('.take-quiz-container').html(response.responseText);
+            description.remove();
+        }
+    });
+
 }

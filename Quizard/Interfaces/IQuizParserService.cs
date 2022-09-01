@@ -8,5 +8,6 @@ namespace Quizard.Interfaces
         Task<string> GetQuizLMS(IFormFile file);
         Task<CreateQuizViewModel> GenerateQuizViewModel(int id);
         Task<List<SelectListItem>> GenerateQuestionTypes();
+        Task<TakeQuizViewModel> GenerateTakeQuizViewModel(int id);
     }
 }

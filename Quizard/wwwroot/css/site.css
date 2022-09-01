@@ -3,7 +3,16 @@
 
 * {
     font-family: 'Inter', sans-serif;
+
 }
+
+/*body {
+    background: linear-gradient(45deg, rgba(195,6,230,0.06906512605042014) 0%, rgba(19,9,121,0.06906512605042014) 49%, rgba(250,208,120,0.06346288515406162) 100%);
+    background-attachment: fixed;
+    background-size: cover;
+}*/
+
+
 
 
 h1,
@@ -704,4 +713,19 @@ ol {
     color: #fff;
     font-size: 55px;
     text-align: center;
+}
+
+
+.Take-Section {
+    padding: 30px;
+    margin-top: 150px;
+    width: 80%;
+    height: 80%;
+    background-color: rgba(94, 77, 205, .3);
+    border-radius: 6px;
+}
+
+.child-question{
+    margin-left: 40px;
+    margin-top: 10px;
 }

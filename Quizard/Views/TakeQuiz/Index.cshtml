@@ -1,5 +1,7 @@
 ﻿@model Quizard.ViewModels.CreateQuizViewModel
 
+@Html.HiddenFor(x => x.Quiz.Id, new { id = "HiddenQuizId" })
+
 <div class="take-container">
 
     <div class="countdown-outer">
@@ -10,7 +12,7 @@
         </div>
     </div>
 
-    <div class="description-outer">
+    <div class="description-outer" id="description">
         <div class="description-box">
             <h1> @Model.Quiz.QuizName </h1>
             <br />

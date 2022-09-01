@@ -1,0 +1,106 @@
+﻿@model Quizard.ViewModels.TakeQuizViewModel
+
+<p> Section <strong>1</strong> of <strong>2</strong> </p>
+
+
+<div class="Take-Section">
+
+    <form action="TakeSection">
+
+        @{
+            int i = 1;
+        }
+
+        <h2>@Model.Section.SectionName</h2>
+        <br />
+
+        @foreach (var question in Model.ParentQuestions.Where(i => i.SectionId.Equals(Model.Section.Id)))
+        {
+            <div class="Take-Question" id="@(question.Id)">
+
+                @if (question.QuestionType == Quizard.Data.Enum.QuestionType.GROUP)
+                {
+                    <strong>Question @i: @question.QuestionTitle</strong>
+                }
+                else
+                {
+                    <strong>Question @i: @question.QuestionTitle</strong>
+                }
+
+                @if (question.QuestionType == Quizard.Data.Enum.QuestionType.ESS || question.QuestionType == Quizard.Data.Enum.QuestionType.SR)
+                {
+                    <div class="form-group">
+                        @*<label for="@question.QuestionAnswers" class="col-form-label">Answer:</label>*@
+                        <textarea for="@question.QuestionAnswers" class="form-control" id="answer" placeholder="Answer Here:"></textarea>
+                    </div>
+                }
+                else if (question.QuestionType == Quizard.Data.Enum.QuestionType.FIB || question.QuestionType == Quizard.Data.Enum.QuestionType.NUM)
+                {
+                    <div class="form-group">
+                        @*<label for="@question.QuestionAnswers" class="col-form-label">Answer:</label>*@
+                        <input for="@question.QuestionAnswers" type="text" class="form-control" placeholder="Answer Here:" autocomplete="off">
+                    </div>
+                }
+                @*                else if (question.QuestionType == Quizard.Data.Enum.QuestionType.MC || question.QuestionType == Quizard.Data.Enum.QuestionType.TF)
+            {
+            int i = 0;
+            foreach (var ans in question.QuestionAnswers)
+            {
+            <div class="add-ans">
+            <div id="custom-add-box">
+            <div id="add-container">
+            <label class="check-container">
+            @Html.CheckBoxFor(ans, new { id="ansCheck"})
+            <div class="checkmark"></div>
+            </label>
+            <input for="ans" name="question.QuestionAnswers[i]" type="text" id="ans-txt" class="form-control" aria-label="Text input with checkbox" placeholder="Answer Text" autocomplete="off">
+            </div>
+            </div>
+            </div>
+            i++;
+            }
+            }
+            else if (question.QuestionType == Quizard.Data.Enum.QuestionType.MA)
+            {
+            int j = 0;
+            foreach (var ans in question.QuestionAnswers)
+            {
+            <div class="add-ans">
+            <div id="custom-add-box">
+            <div id="add-container">
+            <label class="check-container">
+            @Html.CheckBoxFor(ans, new { id="ansCheck"})
+            <div class="checkmark"></div>
+            </label>
+            <input for="ans" name="question.QuestionAnswers[j]" type="text" id="ans-txt" class="form-control" aria-label="Text input with checkbox" placeholder="Answer Text" autocomplete="off">
+            </div>
+            </div>
+            </div>
+            j++;
+            }
+            }*@
+
+                @if (question.Mark != null)
+                {
+                    <i> @question.Mark Marks </i>
+                }
+
+                @Html.Partial("_TakeQuestionPartial", question.Children)
+
+            </div>
+
+            <br />
+
+            @{
+                i++;
+            }
+        }
+
+    </form>
+
+    <div class="nav-buttons">
+        <button type="submit" class="button--save">Previous Section</button>
+        <button type="submit" class="button--save">Next Section</button>
+    </div>
+
+</div>

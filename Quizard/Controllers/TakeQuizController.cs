@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Quizard.Interfaces;
 using Quizard.Models;
+using Quizard.ViewModels;
 
 namespace Quizard.Controllers
 {
@@ -39,18 +40,25 @@ namespace Quizard.Controllers
         public async Task<IActionResult> BeginQuiz(int quizId)
         {
             var currentUser = _contextAccessor.HttpContext.User.GetUserId();
-            var userQuizAttempt = new UserQuizAttempt()
-            {
-                QuizId = quizId,
-                UserId = currentUser,
-                TimeStarted = DateTime.Now,
-                IsMarked = false,
-                ReleaseFeedback = false,
-            };
+            // Uncomment when working...
+            //var userQuizAttempt = new UserQuizAttempt()
+            //{
+            //    QuizId = quizId,
+            //    UserId = currentUser,
+            //    TimeStarted = DateTime.Now,
+            //    IsMarked = false,
+            //    ReleaseFeedback = false,
+            //};
 
-            // return section partial view...
-            return null;
+            // load take quiz view model
+            TakeQuizViewModel takeQuizViewModel = await _quizParserService.GenerateTakeQuizViewModel(quizId);
+
+
+            return PartialView("_TakeSectionPartial", takeQuizViewModel);
+            //return null;
         }
+
+        // public ActionResult SectionNavigation(int? id,int? index)
 
 
         // public async Task<IActionResult> SubmitResponse(List<string> sectionResponse)
