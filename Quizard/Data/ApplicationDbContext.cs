@@ -52,13 +52,15 @@ namespace Quizard.Data
             builder.Entity<UserQuizAttempt>()
                 .HasOne(qa => qa.Quiz)
                 .WithMany(qa => qa.UserQuizAttempts)
-                .HasForeignKey(qa => qa.UserId);
+                .HasForeignKey(qa => qa.QuizId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             // Relation for quiz to have many user attempts
             builder.Entity<UserQuizAttempt>()
                 .HasOne(qa => qa.User)
                 .WithMany(qa => qa.UserQuizAttempts)
-                .HasForeignKey(qa => qa.QuizId);
+                .HasForeignKey(qa => qa.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
 
@@ -67,13 +69,15 @@ namespace Quizard.Data
             builder.Entity<UserQuestionResponse>()
                 .HasOne(qr => qr.UserQuizAttempt)
                 .WithMany(qr => qr.QuestionResponses)
-                .HasForeignKey(qr => qr.QuestionId);
+                .HasForeignKey(qr => qr.UserQuizAttemptId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             // Relation for question to have many user responses
             builder.Entity<UserQuestionResponse>()
                 .HasOne(qr => qr.Question)
                 .WithMany(qr => qr.QuestionResponses)
-                .HasForeignKey(qr => qr.UserQuizAttemptId);
+                .HasForeignKey(qr => qr.QuestionId)
+                .OnDelete(DeleteBehavior.NoAction);
 
         }
 
