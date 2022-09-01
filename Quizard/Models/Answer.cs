@@ -16,7 +16,7 @@ namespace Quizard.Models
         public int QuestionId { get; set; }
         public Question Question { get; set; }
 
-        public ICollection<UserQuestionResponse> QuestionResponses { get; set; }
+        //public ICollection<UserQuestionResponse> QuestionResponses { get; set; }
     }
 }
 

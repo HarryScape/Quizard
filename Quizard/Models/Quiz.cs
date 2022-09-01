@@ -25,7 +25,7 @@ namespace Quizard.Models
 
         // Quiz can have many sections
         public ICollection<Section> QuizSections { get; set; }
-        public ICollection<UserQuizAttempt> UserQuizAttempts { get; set; }
+        public ICollection<UserQuizAttempt>? UserQuizAttempts { get; set; }
 
     }
 }

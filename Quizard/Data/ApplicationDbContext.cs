@@ -46,34 +46,34 @@ namespace Quizard.Data
                 .HasForeignKey(um => um.UserId);
 
 
+
             // USER QUIZ ATTEMPTS
             // Relation for user to have many quiz attempts
             builder.Entity<UserQuizAttempt>()
-                .HasOne(um => um.Quiz)
-                .WithMany(um => um.UserQuizAttempts)
-                .HasForeignKey(um => um.UserId);
+                .HasOne(qa => qa.Quiz)
+                .WithMany(qa => qa.UserQuizAttempts)
+                .HasForeignKey(qa => qa.UserId);
 
             // Relation for quiz to have many user attempts
             builder.Entity<UserQuizAttempt>()
-                .HasOne(um => um.User)
-                .WithMany(um => um.UserQuizAttempts)
-                .HasForeignKey(um => um.QuizId);
-
-
+                .HasOne(qa => qa.User)
+                .WithMany(qa => qa.UserQuizAttempts)
+                .HasForeignKey(qa => qa.QuizId);
 
 
 
             // responses
+            // Relation for user attempt to have many question responses
             builder.Entity<UserQuestionResponse>()
-                .HasOne(um => um.Quiz)
-                .WithMany(um => um.UserQuizAttempts)
-                .HasForeignKey(um => um.UserId);
+                .HasOne(qr => qr.UserQuizAttempt)
+                .WithMany(qr => qr.QuestionResponses)
+                .HasForeignKey(qr => qr.QuestionId);
 
-            // Relation for quiz to have many user attempts
+            // Relation for question to have many user responses
             builder.Entity<UserQuestionResponse>()
-                .HasOne(um => um.User)
-                .WithMany(um => um.UserQuizAttempts)
-                .HasForeignKey(um => um.QuizId);
+                .HasOne(qr => qr.Question)
+                .WithMany(qr => qr.QuestionResponses)
+                .HasForeignKey(qr => qr.UserQuizAttemptId);
 
         }
 
