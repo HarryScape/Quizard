@@ -19,6 +19,7 @@ namespace Quizard.Models
         public DateTime? TimeCompleted { get; set; }
         public bool IsMarked { get; set; }
         public bool ReleaseFeedback { get; set; }
+        // public bool? Completed { get; set; }
         public ICollection<UserQuestionResponse>? QuestionResponses { get; set; }
 
     }

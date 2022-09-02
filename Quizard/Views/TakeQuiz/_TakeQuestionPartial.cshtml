@@ -27,6 +27,46 @@
                 <input for="@question.QuestionAnswers" type="text" class="form-control" placeholder="Answer Here:" autocomplete="off">
             </div>
         }
+        else if (question.QuestionType == Quizard.Data.Enum.QuestionType.MC || question.QuestionType == Quizard.Data.Enum.QuestionType.TF)
+        {
+            foreach (var ans in question.QuestionAnswers)
+            {
+                <div class="add-ans">
+                    <div id="custom-add-box">
+                        <div id="choice-container">
+                            <label class="check-container">
+                                <input value="1" type="checkbox">
+                                <div class="checkmark"></div>
+                            </label>
+                            <label for="answer" class="col-form-label">@ans.QuestionAnswer</label>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+        else if (question.QuestionType == Quizard.Data.Enum.QuestionType.MA)
+        {
+            foreach (var ans in question.QuestionAnswers)
+            {
+                <div class="add-ans">
+                    <div id="custom-add-box">
+                        <div id="choice-container">
+                            <label class="check-container">
+                                <input value="1" type="checkbox">
+                                <div class="checkmark"></div>
+                            </label>
+                            <label for="answer" class="col-form-label">@ans.QuestionAnswer</label>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+
+
+
+
 
         @if (question.Mark != null)
         {

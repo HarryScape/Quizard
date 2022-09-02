@@ -656,9 +656,9 @@ $(document).on('click', '#del-ans', function (e) {
 
 
 // COUNTDOWN
-const countdown = document.getElementById('timer');
-const minuteDuration = countdown.getAttribute('time');
-let time = minuteDuration * 60;
+//const countdown = document.getElementById('timer');
+//const minuteDuration = countdown.getAttribute('time');
+//let time = minuteDuration * 60;
 
 function Countdown() {
     setInterval(UpdateCountdown, 1000);
@@ -717,3 +717,12 @@ function BeginQuiz() {
     });
 
 }
+
+
+
+//$(document).on("click", "#check-single", function () {
+
+//    var parent = document.getElementById("single").parentElement.nodeName;
+//    var checkboxes = $("#checkit1, #checkit2, #checkit3");
+
+//})
