@@ -660,32 +660,32 @@ $(document).on('click', '#del-ans', function (e) {
 //const minuteDuration = countdown.getAttribute('time');
 //let time = minuteDuration * 60;
 
-function Countdown() {
-    setInterval(UpdateCountdown, 1000);
-}
+//function Countdown() {
+//    setInterval(UpdateCountdown, 1000);
+//}
 
-function UpdateCountdown() {
-    //const countdown = document.getElementById('timer');
-    //const minuteDuration = countdown.getAttribute('time');
-    //let time = minuteDuration * 60;
+//function UpdateCountdown() {
+//    //const countdown = document.getElementById('timer');
+//    //const minuteDuration = countdown.getAttribute('time');
+//    //let time = minuteDuration * 60;
 
-    const minutes = Math.floor(time / 60);
-    let seconds = time % 60;
-    var hours = Math.floor(minutes / 60);
+//    const minutes = Math.floor(time / 60);
+//    let seconds = time % 60;
+//    var hours = Math.floor(minutes / 60);
 
-    seconds = seconds < 10 ? '0' + seconds : seconds;
+//    seconds = seconds < 10 ? '0' + seconds : seconds;
 
-    countdown.innerHTML = `${hours} : ${minutes} : ${seconds}`
-    time--;
+//    countdown.innerHTML = `${hours} : ${minutes} : ${seconds}`
+//    time--;
 
-    // if time = zero submit page and load completed page.
-    if (time === 0) {
-        window.location.href = '/TakeQuiz/Completed/';
-    }
-}
+//    // if time = zero submit page and load completed page.
+//    if (time === 0) {
+//        window.location.href = '/TakeQuiz/Completed/';
+//    }
+//}
 
 function BeginQuiz() {
-    Countdown();
+    //Countdown();
 
     var quizId = document.getElementById("HiddenQuizId").value;
     var description = document.getElementById('description');
@@ -721,8 +721,104 @@ function BeginQuiz() {
 
 
 //$(document).on("click", "#check-single", function () {
+//    var parent = document.getElementById("single").parentElement;
+//    var checkboxes = parent.querySelectorAll('#check-single');
 
-//    var parent = document.getElementById("single").parentElement.nodeName;
-//    var checkboxes = $("#checkit1, #checkit2, #checkit3");
+//    //for (var i = 0; i < checkboxes.length; i++) {
+//    //    if ($(checkboxes[i]).is(':checked')) {
+//    //        $(checkboxes[i]).prop('disabled', true);
+//    //        checkboxes[i].checked = true;
+//    //        //console.log("yes");
+//    //    }
+//    //    else {
+//    //        $(checkboxes[i]).prop('disabled', false);
+//    //        checkboxes[i].checked = false;
+//    //        //console.log("no");
+//    //    }
+//    //}
 
+
+//    if ($(checkboxes).is(':checked')) {
+//        for (var i = 0; i < checkboxes.length; i++) {
+//            $(checkboxes[i]).prop('disabled', true);
+//        }
+//    }
+//    else {
+//        for (var i = 0; i < checkboxes.length; i++) {
+//            $(checkboxes[i]).prop('disabled', false);
+//        }
+//    }
 //})
+
+
+
+
+
+function NextSection() {
+    var quizId = document.getElementById("HiddenQuizId").value;
+    var element = document.querySelector('.take-quiz-container');
+    var index = element.getAttribute('data-index');
+    //console.log(quizId);
+    //console.log(index);
+
+    $.ajax({
+        type: "POST",
+        data: { quizId: quizId, index: index },
+        url: "/TakeQuiz/NextSectionNavigation",
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: "json",
+        success: function (response) {
+            if (response != null) {
+                console.log("Sent okay");
+            } else {
+                console.log("Something went wrong");
+            }
+        },
+        failure: function (response) {
+            //console.log('error 1');
+        },
+        error: function (response) {
+            //console.log('error 2');
+        },
+        complete: function (response) {
+            $('.take-quiz-container').html(response.responseText);
+            //document.getElementsByClassName(".take-quiz-container").setAttribute('data-index', (index + 1));
+            $('.take-quiz-container').attr('data-index', index++);
+        }
+    });
+}
+
+function PreviousSection() {
+    var quizId = document.getElementById("HiddenQuizId").value;
+    var element = document.querySelector('.take-quiz-container');
+    var index = element.getAttribute('data-index');
+    //console.log(quizId);
+    //console.log(index);
+
+    $.ajax({
+        type: "POST",
+        data: { quizId: quizId, index: index },
+        url: "/TakeQuiz/PreviousSectionNavigation",
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: "json",
+        success: function (response) {
+            if (response != null) {
+                console.log("Sent okay");
+            } else {
+                console.log("Something went wrong");
+            }
+        },
+        failure: function (response) {
+            //console.log('error 1');
+        },
+        error: function (response) {
+            //console.log('error 2');
+        },
+        complete: function (response) {
+            $('.take-quiz-container').html(response.responseText);
+            $('.take-quiz-container').attr('data-index', index--);
+
+        }
+    });
+
+}

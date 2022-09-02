@@ -49,7 +49,7 @@
                             <div id="custom-add-box">
                                 <div id="choice-container">
                                     <label class="check-container">
-                                        <input value="1" type="checkbox" id="check-single">
+                                        <input value="1" type="checkbox" id="check-single" no="@ans.Id">
                                         <div class="checkmark"></div>
                                     </label>
                                     <label for="answer" class="col-form-label">@ans.QuestionAnswer</label>
@@ -95,8 +95,8 @@
     </form>
 
     <div class="nav-buttons">
-        <button type="submit" class="button--save">Previous Section</button>
-        <button type="submit" class="button--save">Next Section</button>
+        <button type="submit" class="button--save" onclick="PreviousSection()">Previous Section</button>
+        <button type="submit" class="button--save" onclick="NextSection()">Next Section</button>
     </div>
 
 </div>

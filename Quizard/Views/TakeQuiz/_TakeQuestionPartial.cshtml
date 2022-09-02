@@ -1,5 +1,10 @@
 ﻿@model IEnumerable<Question>
 
+@{
+    int index = 0;
+    List<char> alphabetLabel = Enumerable.Range('a', 'z' - 'a' + 1).Select(c => (char)c).ToList();
+}
+
 @foreach (var question in Model)
 {
     <div class="child-question" id="@(question.Id)">
@@ -10,7 +15,8 @@
         }
         else
         {
-            @question.QuestionTitle
+            <strong>@($"({alphabetLabel[index]}) ")</strong> @question.QuestionTitle
+            index++;
         }
 
         @if (question.QuestionType == Quizard.Data.Enum.QuestionType.ESS || question.QuestionType == Quizard.Data.Enum.QuestionType.SR)

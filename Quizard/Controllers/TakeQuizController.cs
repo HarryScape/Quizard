@@ -58,7 +58,32 @@ namespace Quizard.Controllers
             //return null;
         }
 
-        // public ActionResult SectionNavigation(int? id,int? index)
+        public async Task<IActionResult> NextSectionNavigation(int quizId, int index)
+        {
+            TakeQuizViewModel takeQuizViewModel = await _quizParserService.GenerateTakeQuizViewModel(quizId);
+            List<Section> sections = (List<Section>)takeQuizViewModel.Sections;
+            if(index < sections.Count - 1)
+            {
+                index++;
+                takeQuizViewModel.Section = sections[index];
+            }
+
+            return PartialView("_TakeSectionPartial", takeQuizViewModel);
+        }
+
+
+        public async Task<IActionResult> PreviousSectionNavigation(int quizId, int index)
+        {
+            TakeQuizViewModel takeQuizViewModel = await _quizParserService.GenerateTakeQuizViewModel(quizId);
+            List<Section> sections = (List<Section>)takeQuizViewModel.Sections;
+            if (index > 0)
+            {
+                index--;
+                takeQuizViewModel.Section = sections[index];
+            }
+
+            return PartialView("_TakeSectionPartial", takeQuizViewModel);
+        }
 
 
         // public async Task<IActionResult> SubmitResponse(List<string> sectionResponse)
