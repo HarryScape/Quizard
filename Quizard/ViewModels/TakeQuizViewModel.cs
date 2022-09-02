@@ -13,6 +13,11 @@ namespace Quizard.ViewModels
         public IEnumerable<Answer> Answers { get; set; }
         public QuestionType QuestionType { get; set; }
 
+        public int AttemptId { get; set; }
+
+        public IEnumerable<UserQuestionResponse> QuestionResponses { get; set; }
+
+
         //public int SectionCount { get; set; }
     }
 }

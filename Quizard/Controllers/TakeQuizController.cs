@@ -9,15 +9,18 @@ namespace Quizard.Controllers
     {
 
         private readonly IQuizRepository _quizRepository;
+        private readonly ITakeQuizRepository _takeQuizRepository;
         private readonly IQuizParserService _quizParserService;
         private readonly IHttpContextAccessor _contextAccessor;
 
 
-        public TakeQuizController(IQuizRepository quizRepository, IQuizParserService quizParserService, IHttpContextAccessor contextAccessor)
+        public TakeQuizController(IQuizRepository quizRepository, IQuizParserService quizParserService,
+            IHttpContextAccessor contextAccessor, ITakeQuizRepository takeQuizRepository)
         {
             _quizRepository = quizRepository;
             _quizParserService = quizParserService;
             _contextAccessor = contextAccessor;
+            _takeQuizRepository = takeQuizRepository;
         }
 
 
@@ -40,7 +43,6 @@ namespace Quizard.Controllers
         public async Task<IActionResult> BeginQuiz(int quizId)
         {
             var currentUser = _contextAccessor.HttpContext.User.GetUserId();
-            // Uncomment when working...
             //var userQuizAttempt = new UserQuizAttempt()
             //{
             //    QuizId = quizId,
@@ -49,20 +51,19 @@ namespace Quizard.Controllers
             //    IsMarked = false,
             //    ReleaseFeedback = false,
             //};
+            //_takeQuizRepository.Add(userQuizAttempt);
 
-            // load take quiz view model
             TakeQuizViewModel takeQuizViewModel = await _quizParserService.GenerateTakeQuizViewModel(quizId);
-
+            //takeQuizViewModel.AttemptId = userQuizAttempt.Id;
 
             return PartialView("_TakeSectionPartial", takeQuizViewModel);
-            //return null;
         }
 
         public async Task<IActionResult> NextSectionNavigation(int quizId, int index)
         {
             TakeQuizViewModel takeQuizViewModel = await _quizParserService.GenerateTakeQuizViewModel(quizId);
             List<Section> sections = (List<Section>)takeQuizViewModel.Sections;
-            if(index < sections.Count - 1)
+            if (index < sections.Count - 1)
             {
                 index++;
                 takeQuizViewModel.Section = sections[index];
@@ -86,7 +87,9 @@ namespace Quizard.Controllers
         }
 
 
-        // public async Task<IActionResult> SubmitResponse(List<string> sectionResponse)
+        // public async Task<IActionResult> SubmitResponse(List<string> sectionResponse){
+        // generate VM and load question responses.
+        //}
 
 
         // public async Task<IActionResult> CompleteQuiz(int quizId)

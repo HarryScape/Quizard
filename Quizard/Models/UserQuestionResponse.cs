@@ -15,7 +15,7 @@ namespace Quizard.Models
         public UserQuizAttempt UserQuizAttempt { get; set; }
         //public ICollection<Answer> CorrectAnswers { get; set; }
 
-
+        //public bool? AnswerCheck { get; set; }
         public string? AnswerResponse { get; set; }
         public string? AnswerFeedback { get; set; }
         public double? MarkAwarded { get; set; }
