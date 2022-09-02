@@ -820,11 +820,12 @@ function PreviousSection() {
 
 
 function SubmitAnswers() {
+    var attemptId = document.getElementById("HiddenAttemptId").value;
+    // Checkbox
     var ansCorrect = [];
     var ansCheck = $('input[type="checkbox"]')
     var ansText = Array.from(document.querySelectorAll('.col-form-label')).map(v => v.innerHTML);
     var questionCheckboxIdList = Array.from(document.querySelectorAll('.col-form-label')).map(v => v.getAttribute('value'));
-
     var ansCheck = $('input[type="checkbox"]')
     for (var i = 0; ansCheck[i]; ++i) {
         if (ansCheck[i].checked) {
@@ -834,9 +835,22 @@ function SubmitAnswers() {
             ansCorrect.push('false');
         }
     }
-    console.log(questionCheckboxIdList);
-    console.log(ansText);
-    console.log(ansCorrect);
+    // Text
+    var questionTextIdList = Array.from(document.querySelectorAll('.form-control')).map(v => v.getAttribute('question'));
+    var textResponseList = Array.from(document.querySelectorAll('.form-control')).map(v => v.value);
 
-
+    $.ajax({
+        type: "POST",
+        data: { questionTextIdList: questionTextIdList, textResponseList: textResponseList, questionCheckboxIdList: questionCheckboxIdList, ansText: ansText, ansCorrect: ansCorrect, attemptId: attemptId },
+        url: "/TakeQuiz/SubmitResponse",
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: "json",
+        success: function (response) {
+            if (response != null) {
+                console.log("Sent okay");
+            } else {
+                console.log("Something went wrong");
+            }
+        }
+    });
 }

@@ -24,6 +24,11 @@ namespace Quizard.Repository
         }
 
         // get response by question id and attempt id. Maybe not can do it in the controller...
+        public async Task<IEnumerable<UserQuestionResponse>> GetResponsesbyQuestion(int attemptId, int questionId)
+        {
+            return await _context.UserQuestionResponses.Where(i => i.UserQuizAttemptId.Equals(attemptId)).Where(j => j.QuestionId.Equals(questionId)).ToListAsync();
+
+        }
 
 
 

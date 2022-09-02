@@ -32,15 +32,13 @@
                 @if (question.QuestionType == Quizard.Data.Enum.QuestionType.ESS || question.QuestionType == Quizard.Data.Enum.QuestionType.SR)
                 {
                     <div class="form-group">
-                        @*<label for="@question.QuestionAnswers" class="col-form-label">Answer:</label>*@
-                        <textarea for="@question.QuestionAnswers" class="form-control" id="answer" placeholder="Answer Here:"></textarea>
+                        <textarea for="@question.QuestionAnswers" class="form-control" id="answer" placeholder="Answer Here:" question="@question.Id"></textarea>
                     </div>
                 }
                 else if (question.QuestionType == Quizard.Data.Enum.QuestionType.FIB || question.QuestionType == Quizard.Data.Enum.QuestionType.NUM)
                 {
                     <div class="form-group">
-                        @*<label for="@question.QuestionAnswers" class="col-form-label">Answer:</label>*@
-                        <input for="@question.QuestionAnswers" type="text" class="form-control" placeholder="Answer Here:" autocomplete="off">
+                        <input for="@question.QuestionAnswers" type="text" class="form-control" placeholder="Answer Here:" autocomplete="off" question="@question.Id">
                     </div>
                 }
                 else if (question.QuestionType == Quizard.Data.Enum.QuestionType.MC || question.QuestionType == Quizard.Data.Enum.QuestionType.TF)
