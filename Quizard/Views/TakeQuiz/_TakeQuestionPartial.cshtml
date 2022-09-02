@@ -7,7 +7,7 @@
 
 @foreach (var question in Model)
 {
-    <div class="child-question" id="@(question.Id)">
+    <div class="child-question" value="@(question.Id)" id="section-question">
 
         @if (question.QuestionType == Quizard.Data.Enum.QuestionType.GROUP)
         {
@@ -44,7 +44,7 @@
                                 <input value="1" type="checkbox">
                                 <div class="checkmark"></div>
                             </label>
-                            <label for="answer" class="col-form-label">@ans.QuestionAnswer</label>
+                            <label for="answer" class="col-form-label" id="ans-txt" value="@question.Id">@ans.QuestionAnswer</label>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                                 <input value="1" type="checkbox">
                                 <div class="checkmark"></div>
                             </label>
-                            <label for="answer" class="col-form-label">@ans.QuestionAnswer</label>
+                            <label for="answer" class="col-form-label" id="ans-txt" value="@question.Id">@ans.QuestionAnswer</label>
                         </div>
                     </div>
                 </div>

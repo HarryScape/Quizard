@@ -758,8 +758,6 @@ function NextSection() {
     var quizId = document.getElementById("HiddenQuizId").value;
     var element = document.querySelector('.take-quiz-container');
     var index = element.getAttribute('data-index');
-    //console.log(quizId);
-    //console.log(index);
 
     $.ajax({
         type: "POST",
@@ -782,7 +780,6 @@ function NextSection() {
         },
         complete: function (response) {
             $('.take-quiz-container').html(response.responseText);
-            //document.getElementsByClassName(".take-quiz-container").setAttribute('data-index', (index + 1));
             $('.take-quiz-container').attr('data-index', index++);
         }
     });
@@ -792,8 +789,6 @@ function PreviousSection() {
     var quizId = document.getElementById("HiddenQuizId").value;
     var element = document.querySelector('.take-quiz-container');
     var index = element.getAttribute('data-index');
-    //console.log(quizId);
-    //console.log(index);
 
     $.ajax({
         type: "POST",
@@ -820,5 +815,28 @@ function PreviousSection() {
 
         }
     });
+
+}
+
+
+function SubmitAnswers() {
+    var ansCorrect = [];
+    var ansCheck = $('input[type="checkbox"]')
+    var ansText = Array.from(document.querySelectorAll('.col-form-label')).map(v => v.innerHTML);
+    var questionCheckboxIdList = Array.from(document.querySelectorAll('.col-form-label')).map(v => v.getAttribute('value'));
+
+    var ansCheck = $('input[type="checkbox"]')
+    for (var i = 0; ansCheck[i]; ++i) {
+        if (ansCheck[i].checked) {
+            ansCorrect.push('true');
+        }
+        else {
+            ansCorrect.push('false');
+        }
+    }
+    console.log(questionCheckboxIdList);
+    console.log(ansText);
+    console.log(ansCorrect);
+
 
 }

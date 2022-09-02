@@ -18,7 +18,7 @@
 
         @foreach (var question in Model.ParentQuestions.Where(i => i.SectionId.Equals(Model.Section.Id)))
         {
-            <div class="Take-Question" id="@(question.Id)">
+            <div class="Take-Question" value="@(question.Id)" id="section-question">
 
                 @if (question.QuestionType == Quizard.Data.Enum.QuestionType.GROUP)
                 {
@@ -51,10 +51,11 @@
                             <div id="custom-add-box">
                                 <div id="choice-container">
                                     <label class="check-container">
-                                        <input value="1" type="checkbox" id="check-single" no="@ans.Id">
+                                        @*<input value="1" type="checkbox" id="check-single" no="@ans.Id">*@
+                                        @Html.CheckBoxFor(model => model.Checked, new { id="check-single"})
                                         <div class="checkmark"></div>
                                     </label>
-                                    <label for="answer" class="col-form-label">@ans.QuestionAnswer</label>
+                                    <label for="answer" class="col-form-label" id="ans-txt" value="@question.Id">@ans.QuestionAnswer</label>
                                 </div>
                             </div>
                         </div>
@@ -69,10 +70,11 @@
                             <div id="custom-add-box">
                                 <div id="choice-container">
                                     <label class="check-container">
-                                        <input value="1" type="checkbox">
+                                        @*<input value="1" type="checkbox">*@
+                                        @Html.CheckBoxFor(model => model.Checked, new { id="ansCheck"})
                                         <div class="checkmark"></div>
                                     </label>
-                                    <label for="answer" class="col-form-label">@ans.QuestionAnswer</label>
+                                    <label for="answer" class="col-form-label" id="ans-txt" value="@question.Id">@ans.QuestionAnswer</label>
                                 </div>
                             </div>
                         </div>
@@ -99,6 +101,9 @@
     <div class="nav-buttons">
         <button type="submit" class="button--save" onclick="PreviousSection()">Previous Section</button>
         <button type="submit" class="button--save" onclick="NextSection()">Next Section</button>
+    </div>
+    <div class="submit-action">
+        <button type="submit" class="button--save" onclick="SubmitAnswers()">Save Progress</button>
     </div>
 
 </div>

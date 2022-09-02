@@ -89,6 +89,8 @@ namespace Quizard.Controllers
 
         // public async Task<IActionResult> SubmitResponse(List<string> sectionResponse){
         // generate VM and load question responses.
+        // get response from db via attempt id and question id
+        // if null create new response, if not null update existing response.
         //}
 
 
