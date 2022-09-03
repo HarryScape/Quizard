@@ -758,10 +758,12 @@ function NextSection() {
     var quizId = document.getElementById("HiddenQuizId").value;
     var element = document.querySelector('.take-quiz-container');
     var index = element.getAttribute('data-index');
+    var attemptId = document.getElementById("HiddenAttemptId").value;
+
 
     $.ajax({
         type: "POST",
-        data: { quizId: quizId, index: index },
+        data: { quizId: quizId, index: index, attemptId: attemptId },
         url: "/TakeQuiz/NextSectionNavigation",
         contentType: 'application/x-www-form-urlencoded',
         dataType: "json",
@@ -789,10 +791,12 @@ function PreviousSection() {
     var quizId = document.getElementById("HiddenQuizId").value;
     var element = document.querySelector('.take-quiz-container');
     var index = element.getAttribute('data-index');
+    var attemptId = document.getElementById("HiddenAttemptId").value;
+
 
     $.ajax({
         type: "POST",
-        data: { quizId: quizId, index: index },
+        data: { quizId: quizId, index: index, attemptId: attemptId },
         url: "/TakeQuiz/PreviousSectionNavigation",
         contentType: 'application/x-www-form-urlencoded',
         dataType: "json",

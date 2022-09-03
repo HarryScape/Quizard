@@ -43,23 +43,23 @@ namespace Quizard.Controllers
         public async Task<IActionResult> BeginQuiz(int quizId)
         {
             var currentUser = _contextAccessor.HttpContext.User.GetUserId();
-            //var userQuizAttempt = new UserQuizAttempt()
-            //{
-            //    QuizId = quizId,
-            //    UserId = currentUser,
-            //    TimeStarted = DateTime.Now,
-            //    IsMarked = false,
-            //    ReleaseFeedback = false,
-            //};
-            //_takeQuizRepository.Add(userQuizAttempt);
+            var userQuizAttempt = new UserQuizAttempt()
+            {
+                QuizId = quizId,
+                UserId = currentUser,
+                TimeStarted = DateTime.Now,
+                IsMarked = false,
+                ReleaseFeedback = false,
+            };
+            _takeQuizRepository.Add(userQuizAttempt);
 
             TakeQuizViewModel takeQuizViewModel = await _quizParserService.GenerateTakeQuizViewModel(quizId);
-            //takeQuizViewModel.AttemptId = userQuizAttempt.Id;
+            takeQuizViewModel.AttemptId = userQuizAttempt.Id;
 
             return PartialView("_TakeSectionPartial", takeQuizViewModel);
         }
 
-        public async Task<IActionResult> NextSectionNavigation(int quizId, int index)
+        public async Task<IActionResult> NextSectionNavigation(int quizId, int index, int attemptId)
         {
             TakeQuizViewModel takeQuizViewModel = await _quizParserService.GenerateTakeQuizViewModel(quizId);
             List<Section> sections = (List<Section>)takeQuizViewModel.Sections;
@@ -68,12 +68,13 @@ namespace Quizard.Controllers
                 index++;
                 takeQuizViewModel.Section = sections[index];
             }
+            takeQuizViewModel.AttemptId = attemptId;
 
             return PartialView("_TakeSectionPartial", takeQuizViewModel);
         }
 
 
-        public async Task<IActionResult> PreviousSectionNavigation(int quizId, int index)
+        public async Task<IActionResult> PreviousSectionNavigation(int quizId, int index, int attemptId)
         {
             TakeQuizViewModel takeQuizViewModel = await _quizParserService.GenerateTakeQuizViewModel(quizId);
             List<Section> sections = (List<Section>)takeQuizViewModel.Sections;
@@ -82,6 +83,7 @@ namespace Quizard.Controllers
                 index--;
                 takeQuizViewModel.Section = sections[index];
             }
+            takeQuizViewModel.AttemptId = attemptId;
 
             return PartialView("_TakeSectionPartial", takeQuizViewModel);
         }
@@ -90,37 +92,63 @@ namespace Quizard.Controllers
         public async Task<IActionResult> SubmitResponse(List<string> questionTextIdList, List<string> textResponseList,
             List<string> questionCheckboxIdList, List<string> ansText, List<string> ansCorrect, int attemptId)
         {
-            // generate VM and load question responses.
-            // get response from db via attempt id and question id
-            // if null create new response, if not null update existing response.
+            // if a new response is null delete the old response if it exists
 
-            // text
-            for (int i = 0; i < textResponseList.Count; i++)
+            // Text Response
+            if (textResponseList.Any())
             {
-                UserQuestionResponse response = new UserQuestionResponse()
+                for (int i = 0; i < textResponseList.Count; i++)
                 {
-                    QuestionId = Convert.ToInt32(questionTextIdList[i]),
-                    UserQuizAttemptId = Convert.ToInt32(attemptId),
-                    AnswerResponse = textResponseList[i],
-                };
-                _takeQuizRepository.Add(response);
-            }
-
-            // checkbox
-            for (int i = 0; i < ansCorrect.Count; i++)
-            {
-                if (ansCorrect[i].Equals("true"))
-                {
-                    UserQuestionResponse response = new UserQuestionResponse()
+                    int questionId = Convert.ToInt32(questionTextIdList[i]);
+                    UserQuestionResponse response = await _takeQuizRepository.GetSingleResponseByQuestion(attemptId, questionId);
+                    if (response == null)
                     {
-                        QuestionId = Convert.ToInt32(questionCheckboxIdList[i]),
-                        UserQuizAttemptId = Convert.ToInt32(attemptId),
-                        AnswerResponse = ansText[i],
-                    };
-                    _takeQuizRepository.Add(response);
+                        UserQuestionResponse newResponse = new UserQuestionResponse()
+                        {
+                            QuestionId = questionId,
+                            UserQuizAttemptId = Convert.ToInt32(attemptId),
+                            AnswerResponse = textResponseList[i],
+                        };
+                        _takeQuizRepository.Add(newResponse);
+                    }
+                    else
+                    {
+                        response.AnswerResponse = textResponseList[i];
+                        _takeQuizRepository.Update(response);
+                    }
                 }
             }
 
+            // Clear Checkbox
+            for (int i = 0; i < ansText.Count; i++)
+            {
+                int questionId = Convert.ToInt32(questionCheckboxIdList[i]);
+                var responses = await _takeQuizRepository.GetResponsesbyQuestion(attemptId, questionId);
+                foreach (var response in responses)
+                {
+                    _takeQuizRepository.Delete(response);
+                }
+            }
+
+            // checkbox
+            if (ansText.Any())
+            {
+                for (int i = 0; i < ansCorrect.Count; i++)
+                {
+                    int questionId = Convert.ToInt32(questionCheckboxIdList[i]);
+
+                    if (ansCorrect[i].Equals("true"))
+                    {
+                        UserQuestionResponse newResponse = new UserQuestionResponse()
+                        {
+                            QuestionId = Convert.ToInt32(questionCheckboxIdList[i]),
+                            UserQuizAttemptId = Convert.ToInt32(attemptId),
+                            AnswerResponse = ansText[i],
+                        };
+                        _takeQuizRepository.Add(newResponse);
+                    }
+                }
+            }
 
             return null;
         }

@@ -30,6 +30,11 @@ namespace Quizard.Repository
 
         }
 
+        // get single response
+        public async Task<UserQuestionResponse> GetSingleResponseByQuestion(int attemptId, int questionId)
+        {
+            return await _context.UserQuestionResponses.FirstOrDefaultAsync(i => i.UserQuizAttemptId == attemptId && i.QuestionId == questionId);
+        }
 
 
 
