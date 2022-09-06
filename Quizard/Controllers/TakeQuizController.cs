@@ -55,6 +55,7 @@ namespace Quizard.Controllers
 
             TakeQuizViewModel takeQuizViewModel = await _quizParserService.GenerateTakeQuizViewModel(quizId);
             takeQuizViewModel.AttemptId = userQuizAttempt.Id;
+            takeQuizViewModel.QuestionResponses = await _takeQuizRepository.GetResponsesbyAttemptId(userQuizAttempt.Id);
 
             return PartialView("_TakeSectionPartial", takeQuizViewModel);
         }
@@ -69,6 +70,7 @@ namespace Quizard.Controllers
                 takeQuizViewModel.Section = sections[index];
             }
             takeQuizViewModel.AttemptId = attemptId;
+            takeQuizViewModel.QuestionResponses = await _takeQuizRepository.GetResponsesbyAttemptId(attemptId);
 
             return PartialView("_TakeSectionPartial", takeQuizViewModel);
         }
@@ -84,6 +86,8 @@ namespace Quizard.Controllers
                 takeQuizViewModel.Section = sections[index];
             }
             takeQuizViewModel.AttemptId = attemptId;
+            takeQuizViewModel.QuestionResponses = await _takeQuizRepository.GetResponsesbyAttemptId(attemptId);
+
 
             return PartialView("_TakeSectionPartial", takeQuizViewModel);
         }

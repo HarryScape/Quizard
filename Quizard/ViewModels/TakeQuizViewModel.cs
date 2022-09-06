@@ -15,7 +15,7 @@ namespace Quizard.ViewModels
 
         public int AttemptId { get; set; }
 
-        public IEnumerable<UserQuestionResponse> QuestionResponses { get; set; }
+        public IEnumerable<UserQuestionResponse>? QuestionResponses { get; set; }
         // each checkbox is a seperate response. 
         // each UserQuestionResponse has a bool checked. 
         // html.checkmarkfor a collection of responses?? HOW
@@ -25,14 +25,3 @@ namespace Quizard.ViewModels
     }
 }
 
-
-
-
-// get questionid
-// get element checkbox container div
-// get list of answers (label)
-// get list of checkmarks and their value
-// send both arrays to controller
-// for loop answers.length
-// if checkmarks.value == true
-// new question response: question id, responsetext = answers[i]

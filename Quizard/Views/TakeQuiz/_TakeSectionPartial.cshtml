@@ -18,6 +18,7 @@
 
         @foreach (var question in Model.ParentQuestions.Where(i => i.SectionId.Equals(Model.Section.Id)))
         {
+            var exists = Model.QuestionResponses.Any(x => x.QuestionId == question.Id);
             <div class="Take-Question" value="@(question.Id)" id="section-question">
 
                 @if (question.QuestionType == Quizard.Data.Enum.QuestionType.GROUP)
@@ -32,7 +33,14 @@
                 @if (question.QuestionType == Quizard.Data.Enum.QuestionType.ESS || question.QuestionType == Quizard.Data.Enum.QuestionType.SR)
                 {
                     <div class="form-group">
-                        <textarea for="@question.QuestionAnswers" class="form-control" id="answer" placeholder="Answer Here:" question="@question.Id"></textarea>
+                        @if (exists)
+                        {
+                            <textarea for="@question.QuestionAnswers" class="form-control" id="answer" placeholder="Answer Here:" question="@question.Id">@Model.QuestionResponses.First(i => i.QuestionId == question.Id).AnswerResponse</textarea>
+                        }
+                        else
+                        {
+                            <textarea for="@question.QuestionAnswers" class="form-control" id="answer" placeholder="Answer Here:" question="@question.Id"></textarea>
+                        }
                     </div>
                 }
                 else if (question.QuestionType == Quizard.Data.Enum.QuestionType.FIB || question.QuestionType == Quizard.Data.Enum.QuestionType.NUM)
