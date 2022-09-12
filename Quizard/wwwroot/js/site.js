@@ -685,7 +685,7 @@ $(document).on('click', '#del-ans', function (e) {
 //}
 
 function BeginQuiz() {
-    //Countdown();
+    Countdown();
 
     var quizId = document.getElementById("HiddenQuizId").value;
     var description = document.getElementById('description');

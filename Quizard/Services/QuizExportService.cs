@@ -52,7 +52,6 @@ namespace Quizard.Services
 
         //public byte[] GenerateDocx(ExportQuizViewModel exportQuizViewModel)
         public async Task<byte[]> GenerateDocx(ExportQuizViewModel exportQuizViewModel)
-
         {
             //Run lineBreak = new Run(new Break());
             int sectionCount = 1, questionCount = 1, questionChildCount = 0, answerCount = 1;

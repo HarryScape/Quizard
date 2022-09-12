@@ -157,6 +157,11 @@ namespace Quizard.Controllers
             return null;
         }
 
+        public async Task<IActionResult> ShowQuestionComponent()
+        {
+            return PartialView("boo");
+        }
+
 
         // public async Task<IActionResult> CompleteQuiz(int quizId)
 

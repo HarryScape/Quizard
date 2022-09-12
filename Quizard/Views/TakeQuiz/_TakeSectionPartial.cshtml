@@ -46,7 +46,15 @@
                 else if (question.QuestionType == Quizard.Data.Enum.QuestionType.FIB || question.QuestionType == Quizard.Data.Enum.QuestionType.NUM)
                 {
                     <div class="form-group">
-                        <input for="@question.QuestionAnswers" type="text" class="form-control" placeholder="Answer Here:" autocomplete="off" question="@question.Id">
+                        @if (exists)
+                        {
+                           <input for="@question.QuestionAnswers" type="text" class="form-control" value="@Model.QuestionResponses.First(i => i.QuestionId == question.Id).AnswerResponse" autocomplete="off" question="@question.Id">
+                        }
+                        else
+                        {
+                            <input for="@question.QuestionAnswers" type="text" class="form-control" placeholder="Answer Here:" autocomplete="off" question="@question.Id">
+                        }
+                        @*<input for="@question.QuestionAnswers" type="text" class="form-control" placeholder="Answer Here:" autocomplete="off" question="@question.Id">*@
                     </div>
                 }
                 else if (question.QuestionType == Quizard.Data.Enum.QuestionType.MC || question.QuestionType == Quizard.Data.Enum.QuestionType.TF)
@@ -92,7 +100,14 @@
                     <i> @question.Mark Marks </i>
                 }
 
-                @Html.Partial("_TakeQuestionPartial", question.Children)
+                @*@Html.Partial("_TakeQuestionPartial", question.Children)*@
+                @await Component.InvokeAsync("Question", new {questions = question.Children, questionResponses = Model.QuestionResponses})
+                @*<vc: Question questions=question.Children, questionResponses=Model.QuestionResponses></vc: Question>*@
+
+                @*@if (question.Children != null)
+                {
+                    await Component.InvokeAsync("Question", new { questions = question.Children, questionResponses = Model.QuestionResponses });
+                }*@
 
             </div>
 

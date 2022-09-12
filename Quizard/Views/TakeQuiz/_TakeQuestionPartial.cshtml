@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<Question>
+@*@model Quizard.ViewModels.TakeQuestionViewModel*@
+@*@model TakeQuestionPartial*@
 
 @{
     int index = 0;
@@ -33,6 +35,7 @@
                 <input for="@question.QuestionAnswers" type="text" class="form-control" placeholder="Answer Here:" autocomplete="off" question="@question.Id">
             </div>
         }
+
         else if (question.QuestionType == Quizard.Data.Enum.QuestionType.MC || question.QuestionType == Quizard.Data.Enum.QuestionType.TF)
         {
             foreach (var ans in question.QuestionAnswers)
@@ -82,6 +85,9 @@
 
         @if (question.Children != null)
         {
+            @*@Model.QuestionResponses = Model.QuestionResponses;
+            @Model.Questions = question.Children;*@
+            @*@Html.Partial("_TakeQuestionPartial", Model)*@
             @Html.Partial("_TakeQuestionPartial", question.Children)
         }
     </div>
