@@ -830,7 +830,9 @@ function SubmitAnswers() {
     var ansCheck = $('input[type="checkbox"]')
     var ansText = Array.from(document.querySelectorAll('.col-form-label')).map(v => v.innerHTML);
     var questionCheckboxIdList = Array.from(document.querySelectorAll('.col-form-label')).map(v => v.getAttribute('value'));
-    var ansCheck = $('input[type="checkbox"]')
+    //var ansCheck = $('input[type="checkbox"]')
+    var answerIdList = Array.from(document.querySelectorAll('.add-ans')).map(v => v.getAttribute('data-ansId'));
+
     for (var i = 0; ansCheck[i]; ++i) {
         if (ansCheck[i].checked) {
             ansCorrect.push('true');
@@ -839,13 +841,14 @@ function SubmitAnswers() {
             ansCorrect.push('false');
         }
     }
+
     // Text
     var questionTextIdList = Array.from(document.querySelectorAll('.form-control')).map(v => v.getAttribute('question'));
     var textResponseList = Array.from(document.querySelectorAll('.form-control')).map(v => v.value);
 
     $.ajax({
         type: "POST",
-        data: { questionTextIdList: questionTextIdList, textResponseList: textResponseList, questionCheckboxIdList: questionCheckboxIdList, ansText: ansText, ansCorrect: ansCorrect, attemptId: attemptId },
+        data: { questionTextIdList: questionTextIdList, textResponseList: textResponseList, questionCheckboxIdList: questionCheckboxIdList, ansText: ansText, ansCorrect: ansCorrect, answerIdList: answerIdList, attemptId: attemptId },
         url: "/TakeQuiz/SubmitResponse",
         contentType: 'application/x-www-form-urlencoded',
         dataType: "json",

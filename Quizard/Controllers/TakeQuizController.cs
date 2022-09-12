@@ -92,9 +92,9 @@ namespace Quizard.Controllers
             return PartialView("_TakeSectionPartial", takeQuizViewModel);
         }
 
-
+        // public async Task<IActionResult> SubmitResponse
         public async Task<IActionResult> SubmitResponse(List<string> questionTextIdList, List<string> textResponseList,
-            List<string> questionCheckboxIdList, List<string> ansText, List<string> ansCorrect, int attemptId)
+            List<string> questionCheckboxIdList, List<string> ansText, List<string> ansCorrect, List<string> answerIdList, int attemptId)
         {
             // if a new response is null delete the old response if it exists
 
@@ -148,6 +148,7 @@ namespace Quizard.Controllers
                             QuestionId = Convert.ToInt32(questionCheckboxIdList[i]),
                             UserQuizAttemptId = Convert.ToInt32(attemptId),
                             AnswerResponse = ansText[i],
+                            AnswerId = Convert.ToInt32(answerIdList[i])
                         };
                         _takeQuizRepository.Add(newResponse);
                     }
@@ -155,11 +156,6 @@ namespace Quizard.Controllers
             }
 
             return null;
-        }
-
-        public async Task<IActionResult> ShowQuestionComponent()
-        {
-            return PartialView("boo");
         }
 
 

@@ -412,6 +412,9 @@ namespace Quizard.Migrations
                     b.Property<string>("AnswerFeedback")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("AnswerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("AnswerResponse")
                         .HasColumnType("nvarchar(max)");
 
@@ -425,6 +428,8 @@ namespace Quizard.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AnswerId");
 
                     b.HasIndex("QuestionId");
 
@@ -598,6 +603,10 @@ namespace Quizard.Migrations
 
             modelBuilder.Entity("Quizard.Models.UserQuestionResponse", b =>
                 {
+                    b.HasOne("Quizard.Models.Answer", "Answer")
+                        .WithMany()
+                        .HasForeignKey("AnswerId");
+
                     b.HasOne("Quizard.Models.Question", "Question")
                         .WithMany("QuestionResponses")
                         .HasForeignKey("QuestionId")
@@ -609,6 +618,8 @@ namespace Quizard.Migrations
                         .HasForeignKey("UserQuizAttemptId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Answer");
 
                     b.Navigation("Question");
 

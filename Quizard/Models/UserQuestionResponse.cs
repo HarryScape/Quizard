@@ -13,9 +13,10 @@ namespace Quizard.Models
         [ForeignKey("UserQuizAttempt")]
         public int UserQuizAttemptId { get; set; }
         public UserQuizAttempt UserQuizAttempt { get; set; }
-        //public ICollection<Answer> CorrectAnswers { get; set; }
 
         //public bool? AnswerCheck { get; set; }
+        public int? AnswerId { get; set; }
+        public Answer? Answer { get; set; }
         public string? AnswerResponse { get; set; }
         public string? AnswerFeedback { get; set; }
         public double? MarkAwarded { get; set; }

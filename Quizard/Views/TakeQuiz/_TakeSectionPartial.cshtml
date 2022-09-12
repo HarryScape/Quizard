@@ -61,12 +61,20 @@
                 {
                     foreach (var ans in question.QuestionAnswers)
                     {
-                        <div class="add-ans" id="single">
+                        var userChecked = Model.QuestionResponses.Any(x => x.AnswerId == ans.Id);
+                        <div class="add-ans" id="single" data-ansId="@ans.Id">
                             <div id="custom-add-box">
                                 <div id="choice-container">
                                     <label class="check-container">
-                                        @*<input value="1" type="checkbox" id="check-single" no="@ans.Id">*@
-                                        @Html.CheckBoxFor(model => model.Checked, new { id="check-single"})
+                                        @if(userChecked == true)
+                                        {
+                                            <input value="1" type="checkbox" id="check-single" no="@ans.Id" checked>
+                                        }
+                                        else
+                                        {
+                                             <input value="0" type="checkbox" id="check-single" no="@ans.Id">
+                                        }
+                                        @*@Html.CheckBoxFor(model => model.Checked, new { id="check-single"})*@
                                         <div class="checkmark"></div>
                                     </label>
                                     <label for="answer" class="col-form-label" id="ans-txt" value="@question.Id">@ans.QuestionAnswer</label>
@@ -80,12 +88,21 @@
                 {
                     foreach (var ans in question.QuestionAnswers)
                     {
-                        <div class="add-ans">
+                        var userChecked = Model.QuestionResponses.Any(x => x.AnswerId == ans.Id);
+                        <div class="add-ans" data-ansId="@ans.Id">
                             <div id="custom-add-box">
                                 <div id="choice-container">
                                     <label class="check-container">
                                         @*<input value="1" type="checkbox">*@
-                                        @Html.CheckBoxFor(model => model.Checked, new { id="ansCheck"})
+                                        @*@Html.CheckBoxFor(model => model.Checked, new { id="ansCheck"})*@
+                                        @if(userChecked == true)
+                                        {
+                                            <input value="1" type="checkbox" id="check-single" no="@ans.Id" checked>
+                                        }
+                                        else
+                                        {
+                                             <input value="0" type="checkbox" id="check-single" no="@ans.Id">
+                                        }
                                         <div class="checkmark"></div>
                                     </label>
                                     <label for="answer" class="col-form-label" id="ans-txt" value="@question.Id">@ans.QuestionAnswer</label>

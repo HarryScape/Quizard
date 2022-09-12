@@ -6,11 +6,6 @@ namespace Quizard.Components
 {
     public class QuestionViewComponent : ViewComponent
     {
-        //private readonly 
-        //public QuestionViewComponent()
-        //{
-
-        //}
 
         public async Task<IViewComponentResult> InvokeAsync(IEnumerable<UserQuestionResponse> questionResponses, IEnumerable<Question> questions)
         {
