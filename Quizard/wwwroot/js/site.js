@@ -635,36 +635,16 @@ function BeginQuiz() {
 }
 
 
+// Checkboxes
+$(document).on("click", "#check-single", function () {
+    var parent = document.getElementById("single").parentElement;
+    var checkboxes = parent.querySelectorAll('#check-single');
 
-//$(document).on("click", "#check-single", function () {
-//    var parent = document.getElementById("single").parentElement;
-//    var checkboxes = parent.querySelectorAll('#check-single');
+    $(checkboxes).click(function () {
+        $(checkboxes).not(this).prop('checked', false);
 
-//    //for (var i = 0; i < checkboxes.length; i++) {
-//    //    if ($(checkboxes[i]).is(':checked')) {
-//    //        $(checkboxes[i]).prop('disabled', true);
-//    //        checkboxes[i].checked = true;
-//    //        //console.log("yes");
-//    //    }
-//    //    else {
-//    //        $(checkboxes[i]).prop('disabled', false);
-//    //        checkboxes[i].checked = false;
-//    //        //console.log("no");
-//    //    }
-//    //}
-
-
-//    if ($(checkboxes).is(':checked')) {
-//        for (var i = 0; i < checkboxes.length; i++) {
-//            $(checkboxes[i]).prop('disabled', true);
-//        }
-//    }
-//    else {
-//        for (var i = 0; i < checkboxes.length; i++) {
-//            $(checkboxes[i]).prop('disabled', false);
-//        }
-//    }
-//})
+    });
+});
 
 
 
