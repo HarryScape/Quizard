@@ -1,0 +1,128 @@
+﻿@*@model IEnumerable<Question>*@
+@model Quizard.ViewModels.TakeQuestionViewModel
+@*@model TakeQuestionPartial*@
+
+@{
+    int index = 0;
+    List<char> alphabetLabel = Enumerable.Range('a', 'z' - 'a' + 1).Select(c => (char)c).ToList();
+}
+
+@foreach (var question in Model.Questions)
+{
+    var exists = Model.QuestionResponses.Any(x => x.QuestionId == question.Id);
+    <div class="child-question" value="@(question.Id)" id="section-question">
+
+        @if (question.QuestionType == Quizard.Data.Enum.QuestionType.GROUP)
+        {
+            <strong>@question.QuestionTitle</strong>
+        }
+        else
+        {
+            <strong>@($"({alphabetLabel[index]}) ")</strong> @question.QuestionTitle
+            index++;
+        }
+
+        @if (question.QuestionType == Quizard.Data.Enum.QuestionType.ESS || question.QuestionType == Quizard.Data.Enum.QuestionType.SR)
+        {
+            <div class="form-group">
+                @if (exists)
+                {
+                    <textarea for="@question.QuestionAnswers" class="form-control" id="answer" placeholder="Answer Here:" question="@question.Id">@Model.QuestionResponses.First(i => i.QuestionId == question.Id).AnswerResponse</textarea>
+                }
+                else
+                {
+                    <textarea for="@question.QuestionAnswers" class="form-control" id="answer" placeholder="Answer Here:" question="@question.Id"></textarea>
+                }
+            </div>
+        }
+        else if (question.QuestionType == Quizard.Data.Enum.QuestionType.FIB || question.QuestionType == Quizard.Data.Enum.QuestionType.NUM)
+        {
+            <div class="form-group">
+                @*<label for="@question.QuestionAnswers" class="col-form-label">Answer:</label>*@
+                @if (exists)
+                {
+                    <input for="@question.QuestionAnswers" type="text" class="form-control" value="@Model.QuestionResponses.First(i => i.QuestionId == question.Id).AnswerResponse" autocomplete="off" question="@question.Id">
+                }
+                else
+                {
+                    <input for="@question.QuestionAnswers" type="text" class="form-control" placeholder="Answer Here:" autocomplete="off" question="@question.Id">
+                }
+            </div>
+        }
+
+        else if (question.QuestionType == Quizard.Data.Enum.QuestionType.MC || question.QuestionType == Quizard.Data.Enum.QuestionType.TF)
+        {
+            foreach (var ans in question.QuestionAnswers)
+            {
+                var userChecked = Model.QuestionResponses.Any(x => x.AnswerId == ans.Id);
+                <div class="add-ans" data-ansId="@ans.Id">
+                    <div id="custom-add-box">
+                        <div id="choice-container">
+                            <label class="check-container">
+                                @*<input value="1" type="checkbox">*@
+                                @if (userChecked == true)
+                                {
+                                    <input value="1" type="checkbox" id="check-single" no="@ans.Id" checked>
+                                }
+                                else
+                                {
+                                    <input value="0" type="checkbox" id="check-single" no="@ans.Id">
+                                }
+                                <div class="checkmark"></div>
+                            </label>
+                            <label for="answer" class="col-form-label" id="ans-txt" value="@question.Id">@ans.QuestionAnswer</label>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+        else if (question.QuestionType == Quizard.Data.Enum.QuestionType.MA)
+        {
+            foreach (var ans in question.QuestionAnswers)
+            {
+                var userChecked = Model.QuestionResponses.Any(x => x.AnswerId == ans.Id);
+                <div class="add-ans" data-ansId="@ans.Id">
+                    <div id="custom-add-box">
+                        <div id="choice-container">
+                            <label class="check-container">
+                                @*<input value="1" type="checkbox">*@
+                                @if (userChecked == true)
+                                {
+                                    <input value="1" type="checkbox" id="check-single" no="@ans.Id" checked>
+                                }
+                                else
+                                {
+                                    <input value="0" type="checkbox" id="check-single" no="@ans.Id">
+                                }
+                                <div class="checkmark"></div>
+                            </label>
+                            <label for="answer" class="col-form-label" id="ans-txt" value="@question.Id">@ans.QuestionAnswer</label>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+
+
+
+
+
+        @if (question.Mark != null)
+        {
+            <i> @question.Mark Marks </i>
+        }
+
+
+        @*@if (question.Children != null)
+    {
+    @await Component.InvokeAsync("Question", new { questions = question.Children, questionResponses = Model.QuestionResponses });
+    }*@
+        @await Component.InvokeAsync("Question", new {questions = question.Children, questionResponses = Model.QuestionResponses})
+
+
+    </div>
+}
+
+

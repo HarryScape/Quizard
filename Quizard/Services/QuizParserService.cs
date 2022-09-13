@@ -68,6 +68,7 @@ namespace Quizard.Services
                 question.QuestionAnswers = (ICollection<Answer>)await _quizRepository.GetAnswersByQuestion(question.Id);
             }
 
+
             return quizViewModel;
         }
 
@@ -103,6 +104,31 @@ namespace Quizard.Services
 
 
             return (questionTypes);
+        }
+
+
+        public async Task<TakeQuizViewModel> GenerateTakeQuizViewModel(int id)
+        {
+            TakeQuizViewModel takeQuizViewModel = new TakeQuizViewModel();
+            takeQuizViewModel.Quiz = await _quizRepository.GetQuizById(id);
+            takeQuizViewModel.Sections = await _quizRepository.GetQuizSections(id);
+            takeQuizViewModel.Questions = await _quizRepository.GetQuestionByQuizID(id);
+            takeQuizViewModel.ParentQuestions = await _quizRepository.GetParentQuestions(id);
+            takeQuizViewModel.Answers = await _quizRepository.GetSpecificAnswers(id);
+
+            foreach (var question in takeQuizViewModel.ParentQuestions)
+            {
+                question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
+                question.QuestionAnswers = (ICollection<Answer>)await _quizRepository.GetAnswersByQuestion(question.Id);
+            }
+            foreach (var question in takeQuizViewModel.Questions)
+            {
+                question.Children = (ICollection<Question>)await _quizRepository.GetChildQuestions(question.Id);
+                question.QuestionAnswers = (ICollection<Answer>)await _quizRepository.GetAnswersByQuestion(question.Id);
+            }
+            takeQuizViewModel.Section = takeQuizViewModel.Sections.First();
+
+            return takeQuizViewModel;
         }
 
     }

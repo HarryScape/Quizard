@@ -19,6 +19,8 @@ namespace Quizard.Data
         public DbSet<Answer> Answers { get; set; }
 
         public DbSet<UserModule> UserModules { get; set; }
+        public DbSet<UserQuizAttempt> UserQuizAttempts { get; set; }
+        public DbSet<UserQuestionResponse> UserQuestionResponses { get; set; }
 
         //public DbSet<User> Users { get; set; }
 
@@ -26,6 +28,7 @@ namespace Quizard.Data
         {
             base.OnModelCreating(builder);
 
+            // USER MODULES
             // Composite key
             builder.Entity<UserModule>()
                 .HasKey(um => new { um.UserId, um.ModuleId });
@@ -41,7 +44,44 @@ namespace Quizard.Data
                 .HasOne(um => um.User)
                 .WithMany(um => um.Modules)
                 .HasForeignKey(um => um.UserId);
+
+
+
+            // USER QUIZ ATTEMPTS
+            // Relation for user to have many quiz attempts
+            builder.Entity<UserQuizAttempt>()
+                .HasOne(qa => qa.Quiz)
+                .WithMany(qa => qa.UserQuizAttempts)
+                .HasForeignKey(qa => qa.QuizId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Relation for quiz to have many user attempts
+            builder.Entity<UserQuizAttempt>()
+                .HasOne(qa => qa.User)
+                .WithMany(qa => qa.UserQuizAttempts)
+                .HasForeignKey(qa => qa.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+
+            // responses
+            // Relation for user attempt to have many question responses
+            builder.Entity<UserQuestionResponse>()
+                .HasOne(qr => qr.UserQuizAttempt)
+                .WithMany(qr => qr.QuestionResponses)
+                .HasForeignKey(qr => qr.UserQuizAttemptId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Relation for question to have many user responses
+            builder.Entity<UserQuestionResponse>()
+                .HasOne(qr => qr.Question)
+                .WithMany(qr => qr.QuestionResponses)
+                .HasForeignKey(qr => qr.QuestionId)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
+
+
 
     }
 }

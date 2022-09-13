@@ -401,6 +401,82 @@ namespace Quizard.Migrations
                     b.ToTable("UserModules");
                 });
 
+            modelBuilder.Entity("Quizard.Models.UserQuestionResponse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AnswerFeedback")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("AnswerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AnswerResponse")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("MarkAwarded")
+                        .HasColumnType("float");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserQuizAttemptId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnswerId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("UserQuizAttemptId");
+
+                    b.ToTable("UserQuestionResponses");
+                });
+
+            modelBuilder.Entity("Quizard.Models.UserQuizAttempt", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("IsMarked")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("QuizId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ReleaseFeedback")
+                        .HasColumnType("bit");
+
+                    b.Property<double?>("Score")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("TimeCompleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("TimeStarted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuizId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserQuizAttempts");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -525,6 +601,50 @@ namespace Quizard.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Quizard.Models.UserQuestionResponse", b =>
+                {
+                    b.HasOne("Quizard.Models.Answer", "Answer")
+                        .WithMany()
+                        .HasForeignKey("AnswerId");
+
+                    b.HasOne("Quizard.Models.Question", "Question")
+                        .WithMany("QuestionResponses")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Quizard.Models.UserQuizAttempt", "UserQuizAttempt")
+                        .WithMany("QuestionResponses")
+                        .HasForeignKey("UserQuizAttemptId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Answer");
+
+                    b.Navigation("Question");
+
+                    b.Navigation("UserQuizAttempt");
+                });
+
+            modelBuilder.Entity("Quizard.Models.UserQuizAttempt", b =>
+                {
+                    b.HasOne("Quizard.Models.Quiz", "Quiz")
+                        .WithMany("UserQuizAttempts")
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Quizard.Models.User", "User")
+                        .WithMany("UserQuizAttempts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Quiz");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Quizard.Models.Module", b =>
                 {
                     b.Navigation("ModuleQuizzes");
@@ -537,11 +657,15 @@ namespace Quizard.Migrations
                     b.Navigation("Children");
 
                     b.Navigation("QuestionAnswers");
+
+                    b.Navigation("QuestionResponses");
                 });
 
             modelBuilder.Entity("Quizard.Models.Quiz", b =>
                 {
                     b.Navigation("QuizSections");
+
+                    b.Navigation("UserQuizAttempts");
                 });
 
             modelBuilder.Entity("Quizard.Models.Section", b =>
@@ -553,7 +677,14 @@ namespace Quizard.Migrations
                 {
                     b.Navigation("Modules");
 
+                    b.Navigation("UserQuizAttempts");
+
                     b.Navigation("UserQuizzes");
+                });
+
+            modelBuilder.Entity("Quizard.Models.UserQuizAttempt", b =>
+                {
+                    b.Navigation("QuestionResponses");
                 });
 #pragma warning restore 612, 618
         }

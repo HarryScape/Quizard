@@ -1,0 +1,148 @@
+﻿@model Quizard.ViewModels.TakeQuizViewModel
+
+@Html.HiddenFor(x => x.AttemptId, new { id = "HiddenAttemptId" })
+
+<p> Section <strong>1</strong> of <strong>2</strong> </p>
+
+
+<div class="Take-Section">
+
+    <form action="TakeSection">
+
+        @{
+            int i = 1;
+        }
+
+        <h2>@Model.Section.SectionName</h2>
+        <br />
+
+        @foreach (var question in Model.ParentQuestions.Where(i => i.SectionId.Equals(Model.Section.Id)))
+        {
+            var exists = Model.QuestionResponses.Any(x => x.QuestionId == question.Id);
+            <div class="Take-Question" value="@(question.Id)" id="section-question">
+
+                @if (question.QuestionType == Quizard.Data.Enum.QuestionType.GROUP)
+                {
+                    <strong>Question @i: @question.QuestionTitle</strong>
+                }
+                else
+                {
+                    <strong>Question @i: @question.QuestionTitle</strong>
+                }
+
+                @if (question.QuestionType == Quizard.Data.Enum.QuestionType.ESS || question.QuestionType == Quizard.Data.Enum.QuestionType.SR)
+                {
+                    <div class="form-group">
+                        @if (exists)
+                        {
+                            <textarea for="@question.QuestionAnswers" class="form-control" id="answer" placeholder="Answer Here:" question="@question.Id">@Model.QuestionResponses.First(i => i.QuestionId == question.Id).AnswerResponse</textarea>
+                        }
+                        else
+                        {
+                            <textarea for="@question.QuestionAnswers" class="form-control" id="answer" placeholder="Answer Here:" question="@question.Id"></textarea>
+                        }
+                    </div>
+                }
+                else if (question.QuestionType == Quizard.Data.Enum.QuestionType.FIB || question.QuestionType == Quizard.Data.Enum.QuestionType.NUM)
+                {
+                    <div class="form-group">
+                        @if (exists)
+                        {
+                           <input for="@question.QuestionAnswers" type="text" class="form-control" value="@Model.QuestionResponses.First(i => i.QuestionId == question.Id).AnswerResponse" autocomplete="off" question="@question.Id">
+                        }
+                        else
+                        {
+                            <input for="@question.QuestionAnswers" type="text" class="form-control" placeholder="Answer Here:" autocomplete="off" question="@question.Id">
+                        }
+                        @*<input for="@question.QuestionAnswers" type="text" class="form-control" placeholder="Answer Here:" autocomplete="off" question="@question.Id">*@
+                    </div>
+                }
+                else if (question.QuestionType == Quizard.Data.Enum.QuestionType.MC || question.QuestionType == Quizard.Data.Enum.QuestionType.TF)
+                {
+                    foreach (var ans in question.QuestionAnswers)
+                    {
+                        var userChecked = Model.QuestionResponses.Any(x => x.AnswerId == ans.Id);
+                        <div class="add-ans" id="single" data-ansId="@ans.Id">
+                            <div id="custom-add-box">
+                                <div id="choice-container">
+                                    <label class="check-container">
+                                        @if(userChecked == true)
+                                        {
+                                            <input value="1" type="checkbox" id="check-single" no="@ans.Id" checked>
+                                        }
+                                        else
+                                        {
+                                             <input value="0" type="checkbox" id="check-single" no="@ans.Id">
+                                        }
+                                        @*@Html.CheckBoxFor(model => model.Checked, new { id="check-single"})*@
+                                        <div class="checkmark"></div>
+                                    </label>
+                                    <label for="answer" class="col-form-label" id="ans-txt" value="@question.Id">@ans.QuestionAnswer</label>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                else if (question.QuestionType == Quizard.Data.Enum.QuestionType.MA)
+                {
+                    foreach (var ans in question.QuestionAnswers)
+                    {
+                        var userChecked = Model.QuestionResponses.Any(x => x.AnswerId == ans.Id);
+                        <div class="add-ans" data-ansId="@ans.Id">
+                            <div id="custom-add-box">
+                                <div id="choice-container">
+                                    <label class="check-container">
+                                        @*<input value="1" type="checkbox">*@
+                                        @*@Html.CheckBoxFor(model => model.Checked, new { id="ansCheck"})*@
+                                        @if(userChecked == true)
+                                        {
+                                            <input value="1" type="checkbox" id="check-single" no="@ans.Id" checked>
+                                        }
+                                        else
+                                        {
+                                             <input value="0" type="checkbox" id="check-single" no="@ans.Id">
+                                        }
+                                        <div class="checkmark"></div>
+                                    </label>
+                                    <label for="answer" class="col-form-label" id="ans-txt" value="@question.Id">@ans.QuestionAnswer</label>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                @if (question.Mark != null)
+                {
+                    <i> @question.Mark Marks </i>
+                }
+
+                @*@Html.Partial("_TakeQuestionPartial", question.Children)*@
+                @await Component.InvokeAsync("Question", new {questions = question.Children, questionResponses = Model.QuestionResponses})
+                @*<vc: Question questions=question.Children, questionResponses=Model.QuestionResponses></vc: Question>*@
+
+                @*@if (question.Children != null)
+                {
+                    await Component.InvokeAsync("Question", new { questions = question.Children, questionResponses = Model.QuestionResponses });
+                }*@
+
+            </div>
+
+            <br />
+
+            i++;
+
+        }
+
+    </form>
+
+    <div class="nav-buttons">
+        <button type="submit" class="button--save" onclick="PreviousSection()">Previous Section</button>
+        <button type="submit" class="button--save" onclick="NextSection()">Next Section</button>
+    </div>
+    <div class="submit-action">
+        <button type="submit" class="button--save" onclick="SubmitAnswers()">Save Progress</button>
+        <button type="submit" class="button--save" onclick="ConfirmComplete()">Finish Quiz</button>
+    </div>
+
+</div>

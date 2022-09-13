@@ -5,6 +5,14 @@
     font-family: 'Inter', sans-serif;
 }
 
+/*body {
+    background: linear-gradient(45deg, rgba(195,6,230,0.06906512605042014) 0%, rgba(19,9,121,0.06906512605042014) 49%, rgba(250,208,120,0.06346288515406162) 100%);
+    background-attachment: fixed;
+    background-size: cover;
+}*/
+
+
+
 
 h1,
 h2,
@@ -32,10 +40,10 @@ h3 {
     padding: 0;
     border: none;
     position: absolute;*/
-    /*position: relative;*/
-    /*right: 20px;*/
-    /*left: 95%;*/
-    /*background: transparent;
+/*position: relative;*/
+/*right: 20px;*/
+/*left: 95%;*/
+/*background: transparent;
     cursor: pointer;
     color: black;
 }*/
@@ -85,21 +93,21 @@ h3 {
 
 
 /*.flex-container {*/
-    /*    display: flex;*/
-    /*flex-direction: row;*/
-    /*justify-content: flex-start;
+/*    display: flex;*/
+/*flex-direction: row;*/
+/*justify-content: flex-start;
     flex-wrap: nowrap;
     align-items: flex-start;*/
 
-    /*display: flex;
+/*display: flex;
     flex-direction: row;
     flex-wrap: nowrap;*/
-    /*justify-content: flex-start;*/
-    /*justify-content: space-between;
+/*justify-content: flex-start;*/
+/*justify-content: space-between;
     align-content: stretch;
     align-items: flex-start;
     height: auto;*/
-    /*box-sizing: border-box;*/
+/*box-sizing: border-box;*/
 /*}
 
 
@@ -108,34 +116,34 @@ h3 {
     background-color: rgb(217, 217, 245);
     border: solid 2px #5e4dcd;
     border-radius: 0.5rem;*/
-    /*flex-basis: auto;
+/*flex-basis: auto;
     flex: 1 1 auto;*/
-    /*max-width: 400px;
+/*max-width: 400px;
     min-width: 300px;
     order: 2;*/
-    /*flex: 1 1 auto;*/
-    /*align-self: auto;
+/*flex: 1 1 auto;*/
+/*align-self: auto;
     padding: 20px;
     flex-flow: row wrap;*/
-    /*overide flex*/
-    /*display: flex;
+/*overide flex*/
+/*display: flex;
     position: fixed;*/
-    /*right: 50px;*/
-    /*right: 8%;
+/*right: 50px;*/
+/*right: 8%;
     width: 25%;
 }
 
 
 .quiz-wrapper {*/
-    /* background-color: blue; */
-    /*padding: 20px;
+/* background-color: blue; */
+/*padding: 20px;
     border-radius: 0.5rem;
     display: flex;
     width: 75%;
     order: 1;*/
-    /*flex: 3 0 auto;*/
-    /*align-self: flex-start;*/
-    /*max-width: 1100px;*/
+/*flex: 3 0 auto;*/
+/*align-self: flex-start;*/
+/*max-width: 1100px;*/
 /*}*/
 
 .flex-container {
@@ -158,7 +166,6 @@ h3 {
     position: fixed;
     right: 5%;
     min-width: 20%;
-
 }
 
     .controls > .input-group {
@@ -195,7 +202,6 @@ h3 {
     font-size: 15px;
     cursor: pointer;
     transition: background-color .3s ease-in-out;
-
 }
 
     .button--add:hover {
@@ -524,7 +530,7 @@ ol {
 }
 
 
-.module-classroom{
+.module-classroom {
     margin-top: 20px;
 }
 
@@ -654,6 +660,79 @@ ol {
     margin-top: 20px;
 }
 
-.home-buttons > p:first-child {
-    margin-top: 50px;
+    .home-buttons > p:first-child {
+        margin-top: 50px;
+    }
+
+
+
+
+/*TAKE QUIZ*/
+.countdown-outer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
+
+.countdown {
+    width: 400px;
+    height: 100px;
+    background-color: #5e4dcd;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    position: absolute;
+    top: 56px;
+    display: inline-block;
+}
+
+.description-outer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.description-box {
+    padding: 30px;
+    margin-top: 150px;
+    width: 80%;
+    height: 80%;
+    text-align: center;
+    background-color: rgba(94, 77, 205, .3);
+    border-radius: 6px;
+}
+
+.take-description-buttons .button--save {
+    margin: 30px;
+    font-size: 20px;
+}
+
+#timer {
+    color: #fff;
+    font-size: 55px;
+    text-align: center;
+}
+
+.child-question {
+    margin-left: 40px;
+    margin-top: 10px;
+}
+
+.Take-Section {
+    padding: 30px;
+    margin-top: 150px;
+    width: 80%;
+    height: 80%;
+    background-color: rgba(94, 77, 205, .3);
+    border-radius: 6px;
+}
+
+    .Take-Section .check-container {
+        display: inline-block;
+        vertical-align: central;
+        padding-left: 15px;
+        position: relative;
+        top: 3px;
+        margin-right: 20px;
+    }
+
+

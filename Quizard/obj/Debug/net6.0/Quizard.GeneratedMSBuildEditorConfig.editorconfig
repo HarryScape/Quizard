@@ -99,12 +99,36 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxfU2VjdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Shared/Components/Question/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcUXVlc3Rpb25cRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/TakeQuiz/Completed.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFrZVF1aXpcQ29tcGxldGVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/TakeQuiz/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFrZVF1aXpcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/TakeQuiz/_SubmitModalPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFrZVF1aXpcX1N1Ym1pdE1vZGFsUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/TakeQuiz/_TakeQuestionPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFrZVF1aXpcX1Rha2VRdWVzdGlvblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/TakeQuiz/_TakeSectionPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFrZVF1aXpcX1Rha2VTZWN0aW9uUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/_ViewImports.cshtml]
