@@ -159,7 +159,17 @@ namespace Quizard.Controllers
         }
 
 
-        // public async Task<IActionResult> CompleteQuiz(int quizId)
+        public async Task<IActionResult> CompleteQuiz(int attemptId)
+        {
+            UserQuizAttempt attempt = await _takeQuizRepository.GetAttemptById(attemptId);
+            attempt.TimeCompleted = DateTime.Now;
+            _takeQuizRepository.Update(attempt);
+
+            return RedirectToAction("Completed", "TakeQuiz");
+        }
+
 
     }
 }
+
+

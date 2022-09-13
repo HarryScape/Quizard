@@ -755,6 +755,8 @@ function BeginQuiz() {
 
 
 function NextSection() {
+    SubmitAnswers()
+
     var quizId = document.getElementById("HiddenQuizId").value;
     var element = document.querySelector('.take-quiz-container');
     var index = element.getAttribute('data-index');
@@ -788,6 +790,8 @@ function NextSection() {
 }
 
 function PreviousSection() {
+    SubmitAnswers()
+
     var quizId = document.getElementById("HiddenQuizId").value;
     var element = document.querySelector('.take-quiz-container');
     var index = element.getAttribute('data-index');
@@ -823,6 +827,7 @@ function PreviousSection() {
 }
 
 
+// Submit Answer
 function SubmitAnswers() {
     var attemptId = document.getElementById("HiddenAttemptId").value;
     // Checkbox
@@ -859,5 +864,28 @@ function SubmitAnswers() {
                 console.log("Something went wrong");
             }
         }
+    });
+}
+
+// Complete Quiz
+function CompleteQuiz() {
+    SubmitAnswers()
+
+    var attemptId = document.getElementById("HiddenAttemptId").value;
+
+    $.post('/TakeQuiz/CompleteQuiz', { attemptId: attemptId },
+        function () {
+            window.location.href = '/TakeQuiz/Completed/';
+        });
+}
+
+// Confirm Complete Modal
+function ConfirmComplete() {
+    $("#exampleModalCenter").modal("toggle");
+
+    const button = document.getElementById('end-confirm');
+    button.addEventListener('click', function handleClick() {
+        $("#exampleModalCenter").modal("toggle");
+        CompleteQuiz();
     });
 }

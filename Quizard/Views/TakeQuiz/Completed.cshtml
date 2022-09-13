@@ -1,8 +1,19 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
+<div class="home-container">
+    <div class="home-panel" id="left-panel">
 
+        <object type="image/svg+xml" data="/Images/QuizardAnim.svg">
+            <img src="sample.svg" />
+        </object>
 
-<h1>test</h1>
+    </div>
+    <div class="home-panel" id="right-panel">
+        <div class="home-buttons">
+
+            <p>Congratulations on completing your quiz! Your powers grow stronger each day, keep at it.</p>
+
+            <p>Head back to the Dashboard!</p>
+            <button type="submit" class="home-btn" onclick="location.href='@Url.Action("Index", "Dashboard")'">Dashboard</button>
+        </div>
+    </div>
+</div>
