@@ -159,14 +159,12 @@ namespace Quizard.Controllers
         public async Task<IActionResult> ExportQuiz(int quizId)
         {
             var exportQuizViewModel = await _quizExportService.GenerateQuizViewModel(quizId);
-            //_quizExportService.GenerateDocx(exportQuizViewModel);
             byte[] docToSend = await _quizExportService.GenerateDocx(exportQuizViewModel);
 
-            string downloadUrl = await _quizExportService.GenerateQTI(docToSend);
+            //string downloadUrl = await _quizExportService.GenerateQTI(docToSend);
 
-            return Redirect(downloadUrl);
-            //return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "test.docx");
-            //return RedirectToAction("Index", "Dashboard");
+            return File(docToSend, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", $"{exportQuizViewModel.Quiz.QuizName}.docx");
+            //return Redirect(downloadUrl);
         }
     }
 }
