@@ -47,15 +47,18 @@ namespace Quizard.Controllers
         [HttpPost]
         public async Task<IActionResult> AddModule(Module newModule)
         {
-            Module module = new Module()
+            if(newModule.ModuleCode != null)
             {
-                Id = newModule.Id,
-                Description = newModule.Description,
-                ModuleCode = newModule.ModuleCode,
-                ModuleLeaderId = _contextAccessor.HttpContext.User.GetUserId(),
-            };
-            _moduleRepository.Add(module);
-
+                Module module = new Module()
+                {
+                    Id = newModule.Id,
+                    Description = newModule.Description,
+                    ModuleCode = newModule.ModuleCode,
+                    ModuleLeaderId = _contextAccessor.HttpContext.User.GetUserId(),
+                };
+                _moduleRepository.Add(module);
+            }
+           
             return RedirectToAction("Index", "Module");
         }
 
@@ -71,10 +74,13 @@ namespace Quizard.Controllers
         [HttpPost]
         public async Task<IActionResult> EditModule(Module updatedModule)
         {
-            Module module = await _moduleRepository.GetModuleById(updatedModule.Id);
-            module.Description = updatedModule.Description;
-            module.ModuleCode = updatedModule.ModuleCode;
-            _moduleRepository.Update(module);
+            if(updatedModule.ModuleCode != null)
+            {
+                Module module = await _moduleRepository.GetModuleById(updatedModule.Id);
+                module.Description = updatedModule.Description;
+                module.ModuleCode = updatedModule.ModuleCode;
+                _moduleRepository.Update(module);
+            }
 
             return RedirectToAction("Index", "Module");
         }

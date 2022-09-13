@@ -59,14 +59,17 @@ namespace Quizard.Controllers
         [HttpPost]
         public async Task<IActionResult> AddQuestionGroup(string groupName, int quizId, int sectionId)
         {
-            var questionGroup = new Question()
+            if(groupName != null)
             {
-                QuestionType = QuestionType.GROUP,
-                QuestionTitle = groupName,
-                QuestionPosition = 0,
-                SectionId = sectionId
-            };
-            _quizRepository.Add(questionGroup);
+                var questionGroup = new Question()
+                {
+                    QuestionType = QuestionType.GROUP,
+                    QuestionTitle = groupName,
+                    QuestionPosition = 0,
+                    SectionId = sectionId
+                };
+                _quizRepository.Add(questionGroup);
+            }
 
             var quizViewModel = await _quizParserService.GenerateQuizViewModel(quizId);
 
@@ -76,12 +79,15 @@ namespace Quizard.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSectionDB(string sectionName, int quizId)
         {
-            var section = new Section()
+            if(sectionName != null)
             {
-                SectionName = sectionName,
-                QuizId = quizId
-            };
-            _quizRepository.Add(section);
+                var section = new Section()
+                {
+                    SectionName = sectionName,
+                    QuizId = quizId
+                };
+                _quizRepository.Add(section);
+            }
 
             var quizViewModel = await _quizParserService.GenerateQuizViewModel(quizId);
 
@@ -221,10 +227,18 @@ namespace Quizard.Controllers
         public async Task<IActionResult> UpdateSection(Section updatedSection)
         {
             Section section = await _quizRepository.GetSectionById(updatedSection.Id);
-            section.SectionName = updatedSection.SectionName;
-            section.RequiredQuestions = updatedSection.RequiredQuestions;
+            if (updatedSection.SectionName != null)
+            {
+                section.SectionName = updatedSection.SectionName;
+                section.RequiredQuestions = updatedSection.RequiredQuestions;
 
-            _quizRepository.Update(section);
+                _quizRepository.Update(section);
+            }
+            //Section section = await _quizRepository.GetSectionById(updatedSection.Id);
+            //section.SectionName = updatedSection.SectionName;
+            //section.RequiredQuestions = updatedSection.RequiredQuestions;
+
+            //_quizRepository.Update(section);
 
             var quizViewModel = await _quizParserService.GenerateQuizViewModel(section.QuizId);
             return PartialView("_Section", quizViewModel);
@@ -245,40 +259,78 @@ namespace Quizard.Controllers
         [HttpPost]
         public async Task<IActionResult> AddQuestion(List<string> questionBody, List<string> answers, List<string> answersCheck)
         {
-            Question question = new Question()
+            if(questionBody[0] != null)
             {
-                SectionId = Int32.Parse(questionBody[5]),
-                QuestionTitle = questionBody[0],
-                QuestionType = Enum.Parse<QuestionType>(questionBody[6]),
-            };
-            if (questionBody[1] != null)
-            {
-                question.Mark = Int32.Parse(questionBody[1]);
-            }
-            if (questionBody[2] != null)
-            {
-                question.ErrorMargin = double.Parse(questionBody[2]);
-            }
-            if (questionBody[3] != null)
-            {
-                question.NegativeMark = double.Parse(questionBody[3]);
-            }
-
-            _quizRepository.Add(question);
-
-            for (int i = 0; i < answers.Count; i++)
-            {
-                Answer answer = new Answer()
+                Question question = new Question()
                 {
-                    QuestionAnswer = answers[i],
-                    QuestionId = question.Id,
+                    SectionId = Int32.Parse(questionBody[5]),
+                    QuestionTitle = questionBody[0],
+                    QuestionType = Enum.Parse<QuestionType>(questionBody[6]),
                 };
-                if (answersCheck[i].Equals("true"))
+                if (questionBody[1] != null)
                 {
-                    answer.isCorrect = true;
+                    question.Mark = Int32.Parse(questionBody[1]);
                 }
-                _quizRepository.Add(answer);
+                if (questionBody[2] != null)
+                {
+                    question.ErrorMargin = double.Parse(questionBody[2]);
+                }
+                if (questionBody[3] != null)
+                {
+                    question.NegativeMark = double.Parse(questionBody[3]);
+                }
+
+                _quizRepository.Add(question);
+
+                for (int i = 0; i < answers.Count; i++)
+                {
+                    Answer answer = new Answer()
+                    {
+                        QuestionAnswer = answers[i],
+                        QuestionId = question.Id,
+                    };
+                    if (answersCheck[i].Equals("true"))
+                    {
+                        answer.isCorrect = true;
+                    }
+                    _quizRepository.Add(answer);
+                }
             }
+
+            //Question question = new Question()
+            //{
+            //    SectionId = Int32.Parse(questionBody[5]),
+            //    QuestionTitle = questionBody[0],
+            //    QuestionType = Enum.Parse<QuestionType>(questionBody[6]),
+            //};
+            //if (questionBody[1] != null)
+            //{
+            //    question.Mark = Int32.Parse(questionBody[1]);
+            //}
+            //if (questionBody[2] != null)
+            //{
+            //    question.ErrorMargin = double.Parse(questionBody[2]);
+            //}
+            //if (questionBody[3] != null)
+            //{
+            //    question.NegativeMark = double.Parse(questionBody[3]);
+            //}
+
+            //_quizRepository.Add(question);
+
+            //for (int i = 0; i < answers.Count; i++)
+            //{
+            //    Answer answer = new Answer()
+            //    {
+            //        QuestionAnswer = answers[i],
+            //        QuestionId = question.Id,
+            //    };
+            //    if (answersCheck[i].Equals("true"))
+            //    {
+            //        answer.isCorrect = true;
+            //    }
+            //    _quizRepository.Add(answer);
+            //}
 
             var quizViewModel = await _quizParserService.GenerateQuizViewModel(Int32.Parse(questionBody[4]));
             return PartialView("_Section", quizViewModel);

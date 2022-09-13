@@ -133,16 +133,19 @@ namespace Quizard.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateQuiz(Quiz updatedQuiz)
         {
-            int modId = Convert.ToInt32(updatedQuiz.ModuleId);
-            Quiz quiz = await _quizRepository.GetQuizById(updatedQuiz.Id);
-            quiz.QuizName = updatedQuiz.QuizName;
-            quiz.TimeLimit = updatedQuiz.TimeLimit;
-            quiz.Shuffled = updatedQuiz.Shuffled;
-            quiz.Deployed = updatedQuiz.Deployed;
-            quiz.ModuleId = updatedQuiz.ModuleId;
-            quiz.Module = await _moduleRepository.GetModuleById(modId);
-            quiz.DateCreated = DateTime.Now;
-            _quizRepository.Update(quiz);
+            if(updatedQuiz.QuizName != null)
+            {
+                int modId = Convert.ToInt32(updatedQuiz.ModuleId);
+                Quiz quiz = await _quizRepository.GetQuizById(updatedQuiz.Id);
+                quiz.QuizName = updatedQuiz.QuizName;
+                quiz.TimeLimit = updatedQuiz.TimeLimit;
+                quiz.Shuffled = updatedQuiz.Shuffled;
+                quiz.Deployed = updatedQuiz.Deployed;
+                quiz.ModuleId = updatedQuiz.ModuleId;
+                quiz.Module = await _moduleRepository.GetModuleById(modId);
+                quiz.DateCreated = DateTime.Now;
+                _quizRepository.Update(quiz);
+            }
 
             return RedirectToAction("Index", "Dashboard");
         }
