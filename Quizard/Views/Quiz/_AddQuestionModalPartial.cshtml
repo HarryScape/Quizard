@@ -13,6 +13,8 @@
                 <form action="AddQuestion">
 
                     <input type="hidden" asp-for="@Model.QuizId" name="Id" value="@Model.QuizId">
+                    @*<input type="hidden" asp-for="@Model.SectionId" name="secId" value="@Model.SectionId">*@
+                    @Html.HiddenFor(x => x.SectionId, new { id = "HiddenSectionId" })
 
                     <div class="form-group">
                         <label asp-for="@Model.Question.QuestionTitle" class="col-form-label">Question TItle:</label>

@@ -232,10 +232,11 @@ namespace Quizard.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> ShowAddQuestionModal(int id)
+        public async Task<IActionResult> ShowAddQuestionModal(int id, int sectionId)
         {
             var addQuestionViewModel = new AddQuestionViewModel();
             addQuestionViewModel.Quiz = await _quizRepository.GetQuizById(id);
+            addQuestionViewModel.SectionId = sectionId;
             addQuestionViewModel.QuestionTypeList = await _quizParserService.GenerateQuestionTypes();
             return PartialView("_AddQuestionModalPartial", addQuestionViewModel);
         }

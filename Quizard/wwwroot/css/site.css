@@ -81,6 +81,22 @@ h3 {
     color: #5e5dcd;
 }
 
+.hi-plus-circle {
+    width: 1.5em;
+    height: 1.5em;
+    display: inline-block;
+    align-self: center;
+    vertical-align: middle;
+    margin-top: -0.1em;
+    padding: 0;
+    border: none;
+    position: absolute;
+    right: 55px;
+    background: transparent;
+    cursor: pointer;
+    color: #5e5dcd;
+}
+
 /*.humbleicons {
     width: 1.5em;
     height: 1.5em;
@@ -174,12 +190,16 @@ h3 {
         align-items: center;
     }
 
-/*QUIZ CONTROLS*/
-.input-group {
-    display: flex;
-    align-items: center;
-    padding-bottom: 10px;
-}
+    .controls #AddSectionName, #AddGroupName {
+        margin-left: 5px;
+    }
+
+    /*QUIZ CONTROLS*/
+    .input-group {
+        display: flex;
+        align-items: center;
+        padding-bottom: 10px;
+    }
 
 .input {
     min-height: 50px;
@@ -202,6 +222,7 @@ h3 {
     font-size: 15px;
     cursor: pointer;
     transition: background-color .3s ease-in-out;
+    margin-right: 5px;
 }
 
     .button--add:hover {

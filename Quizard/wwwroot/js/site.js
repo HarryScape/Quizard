@@ -549,90 +549,6 @@ function RemoveStudent(studentEmail, moduleId) {
     });
 }
 
-//Add Question
-$(function () {
-    var placeholder = $('#modal-zone');
-
-    $('button[data-toggle="add-question-modal"]').click(function (event) {
-        var url = $(this).data('url');
-
-        $.get(url).done(function (data) {
-            placeholder.html(data);
-            placeholder.find('.modal').modal('show');
-        })
-    })
-
-    //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
-    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
-        placeholder.find('.modal').modal('hide');
-        $('#modal-zone').html("");
-    })
-
-    //$(document).on("click", '[data-save="modal"]', function (event) {
-    placeholder.on('click', '[data-new-question="modal"]', function (event) {
-        var form = $(this).parents('.modal').find('form');
-        var actionUrl = form.attr('action');
-        var dataPost = form.serialize();
-
-        //custom
-        var ansCorrect = [];
-        var ansCheck = $('input[type="checkbox"]')
-        var ansText = Array.from(document.querySelectorAll('#ans-txt')).map(v => v.value);
-        var ansCheck = $('input[type="checkbox"]')
-        for (var i = 0; ansCheck[i]; ++i) {
-            if (ansCheck[i].checked) {
-                ansCorrect.push('true');
-            }
-            else {
-                ansCorrect.push('false');
-            }
-        }
-        var questionBody = [];
-        questionBody[0] = document.getElementById("question-name-text").value;
-        questionBody[1] = document.getElementById("inlineFormInputMark").value;
-        questionBody[2] = document.getElementById("inlineFormInputMargin").value;
-        questionBody[3] = document.getElementById("inlineFormInputNegative").value;
-        questionBody[4] = document.getElementById("HiddenQuizId").value;
-        questionBody[5] = document.getElementsByClassName("popup")[0].id;
-        questionBody[6] = document.getElementById("QuestionType").value;
-        //console.log(questionBody);
-        //custom
-
-        var data = { questionBody: questionBody, answers: ansText, answersCheck: ansCorrect };
-
-        //$.post('/Quiz/AddQuestion', data).done(function (data) {
-        //    //location.reload(true);
-        //    $('.quiz-wrapper').html(response.responseText);
-        //})
-        $.ajax({
-            type: "POST",
-            data: data,
-            url: "/Quiz/AddQuestion",
-            contentType: 'application/x-www-form-urlencoded',
-            dataType: "json",
-            success: function (response) {
-                if (response != null) {
-                    console.log("Sent okay");
-                } else {
-                    console.log("Something went wrong");
-                }
-            },
-            failure: function (response) {
-                //console.log(response.responseText);
-            },
-            error: function (response) {
-                //console.log(response.responseText);
-            },
-            complete: function (response) {
-                $('.quiz-wrapper').html(response.responseText);
-                SavePosition();
-                placeholder.find('.modal').modal('hide');
-                $('#modal-zone').html("");
-                location.reload(true);
-            }
-        });
-    });
-})
 
 
 
@@ -889,3 +805,90 @@ function ConfirmComplete() {
         CompleteQuiz();
     });
 }
+
+
+//Add Question New
+$(function () {
+    var placeholder = $('#modal-zone');
+
+    $('a[data-toggle="section-add-question-modal"]').click(function (event) {
+        var url = $(this).data('url');
+
+        $.get(url).done(function (data) {
+            placeholder.html(data);
+            placeholder.find('.modal').modal('show');
+        })
+    })
+
+    //$(document).on("click", '[data-bs-dismiss="modal"]', function (event) {
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.find('.modal').modal('hide');
+        $('#modal-zone').html("");
+    })
+
+    //$(document).on("click", '[data-save="modal"]', function (event) {
+    placeholder.on('click', '[data-new-question="modal"]', function (event) {
+        var form = $(this).parents('.modal').find('form');
+        var actionUrl = form.attr('action');
+        var dataPost = form.serialize();
+
+        //custom
+        var ansCorrect = [];
+        var ansCheck = $('input[type="checkbox"]')
+        var ansText = Array.from(document.querySelectorAll('#ans-txt')).map(v => v.value);
+        var ansCheck = $('input[type="checkbox"]')
+        for (var i = 0; ansCheck[i]; ++i) {
+            if (ansCheck[i].checked) {
+                ansCorrect.push('true');
+            }
+            else {
+                ansCorrect.push('false');
+            }
+        }
+        var questionBody = [];
+        questionBody[0] = document.getElementById("question-name-text").value;
+        questionBody[1] = document.getElementById("inlineFormInputMark").value;
+        questionBody[2] = document.getElementById("inlineFormInputMargin").value;
+        questionBody[3] = document.getElementById("inlineFormInputNegative").value;
+        questionBody[4] = document.getElementById("HiddenQuizId").value;
+        //questionBody[5] = document.getElementsByClassName("popup")[0].id; // id
+        questionBody[5] = document.getElementById("HiddenSectionId").value; // id
+        questionBody[6] = document.getElementById("QuestionType").value;
+        //console.log(questionBody);
+        //custom
+
+        var data = { questionBody: questionBody, answers: ansText, answersCheck: ansCorrect };
+
+        //$.post('/Quiz/AddQuestion', data).done(function (data) {
+        //    //location.reload(true);
+        //    $('.quiz-wrapper').html(response.responseText);
+        //})
+        $.ajax({
+            type: "POST",
+            data: data,
+            url: "/Quiz/AddQuestion",
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: "json",
+            success: function (response) {
+                if (response != null) {
+                    console.log("Sent okay");
+                } else {
+                    console.log("Something went wrong");
+                }
+            },
+            failure: function (response) {
+                //console.log(response.responseText);
+            },
+            error: function (response) {
+                //console.log(response.responseText);
+            },
+            complete: function (response) {
+                $('.quiz-wrapper').html(response.responseText);
+                SavePosition();
+                placeholder.find('.modal').modal('hide');
+                $('#modal-zone').html("");
+                location.reload(true);
+            }
+        });
+    });
+})

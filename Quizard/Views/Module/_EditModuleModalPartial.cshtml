@@ -15,11 +15,11 @@
  
                         <div class="form-group">
                             <label asp-for="ModuleCode" class="col-form-label">Module Code:</label>
-                            <input asp-for="ModuleCode" type="text" class="form-control" id="inlineFormInputName" placeholder="CS101" value="@Model.ModuleCode">
+                            <input asp-for="ModuleCode" type="text" class="form-control" id="inlineFormInputName" placeholder="CS101" value="@Model.ModuleCode" autocomplete="off">
                         </div>
                         <div class="form-group">
                             <label asp-for="Description" class="col-form-label">Optional Description:</label>
-                            <input asp-for="Description" type="text" class="form-control" id="inlineFormInputName" placeholder="Data Structures & Algorithms" value="@Model.Description">
+                            <input asp-for="Description" type="text" class="form-control" id="inlineFormInputName" placeholder="Data Structures & Algorithms" value="@Model.Description" autocomplete="off">
                         </div>
 
                         <input type="hidden" asp-for="Id" name="Id" value="@Model.Id">
