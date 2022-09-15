@@ -17,20 +17,6 @@ namespace Quizard.Controllers
             _quizParserService = quizParserService;
         }
 
-        // UPLOAD
-
-        [HttpGet]
-        public IActionResult Upload()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult> Index()
-        {
-            IEnumerable<Quiz> quizzes = await _quizRepository.GetAll();
-            return View(quizzes);
-        }
-
 
         [ActionName("Create")]
         public async Task<IActionResult> Create(int quizId)
@@ -40,6 +26,8 @@ namespace Quizard.Controllers
             return View(quizViewModel);
         }
 
+
+        // Generates quiz sections in view
         [HttpPost]
         public ActionResult SectionPartialView(string sectionName, int quizId)
         {
@@ -56,6 +44,13 @@ namespace Quizard.Controllers
             return PartialView("_Section", quizViewModel);
         }
 
+
+        /// <summary>
+        /// Adds a new question group or case study for question parts to be added to
+        /// </summary>
+        /// <param name="groupName"></param>
+        /// <param name="quizId"></param>
+        /// <param name="sectionId"></param>
         [HttpPost]
         public async Task<IActionResult> AddQuestionGroup(string groupName, int quizId, int sectionId)
         {
@@ -76,6 +71,12 @@ namespace Quizard.Controllers
             return PartialView("_Section", quizViewModel);
         }
 
+
+        /// <summary>
+        /// Adds a new section to the quiz
+        /// </summary>
+        /// <param name="sectionName"></param>
+        /// <param name="quizId"></param>
         [HttpPost]
         public async Task<IActionResult> AddSectionDB(string sectionName, int quizId)
         {
@@ -95,6 +96,10 @@ namespace Quizard.Controllers
         }
 
 
+        /// <summary>
+        /// Saves the position of questions in the quiz
+        /// </summary>
+        /// <param name="updates"> Question model mapped to a JSON class</param>
         [HttpPost]
         public async Task<IActionResult> SaveQuiz(List<QuestionJsonHelper> updates)
         {
@@ -115,6 +120,11 @@ namespace Quizard.Controllers
             return Json(message);
         }
 
+
+        /// <summary>
+        /// Manually deletes a quiz as cascading delete constraint in the DB is disabled
+        /// </summary>
+        /// <param name="id"></param>
         public async Task<IActionResult> DeleteQuiz(int id)
         {
             var quiz = await _quizRepository.GetQuizById(id);
@@ -132,6 +142,11 @@ namespace Quizard.Controllers
             return Json(new { redirectToUrl = Url.Action("Index", "Dashboard") });
         }
 
+
+        /// <summary>
+        /// Deletes a section including questions within the section
+        /// </summary>
+        /// <param name="sectionId"></param>
         [HttpPost]
         public async Task<IActionResult> DeleteSection(int sectionId)
         {
@@ -159,6 +174,12 @@ namespace Quizard.Controllers
             return PartialView("_Section", quizViewModel);
         }
 
+
+        /// <summary>
+        /// Deletes a question. If the question has question parts they are detached from the parent question
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <param name="quizId"></param>
         [HttpPost]
         public async Task<IActionResult> DeleteQuestion(int questionId, int quizId)
         {
@@ -185,6 +206,8 @@ namespace Quizard.Controllers
             return PartialView("_Section", quizViewModel);
         }
 
+
+        // Generate Modal Popup
         [HttpGet]
         public async Task<IActionResult> ShowDeleteModal(int id)
         {
@@ -192,6 +215,8 @@ namespace Quizard.Controllers
             return PartialView("_DeleteModalPartial");
         }
 
+
+        // Generate Modal Popup
         [HttpGet]
         public async Task<IActionResult> ShowEditModal(int id)
         {
@@ -199,6 +224,11 @@ namespace Quizard.Controllers
             return PartialView("_EditModalPartial", question);
         }
 
+
+        /// <summary>
+        /// Updates a questions attributes
+        /// </summary>
+        /// <param name="updatedQuestion"></param>
         [HttpPost]
         public async Task<IActionResult> UpdateQuestion(Question updatedQuestion)
         {
@@ -216,6 +246,7 @@ namespace Quizard.Controllers
         }
 
 
+        // Generate Modal Popup
         [HttpGet]
         public async Task<IActionResult> ShowEditSectionModal(int id)
         {
@@ -223,6 +254,11 @@ namespace Quizard.Controllers
             return PartialView("_EditSectionModalPartial", section);
         }
 
+
+        /// <summary>
+        /// Updates a sections attributes
+        /// </summary>
+        /// <param name="updatedSection"></param>
         [HttpPost]
         public async Task<IActionResult> UpdateSection(Section updatedSection)
         {
@@ -234,17 +270,13 @@ namespace Quizard.Controllers
 
                 _quizRepository.Update(section);
             }
-            //Section section = await _quizRepository.GetSectionById(updatedSection.Id);
-            //section.SectionName = updatedSection.SectionName;
-            //section.RequiredQuestions = updatedSection.RequiredQuestions;
-
-            //_quizRepository.Update(section);
 
             var quizViewModel = await _quizParserService.GenerateQuizViewModel(section.QuizId);
             return PartialView("_Section", quizViewModel);
         }
 
 
+        // Generate Modal Popup
         [HttpGet]
         public async Task<IActionResult> ShowAddQuestionModal(int id, int sectionId)
         {
@@ -255,6 +287,13 @@ namespace Quizard.Controllers
             return PartialView("_AddQuestionModalPartial", addQuestionViewModel);
         }
 
+
+        /// <summary>
+        /// Adds a new question to the quiz. Params are List<> due to multiple complex objects posted with AJAX
+        /// </summary>
+        /// <param name="questionBody"></param>
+        /// <param name="answers"></param>
+        /// <param name="answersCheck"></param>
         [ActionName("AddQuestion")]
         [HttpPost]
         public async Task<IActionResult> AddQuestion(List<string> questionBody, List<string> answers, List<string> answersCheck)
@@ -296,41 +335,6 @@ namespace Quizard.Controllers
                     _quizRepository.Add(answer);
                 }
             }
-
-            //Question question = new Question()
-            //{
-            //    SectionId = Int32.Parse(questionBody[5]),
-            //    QuestionTitle = questionBody[0],
-            //    QuestionType = Enum.Parse<QuestionType>(questionBody[6]),
-            //};
-            //if (questionBody[1] != null)
-            //{
-            //    question.Mark = Int32.Parse(questionBody[1]);
-            //}
-            //if (questionBody[2] != null)
-            //{
-            //    question.ErrorMargin = double.Parse(questionBody[2]);
-            //}
-            //if (questionBody[3] != null)
-            //{
-            //    question.NegativeMark = double.Parse(questionBody[3]);
-            //}
-
-            //_quizRepository.Add(question);
-
-            //for (int i = 0; i < answers.Count; i++)
-            //{
-            //    Answer answer = new Answer()
-            //    {
-            //        QuestionAnswer = answers[i],
-            //        QuestionId = question.Id,
-            //    };
-            //    if (answersCheck[i].Equals("true"))
-            //    {
-            //        answer.isCorrect = true;
-            //    }
-            //    _quizRepository.Add(answer);
-            //}
 
             var quizViewModel = await _quizParserService.GenerateQuizViewModel(Int32.Parse(questionBody[4]));
             return PartialView("_Section", quizViewModel);

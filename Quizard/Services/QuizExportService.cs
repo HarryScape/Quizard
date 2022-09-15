@@ -24,6 +24,13 @@ namespace Quizard.Services
             _httpClientFactory = httpClientFactory;
         }
 
+
+        /// <summary>
+        /// Generates a quiz ViewModel to contain all quiz objects to bo converted during export
+        /// Utilises DocumentFormat.OpenXml
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Quiz ViewModel</returns>
         public async Task<ExportQuizViewModel> GenerateQuizViewModel(int id)
         {
             var quizViewModel = new ExportQuizViewModel();
@@ -47,10 +54,11 @@ namespace Quizard.Services
         }
 
 
-        //string path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "TempUpload")).ToString();
-
-
-        //public byte[] GenerateDocx(ExportQuizViewModel exportQuizViewModel)
+        /// <summary>
+        /// Generates a .docx file of the quiz for exporting
+        /// </summary>
+        /// <param name="exportQuizViewModel"></param>
+        /// <returns>.docx quiz</returns>
         public async Task<byte[]> GenerateDocx(ExportQuizViewModel exportQuizViewModel)
         {
             //Run lineBreak = new Run(new Break());
@@ -91,7 +99,7 @@ namespace Quizard.Services
                         runName.AppendChild(new Text($"Section {sectionCount}: {section.SectionName}"));
                         runName.AppendChild(new Break());
 
-                        // question loop here
+                        // questions are added
                         foreach (var questionParent in exportQuizViewModel.ParentQuestions.Where(i => i.SectionId == section.Id))
                         {
                             Paragraph paragraphParent = body.AppendChild(new Paragraph());
@@ -122,7 +130,7 @@ namespace Quizard.Services
                                     runChild.AppendChild(new Text($"{alphabetLabel[questionChildCount]}) {questionChild.QuestionTitle}"));
                                 }
                                 questionChildCount++;
-                                // answers
+                                // answers are added
                                 if (questionChild.QuestionAnswers != null)
                                 {
                                     foreach (var ans in questionChild.QuestionAnswers)
@@ -170,46 +178,26 @@ namespace Quizard.Services
                                 answerCount = 1;
 
                             }
-                            //if(questionParent.QuestionType == Data.Enum.QuestionType.GROUP)
-                            //{
-                            //    //append space
-                            //    runParent.AppendChild(new Break());
-                            //}
                         }
                         questionCount = 1;
                         sectionCount++;
                     }
                     wordDocument.MainDocumentPart.Document.Save();
                     wordDocument.Close();
-                    //string file = $"C:\\data\\newFileName.docx";
-                    //File.WriteAllBytes("C:\\data\\newFileName.docx", mem.ToArray());
-                    //return new FileStreamResult(mem, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-                    //{
-                    //    FileDownloadName = "test.docx"
-                    //};
                     byte[] rawBytes = mem.ToArray();
                     return rawBytes;
                 }
             }
-            return null;
         }
 
 
-        //public void DocxChildQuestions(IEnumerable<Question> questionChild)
-        //{
-        //    // do something here to add child questions to the document...
-        //    foreach(var question in questionChild)
-        //    {
-        //        Paragraph paragraphParent = body.AppendChild(new Paragraph());
-        //        Run runParent = paragraphParent.AppendChild(new Run());
-        //        runParent.AppendChild(new Text($"{questionCount}) {question.QuestionTitle}"));
-        //    }
-        //}
-
-
+        /// <summary>
+        /// Consumes external GETMARKED API to convert .docx quiz to QTI download link
+        /// </summary>
+        /// <param name="doc">.docx quiz</param>
+        /// <returns>URL to download QTI quiz</returns>
         public async Task<string> GenerateQTI(byte[] doc)
         {
-            //var docToSend = "replace later";
             var qtiUrl = "";
             string key = "test1234"; // fake placeholder private key
             var headers = $"AUTHORIZATION: Api-Key {key}";
@@ -221,10 +209,10 @@ namespace Quizard.Services
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(headers);
             //httpClient.DefaultRequestHeaders.Add("AUTHORIZATION: Api-Key", key);
 
-            // CREATE JOB
+            // Create job
             string createURL = $"https://digitaliser.getmarked.ai/api/v1.0/job/create_job/";
             //var headers = $"AUTHORIZATION: Api-Key {key}";
-            // POST your file using multipart/form-data
+            // POST .docx using multipart/form-data
             var content = new MultipartFormDataContent("------------" + Guid.NewGuid());
             var byteArrayContent = new ByteArrayContent(doc);
             byteArrayContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
@@ -240,36 +228,31 @@ namespace Quizard.Services
                 JsonNode endpointNode = JsonNode.Parse(contentStream)!;
                 string endpoint = endpointNode!["data"]["result_endpoint"]!.ToString();
 
-                // GET JSON QUIZ VIA POLLING
+                // Get JSON endpoint via polling
                 var quizJson = await httpClient.GetAsync(endpoint);
                 quizJson.EnsureSuccessStatusCode();
 
-                // POST JSON QUIZ TO GET QTI URL
+                // Post JSON quiz to get QTI URL response
                 if (response.IsSuccessStatusCode)
                 {
                     StringContent jsonQuizContent = new StringContent(quizJson.ToString(), Encoding.UTF8, "application/json");
                     string convertURL = $"https://digitaliser.getmarked.ai/api/v1.0/json_conversion/";
-                    var quizUrl = await httpClient.PostAsync(convertURL, jsonQuizContent); // plus the json quiz how????
+                    var quizUrl = await httpClient.PostAsync(convertURL, jsonQuizContent);
                     quizUrl.EnsureSuccessStatusCode();
 
-                    // Parse response
+                    // Parse QTI URL response
                     if (quizUrl.IsSuccessStatusCode)
                     {
                         using var qtiStream = await quizUrl.Content.ReadAsStreamAsync();
                         JsonNode urlNode = JsonNode.Parse(qtiStream)!;
                         qtiUrl = urlNode!["data"]["url"]!.ToString();
 
-                        // Return QTI quiz.zip file url
                         return qtiUrl;
                     }
                 }
             }
             return null;
         }
-
-
-
-
 
     }
 }

@@ -39,7 +39,10 @@ namespace Quizard.Controllers
         }
 
 
-
+        /// <summary>
+        /// Passes a quiz to the view and adds a new quiz attempt to the DB
+        /// </summary>
+        /// <param name="quizId"></param>
         public async Task<IActionResult> BeginQuiz(int quizId)
         {
             var currentUser = _contextAccessor.HttpContext.User.GetUserId();
@@ -60,6 +63,8 @@ namespace Quizard.Controllers
             return PartialView("_TakeSectionPartial", takeQuizViewModel);
         }
 
+
+        // Navigate sections
         public async Task<IActionResult> NextSectionNavigation(int quizId, int index, int attemptId)
         {
             TakeQuizViewModel takeQuizViewModel = await _quizParserService.GenerateTakeQuizViewModel(quizId);
@@ -76,6 +81,7 @@ namespace Quizard.Controllers
         }
 
 
+        // Navigate sections
         public async Task<IActionResult> PreviousSectionNavigation(int quizId, int index, int attemptId)
         {
             TakeQuizViewModel takeQuizViewModel = await _quizParserService.GenerateTakeQuizViewModel(quizId);
@@ -92,13 +98,20 @@ namespace Quizard.Controllers
             return PartialView("_TakeSectionPartial", takeQuizViewModel);
         }
 
-        // public async Task<IActionResult> SubmitResponse
+
+        /// <summary>
+        /// Saves question responses. Params are List<> due to AJAX post unable to pass multiple complex objects
+        /// </summary>
+        /// <param name="questionTextIdList"></param>
+        /// <param name="textResponseList"></param>
+        /// <param name="questionCheckboxIdList"></param>
+        /// <param name="ansText"></param>
+        /// <param name="ansCorrect"></param>
+        /// <param name="answerIdList"></param>
+        /// <param name="attemptId"></param>
         public async Task<IActionResult> SubmitResponse(List<string> questionTextIdList, List<string> textResponseList,
             List<string> questionCheckboxIdList, List<string> ansText, List<string> ansCorrect, List<string> answerIdList, int attemptId)
         {
-            // if a new response is null delete the old response if it exists
-
-            // Text Response
             if (textResponseList.Any())
             {
                 for (int i = 0; i < textResponseList.Count; i++)
@@ -123,7 +136,7 @@ namespace Quizard.Controllers
                 }
             }
 
-            // Clear Checkbox
+            // Clear Checkbox answers
             for (int i = 0; i < ansText.Count; i++)
             {
                 int questionId = Convert.ToInt32(questionCheckboxIdList[i]);
@@ -134,7 +147,7 @@ namespace Quizard.Controllers
                 }
             }
 
-            // checkbox
+            // Adds new checkbox answers
             if (ansText.Any())
             {
                 for (int i = 0; i < ansCorrect.Count; i++)
@@ -154,7 +167,6 @@ namespace Quizard.Controllers
                     }
                 }
             }
-
             return null;
         }
 

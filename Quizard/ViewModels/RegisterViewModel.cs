@@ -22,7 +22,6 @@ namespace Quizard.ViewModels
         [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
 
-        //[Display(Name = "Are You A Student Or Teacher?")]
         public IEnumerable<SelectListItem>? RoleList { get; set; }
         [Required(ErrorMessage = "Choose account type")]
         [Display(Name = "* Select Role")]

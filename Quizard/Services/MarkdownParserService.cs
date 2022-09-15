@@ -18,6 +18,11 @@ namespace Quizard.Services
         }
 
 
+        /// <summary>
+        /// Parse an uploaded quiz and adds it to the DB
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns>true if success</returns>
         public async Task<bool> ParseQuizA(IFormFile file)
         {
             // bool isComment = line.StartsWith("...");
@@ -132,8 +137,11 @@ namespace Quizard.Services
         }
 
 
-
-
+        /// <summary>
+        /// Parse an uploaded quiz and adds it to the DB
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns>true if success</returns>
         public async Task<bool> ParseQuizB(IFormFile file)
         {
             var currentUser = _contextAccessor.HttpContext.User.GetUserId();
@@ -182,7 +190,6 @@ namespace Quizard.Services
                             for (int j = 1; j < questionList.Count; j++)
                             {
                                 Answer answer = new Answer();
-                                // if qlist.size = 1 qtype == ESS
                                 if (questionList.Count == 1)
                                 {
                                     question.QuestionType = Enum.Parse<QuestionType>("ESS");

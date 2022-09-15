@@ -28,7 +28,6 @@ namespace Quizard.Data
         {
             base.OnModelCreating(builder);
 
-            // USER MODULES
             // Composite key
             builder.Entity<UserModule>()
                 .HasKey(um => new { um.UserId, um.ModuleId });
@@ -46,8 +45,6 @@ namespace Quizard.Data
                 .HasForeignKey(um => um.UserId);
 
 
-
-            // USER QUIZ ATTEMPTS
             // Relation for user to have many quiz attempts
             builder.Entity<UserQuizAttempt>()
                 .HasOne(qa => qa.Quiz)
@@ -63,8 +60,6 @@ namespace Quizard.Data
                 .OnDelete(DeleteBehavior.NoAction);
 
 
-
-            // responses
             // Relation for user attempt to have many question responses
             builder.Entity<UserQuestionResponse>()
                 .HasOne(qr => qr.UserQuizAttempt)
@@ -80,8 +75,5 @@ namespace Quizard.Data
                 .OnDelete(DeleteBehavior.NoAction);
 
         }
-
-
-
     }
 }

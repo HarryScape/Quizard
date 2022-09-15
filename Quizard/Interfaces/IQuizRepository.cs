@@ -4,27 +4,20 @@ namespace Quizard.Interfaces
 {
     public interface IQuizRepository
     {
-        // GET commands
-        // Quiz
         Task<IEnumerable<Quiz>> GetAll();
         Task<Quiz> GetQuizById(int id);
-        // Section
-        Task<IEnumerable<Section>> GetQuizSections(int QuizId);
+        Task<IEnumerable<Section>> GetQuizSections(int quizId);
         Task<Section> GetSectionById(int id);
-        // Question
         Task<IEnumerable<Question>> GetAllQuestions();
-        Task<IEnumerable<Question>> GetQuestionByQuizID(int Quizid);
+        Task<IEnumerable<Question>> GetQuestionByQuizID(int quizId);
         Task<IEnumerable<Question>> GetQuestionBySectionID(int sectionId);
         Task<IEnumerable<Question>> GetParentQuestions(int quizId);
         Task<IEnumerable<Question>> GetChildQuestions(int id);
         Task<Question> GetQuestionById(int id);
-        // Answer
         Task<IEnumerable<Answer>> GetAllAnswers();
-        Task<IEnumerable<Answer>> GetSpecificAnswers(int QuizId);
+        Task<IEnumerable<Answer>> GetSpecificAnswers(int quizId);
         Task<IEnumerable<Answer>> GetAnswersByQuestion(int id);
 
-
-        // CRUD
         bool Add(Quiz quiz);
         bool Add(Section section);
         bool Add(Question quiz);

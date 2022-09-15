@@ -1,8 +1,6 @@
 ﻿using Quizard.Data.Enum;
 using Quizard.Interfaces;
 using Quizard.Models;
-using Quizard.Repository;
-using Quizard.ViewModels;
 
 namespace Quizard.Services
 {
@@ -17,6 +15,12 @@ namespace Quizard.Services
             _contextAccessor = contextAccessor;
         }
 
+
+        /// <summary>
+        /// Parses an uploaded quiz and adds it to the DB
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns>true if success</returns>
         public async Task<bool> ParseQuiz(IFormFile file)
         {
             var currentUser = _contextAccessor.HttpContext.User.GetUserId();
@@ -42,6 +46,7 @@ namespace Quizard.Services
                     List<Answer> answers = new List<Answer>();
 
                     var line = fileReader.ReadLine();
+                    // tab delimitation
                     var values = line.Split("\t");
 
                     question.QuestionType = Enum.Parse<QuestionType>(values[0]);
@@ -59,7 +64,6 @@ namespace Quizard.Services
                             {
                                 answer.isCorrect = true;
                             }
-                            //answer.isCorrect = values[i + 1];
                             answer.QuestionId = question.Id;
                             answers.Add(answer);
                         }

@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Quizard.Data;
-using Quizard.Data.Enum;
 using Quizard.Interfaces;
 using Quizard.Models;
-using Quizard.Repository;
 using Quizard.ViewModels;
 
 namespace Quizard.Controllers
@@ -19,12 +16,11 @@ namespace Quizard.Controllers
         private readonly IQuizParserService _quizParserService;
         private readonly IBlackboardParserService _blackboardParserService;
         private readonly IMarkdownParserService _markdownParserService;
-        private readonly IHttpClientFactory _httpClientFactory;
 
         public DashboardController(IDashboardRepository dashboardRepository, IQuizRepository quizRepository,
             IHttpContextAccessor contextAccessor, IQuizParserService quizParserService, IBlackboardParserService blackboardParserService,
             IMarkdownParserService canvasParserService, IModuleRepository moduleRepository, 
-            IQuizExportService quizExportService, IHttpClientFactory httpClientFactory)
+            IQuizExportService quizExportService)
         {
             _dashboardRepository = dashboardRepository;
             _quizRepository = quizRepository;
@@ -34,9 +30,12 @@ namespace Quizard.Controllers
             _markdownParserService = canvasParserService;
             _moduleRepository = moduleRepository;
             _quizExportService = quizExportService;
-            _httpClientFactory = httpClientFactory;
         }
 
+
+        /// <summary>
+        /// Fetches all quizzes belonging to the current logged in user
+        /// </summary>
         public async Task<IActionResult> Index()
         {
             var currentUser = _contextAccessor.HttpContext.User.GetUserId();
@@ -68,6 +67,11 @@ namespace Quizard.Controllers
             return View(dashboardViewModel);
         }
 
+
+        /// <summary>
+        /// Identifies the quiz type and sends it to a parser method.
+        /// </summary>
+        /// <param name="file"> A .txt quiz </param>
         [HttpPost]
         public async Task<IActionResult> UploadQuiz(IFormFile file)
         {
@@ -94,14 +98,12 @@ namespace Quizard.Controllers
         }
 
 
-
-
+        // Generates Modal Popup
         [HttpGet]
         public async Task<IActionResult> ShowOptionsModal(int id)
         {
             Quiz quiz = await _quizRepository.GetQuizById(id);
 
-            //new stuff
             IEnumerable<Module> userModules = await _moduleRepository.GetUserModules();
             List<SelectListItem> listItems = new List<SelectListItem>();
 
@@ -123,10 +125,13 @@ namespace Quizard.Controllers
             };
 
             return PartialView("_QuizOptionsPartial", editQuizViewModel);
-            //return PartialView("_QuizOptionsPartial", quiz);
         }
 
 
+        /// <summary>
+        /// Updates the values of a quiz
+        /// </summary>
+        /// <param name="updatedQuiz"></param>
         [ActionName("UpdateQuiz")]
         [HttpPost]
         public async Task<IActionResult> UpdateQuiz(Quiz updatedQuiz)
@@ -148,6 +153,11 @@ namespace Quizard.Controllers
             return RedirectToAction("Index", "Dashboard");
         }
 
+
+        /// <summary>
+        /// Toggle deploying a quiz so that a student can view and take the quiz from a their dashboard
+        /// </summary>
+        /// <param name="quizId"></param>
         public async Task<IActionResult> QuizDeployment(int quizId)
         {
             Quiz quiz = await _quizRepository.GetQuizById(quizId);
@@ -157,15 +167,23 @@ namespace Quizard.Controllers
             return RedirectToAction("Index", "Dashboard");
         }
 
+
+
+        /// <summary>
+        /// Generates a .docx formatted quiz for use in an API or to download
+        /// </summary>
+        /// <param name="quizId"></param>
+        /// <returns>returns a .docx download of the quiz</returns>
         public async Task<IActionResult> ExportQuiz(int quizId)
         {
             var exportQuizViewModel = await _quizExportService.GenerateQuizViewModel(quizId);
             byte[] docToSend = await _quizExportService.GenerateDocx(exportQuizViewModel);
 
+            // TODO: Buy GETMARKED membership to use the API further
             //string downloadUrl = await _quizExportService.GenerateQTI(docToSend);
+            //return Redirect(downloadUrl);
 
             return File(docToSend, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", $"{exportQuizViewModel.Quiz.QuizName}.docx");
-            //return Redirect(downloadUrl);
         }
     }
 }

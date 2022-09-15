@@ -105,20 +105,12 @@
         }
 
 
-
-
-
-
         @if (question.Mark != null)
         {
             <i> @question.Mark Marks </i>
         }
 
 
-        @*@if (question.Children != null)
-    {
-    @await Component.InvokeAsync("Question", new { questions = question.Children, questionResponses = Model.QuestionResponses });
-    }*@
         @await Component.InvokeAsync("Question", new {questions = question.Children, questionResponses = Model.QuestionResponses})
 
 

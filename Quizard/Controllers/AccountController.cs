@@ -57,6 +57,9 @@ namespace Quizard.Controllers
             return View(loginViewModel);
         }
 
+        /// <summary>
+        /// Generates the form for registering a user
+        /// </summary>
         public IActionResult Register()
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
@@ -81,6 +84,7 @@ namespace Quizard.Controllers
         {
             if (!ModelState.IsValid) return View(registerViewModel);
 
+            // Check for existing user
             var user = await _userManager.FindByEmailAsync(registerViewModel.EmailAddress);
             if (user != null)
             {
@@ -94,10 +98,10 @@ namespace Quizard.Controllers
                 UserName = registerViewModel.EmailAddress,
                 Name = registerViewModel.Name,
                 DateRegistered = DateTime.Now,
-                //UserModules = new List<Module>()
             };
             var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.Password);
 
+            // assign role to new user
             if (newUserResponse.Succeeded)
             {
                 if (registerViewModel.RoleSelected != null && registerViewModel.RoleSelected.Length > 0 && registerViewModel.RoleSelected == "teacher")
