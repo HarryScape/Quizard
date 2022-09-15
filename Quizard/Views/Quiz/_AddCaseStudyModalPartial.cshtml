@@ -1,0 +1,46 @@
+﻿@using Quizard.ViewModels
+@model AddCaseStudyViewModel
+
+
+<!-- Large modal -->
+<div class="modal fade bd-example-modal-lg" id="add-casestudy-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center w-100" id="exampleModalLongTitle">Add Question</h5>
+            </div>
+
+            <div class="modal-body">
+                <form action="AddCaseStudy">
+
+                    <input type="hidden" asp-for="@Model.QuizId" name="Id" value="@Model.QuizId">
+
+                    <div class="form-group">
+                        <label asp-for="@Model.CaseStudyName" class="col-form-label">* Case Study TItle:</label>
+                        <textarea asp-for="@Model.CaseStudyName" class="form-control" id="question-name-text" placeholder="Study Title"></textarea>
+                    </div>
+
+                    <br />
+
+                    <div class="form-group">
+                        <label asp-for="SectionSelected" class="col-md-2"></label>
+                        <div class="col-md-10">
+                            <select asp-for="SectionSelected" asp-items="@Model.SectionList" class="form-control">
+                                <option disabled selected>--Select Section--</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+
+            <div class="modal-footer">
+                <div class="col text-center">
+                    <button type="button" class="button--save" data-bs-dismiss="modal" id="exit-edit-modal">Cancel</button>
+                    <button type="button" class="button--save" data-new-casestudy="modal" id="save-confirm">Add Case Study</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

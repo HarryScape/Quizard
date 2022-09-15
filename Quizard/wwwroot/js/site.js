@@ -872,3 +872,34 @@ $(function () {
         });
     });
 })
+
+
+// Add Case Study
+$(function () {
+    //SavePosition();
+    var placeholder = $('#modal-zone');
+
+    $('button[data-toggle="add-casestudy-modal"]').click(function (event) {
+        var url = $(this).data('url');
+
+        $.get(url).done(function (data) {
+            placeholder.html(data);
+            placeholder.find('.modal').modal('show');
+        })
+    })
+
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.find('.modal').modal('hide');
+        $('#modal-zone').html("");
+    })
+
+    placeholder.on('click', '[data-new-casestudy="modal"]', function (event) {
+            var form = $(this).parents('.modal').find('form');
+            var actionUrl = form.attr('action');
+            var dataPost = form.serialize();
+
+            $.post(actionUrl, dataPost).done(function (data) {
+                location.reload(true);
+            })
+    });
+})

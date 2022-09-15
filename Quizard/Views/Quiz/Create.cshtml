@@ -15,13 +15,11 @@
                 <input type="text" class="input" id="AddSectionName" placeholder="Add Section" autocomplete="off">
                 <input class="button--add" value="Add" type="submit" id="AddSectionBtn" onclick="AddSection()">
             </div>
+
             <div class="input-group">
-                <input type="text" class="input" id="AddGroupName" placeholder="Add Question Group" autocomplete="off">
-                <input class="button--add" value="Add" type="submit" id="AddSectionBtn" onclick="AddQuestionGroup()">
+                @*<button type="submit" class="button--save" data-toggle="add-question-modal" data-url="@Url.Action("ShowAddQuestionModal", "Quiz", new { id = @Model.Quiz.Id  })">Add Question</button>*@
+                <button type="submit" class="button--save" data-toggle="add-casestudy-modal" data-url="@Url.Action("ShowCaseStudyModal", "Quiz", new { quizId = @Model.Quiz.Id  })">Add Case Study</button>
             </div>
-            @*<div class="input-group">
-                <button type="submit" class="button--save" data-toggle="add-question-modal" data-url="@Url.Action("ShowAddQuestionModal", "Quiz", new { id = @Model.Quiz.Id  })">Add Question</button>
-            </div>*@
 
             <div class="input-group">
                 <input class="button--save" value="Save" type="submit" onclick="SavePosition()">

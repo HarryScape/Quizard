@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Quizard.Data.Enum;
 using Quizard.Interfaces;
 using Quizard.Models;
@@ -45,28 +46,44 @@ namespace Quizard.Controllers
         }
 
 
-        /// <summary>
-        /// Adds a new question group or case study for question parts to be added to
-        /// </summary>
-        /// <param name="groupName"></param>
-        /// <param name="quizId"></param>
-        /// <param name="sectionId"></param>
-        [HttpPost]
-        public async Task<IActionResult> AddQuestionGroup(string groupName, int quizId, int sectionId)
+        // Generate Modal Popup
+        public async Task<IActionResult> ShowCaseStudyModal(int quizId)
         {
-            if(groupName != null)
+            IEnumerable<Section> sections = await _quizRepository.GetQuizSections(quizId);
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            foreach (Section section in sections)
             {
-                var questionGroup = new Question()
+                listItems.Add(new SelectListItem()
                 {
-                    QuestionType = QuestionType.GROUP,
-                    QuestionTitle = groupName,
-                    QuestionPosition = 0,
-                    SectionId = sectionId
-                };
-                _quizRepository.Add(questionGroup);
+                    Value = section.Id.ToString(),
+                    Text = section.SectionName
+                });
             }
 
-            var quizViewModel = await _quizParserService.GenerateQuizViewModel(quizId);
+            AddCaseStudyViewModel addCaseStudyViewModel = new AddCaseStudyViewModel();
+            addCaseStudyViewModel.SectionList = listItems;
+            addCaseStudyViewModel.QuizId = quizId;
+
+            return PartialView("_AddCaseStudyModalPartial", addCaseStudyViewModel);
+        }
+
+
+        /// <summary>
+        /// Adds a new case study or question group
+        /// </summary>
+        /// <param name="addCaseStudyViewModel"></param>
+        public async Task<IActionResult> AddCaseStudy(AddCaseStudyViewModel addCaseStudyViewModel)
+        {
+            Question question = new Question()
+            {
+                QuestionTitle = addCaseStudyViewModel.CaseStudyName,
+                SectionId = Int32.Parse(addCaseStudyViewModel.SectionSelected),
+                QuestionType = QuestionType.GROUP
+            };
+            _quizRepository.Add(question);
+
+            var quizViewModel = await _quizParserService.GenerateQuizViewModel(addCaseStudyViewModel.QuizId);
 
             return PartialView("_Section", quizViewModel);
         }
