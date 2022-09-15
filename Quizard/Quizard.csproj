@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Content\Images\delbin.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="TempUpload\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
@@ -36,12 +29,6 @@
     <Content Update="wwwroot\Images\QuizardAnim.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Content\Images\QuizardAnim.svg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
