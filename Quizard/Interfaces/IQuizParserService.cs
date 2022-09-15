@@ -5,7 +5,7 @@ namespace Quizard.Interfaces
 {
     public interface IQuizParserService
     {
-        Task<string> GetQuizLMS(IFormFile file);
+        Task<string> GetQuizType(IFormFile file);
         Task<CreateQuizViewModel> GenerateQuizViewModel(int id);
         Task<List<SelectListItem>> GenerateQuestionTypes();
         Task<TakeQuizViewModel> GenerateTakeQuizViewModel(int id);

@@ -18,13 +18,12 @@ namespace Quizard.Controllers
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly IQuizParserService _quizParserService;
         private readonly IBlackboardParserService _blackboardParserService;
-        private readonly ICanvasParserService _canvasParserService;
-        private readonly IMoodleParserService _moodleParserService;
+        private readonly IMarkdownParserService _markdownParserService;
         private readonly IHttpClientFactory _httpClientFactory;
 
         public DashboardController(IDashboardRepository dashboardRepository, IQuizRepository quizRepository,
             IHttpContextAccessor contextAccessor, IQuizParserService quizParserService, IBlackboardParserService blackboardParserService,
-            ICanvasParserService canvasParserService, IMoodleParserService moodleParserService, IModuleRepository moduleRepository, 
+            IMarkdownParserService canvasParserService, IModuleRepository moduleRepository, 
             IQuizExportService quizExportService, IHttpClientFactory httpClientFactory)
         {
             _dashboardRepository = dashboardRepository;
@@ -32,8 +31,7 @@ namespace Quizard.Controllers
             _contextAccessor = contextAccessor;
             _quizParserService = quizParserService;
             _blackboardParserService = blackboardParserService;
-            _canvasParserService = canvasParserService;
-            _moodleParserService = moodleParserService;
+            _markdownParserService = canvasParserService;
             _moduleRepository = moduleRepository;
             _quizExportService = quizExportService;
             _httpClientFactory = httpClientFactory;
@@ -71,21 +69,21 @@ namespace Quizard.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadQuiz(IFormFile file, DashboardViewModel dashboardViewModel)
+        public async Task<IActionResult> UploadQuiz(IFormFile file)
         {
-            string lms = await _quizParserService.GetQuizLMS(file);
+            string type = await _quizParserService.GetQuizType(file);
 
-            if (lms.Equals("Blackboard"))
+            if (type.Equals("Blackboard"))
             {
-                await _blackboardParserService.ParseQuiz(file, dashboardViewModel);
+                await _blackboardParserService.ParseQuiz(file);
             }
-            else if (lms.Equals("Canvas"))
+            else if (type.Equals("MarkdownA"))
             {
-                await _canvasParserService.ParseQuiz(file, dashboardViewModel);
+                await _markdownParserService.ParseQuizA(file);
             }
-            else if (lms.Equals("Moodle"))
+            else if (type.Equals("MarkdownB"))
             {
-                await _moodleParserService.ParseQuiz(file, dashboardViewModel);
+                await _markdownParserService.ParseQuizB(file);
             }
             else
             {
