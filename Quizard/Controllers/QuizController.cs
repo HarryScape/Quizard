@@ -11,11 +11,14 @@ namespace Quizard.Controllers
     {
         private readonly IQuizRepository _quizRepository;
         private readonly IQuizParserService _quizParserService;
+        private readonly ITakeQuizRepository _takeQuizRepository;
 
-        public QuizController(IQuizRepository quizRepository, IQuizParserService quizParserService)
+
+        public QuizController(IQuizRepository quizRepository, IQuizParserService quizParserService, ITakeQuizRepository takeQuizRepository)
         {
             _quizRepository = quizRepository;
             _quizParserService = quizParserService;
+            _takeQuizRepository = takeQuizRepository;
         }
 
 
@@ -149,6 +152,15 @@ namespace Quizard.Controllers
             IEnumerable<Section> sections = await _quizRepository.GetQuizSections(id);
             IEnumerable<Question> questions = await _quizRepository.GetQuestionByQuizID(id);
 
+            IEnumerable<UserQuestionResponse> responses = await _takeQuizRepository.GetSingleResponseByQuestionId(questions.First().Id);
+            foreach(UserQuestionResponse response in responses)
+            {
+                response.QuestionId = null;
+                response.AnswerId = null;
+                _takeQuizRepository.Update(response);
+            }
+
+
             if (quiz == null) return View("Error");
 
             _quizRepository.DeleteAns(answers);
@@ -172,6 +184,15 @@ namespace Quizard.Controllers
 
 
             IEnumerable<Question> questions = await _quizRepository.GetQuestionBySectionID(sectionId);
+
+            IEnumerable<UserQuestionResponse> responses = await _takeQuizRepository.GetSingleResponseByQuestionId(questions.First().Id);
+            foreach (UserQuestionResponse response in responses)
+            {
+                response.QuestionId = null;
+                response.AnswerId = null;
+                _takeQuizRepository.Update(response);
+            }
+
             if (questions != null)
             {
                 foreach (Question item in questions)
@@ -202,6 +223,14 @@ namespace Quizard.Controllers
         {
             Question question = await _quizRepository.GetQuestionById(questionId);
             var children = await _quizRepository.GetChildQuestions(questionId);
+
+            IEnumerable<UserQuestionResponse> responses = await _takeQuizRepository.GetSingleResponseByQuestionId(question.Id);
+            foreach (UserQuestionResponse response in responses)
+            {
+                response.QuestionId = null;
+                response.AnswerId = null;
+                _takeQuizRepository.Update(response);
+            }
 
             if (children.Any())
             {

@@ -421,7 +421,7 @@ namespace Quizard.Migrations
                     b.Property<double?>("MarkAwarded")
                         .HasColumnType("float");
 
-                    b.Property<int>("QuestionId")
+                    b.Property<int?>("QuestionId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserQuizAttemptId")
@@ -604,14 +604,14 @@ namespace Quizard.Migrations
             modelBuilder.Entity("Quizard.Models.UserQuestionResponse", b =>
                 {
                     b.HasOne("Quizard.Models.Answer", "Answer")
-                        .WithMany()
-                        .HasForeignKey("AnswerId");
+                        .WithMany("QuestionResponses")
+                        .HasForeignKey("AnswerId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Quizard.Models.Question", "Question")
                         .WithMany("QuestionResponses")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Quizard.Models.UserQuizAttempt", "UserQuizAttempt")
                         .WithMany("QuestionResponses")
@@ -643,6 +643,11 @@ namespace Quizard.Migrations
                     b.Navigation("Quiz");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Quizard.Models.Answer", b =>
+                {
+                    b.Navigation("QuestionResponses");
                 });
 
             modelBuilder.Entity("Quizard.Models.Module", b =>

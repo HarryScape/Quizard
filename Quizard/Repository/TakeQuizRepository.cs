@@ -61,6 +61,17 @@ namespace Quizard.Repository
             return await _context.UserQuestionResponses.FirstOrDefaultAsync(i => i.UserQuizAttemptId == attemptId && i.QuestionId == questionId);
         }
 
+        /// <summary>
+        /// LINQ Retrieves responses when deleting from a quiz to set the question and answer Id's to null
+        /// Cascading delete is not support on current version of Entity Framework
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns>List of responses</returns>
+        public async Task<IEnumerable<UserQuestionResponse>> GetSingleResponseByQuestionId(int questionId)
+        {
+            return await _context.UserQuestionResponses.Where(j => j.QuestionId.Equals(questionId)).ToListAsync();
+        }
+
 
 
         //CRUD operations

@@ -8,6 +8,7 @@ namespace Quizard.Interfaces
         Task<UserQuizAttempt> GetAttemptById(int id);
         Task<IEnumerable<UserQuestionResponse>> GetResponsesbyQuestion(int attemptId, int questionId);
         Task<UserQuestionResponse> GetSingleResponseByQuestion(int attemptId, int questionId);
+        Task<IEnumerable<UserQuestionResponse>> GetSingleResponseByQuestionId(int questionId);
 
         public bool Add(UserQuizAttempt userQuizAttempt);
         public bool Update(UserQuizAttempt userQuizAttempt);

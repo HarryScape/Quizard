@@ -195,8 +195,8 @@ function DeleteQuestion(id) {
             },
             complete: function (response) {
                 $('.quiz-wrapper').html(response.responseText);
-                SavePosition();
-                location.reload(true);
+                //SavePosition();
+                //location.reload(true);
             }
         });
     });

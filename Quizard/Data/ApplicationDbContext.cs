@@ -6,7 +6,6 @@ namespace Quizard.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {
-        // Pass to the base class which is "context"
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
@@ -67,13 +66,22 @@ namespace Quizard.Data
                 .HasForeignKey(qr => qr.UserQuizAttemptId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            // Relation for question to have many user responses
-            builder.Entity<UserQuestionResponse>()
-                .HasOne(qr => qr.Question)
-                .WithMany(qr => qr.QuestionResponses)
-                .HasForeignKey(qr => qr.QuestionId)
-                .OnDelete(DeleteBehavior.NoAction);
+            //Relation for question to have many user responses
+           builder.Entity<UserQuestionResponse>()
+               .HasOne(qr => qr.Question)
+               .WithMany(qr => qr.QuestionResponses)
+               .HasForeignKey(qr => qr.QuestionId)
+               .OnDelete(DeleteBehavior.SetNull)
+               .IsRequired(false);
 
+            //Relation for answer to have many user responses
+            builder.Entity<UserQuestionResponse>()
+                .HasOne(qr => qr.Answer)
+                .WithMany(qr => qr.QuestionResponses)
+                .HasForeignKey(qr => qr.AnswerId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired(false);
         }
     }
 }
+
