@@ -35,50 +35,51 @@ function AddSection() {
         // Working state
         complete: function (response) {
             $('.quiz-wrapper').html(response.responseText);
+                location.reload(true);
         }
     });
 }
 
 
-function AddQuestionGroup() {
-    SavePosition();
-    var name = document.getElementById("AddGroupName").value;
-    var quizId = document.getElementById("HiddenQuizId").value;
-    var secId = document.getElementsByClassName("popup")[0].id;
+//function AddQuestionGroup() {
+//    SavePosition();
+//    var name = document.getElementById("AddGroupName").value;
+//    var quizId = document.getElementById("HiddenQuizId").value;
+//    var secId = document.getElementsByClassName("popup")[0].id;
 
-    var dataPost = { groupName: name, quizId: quizId, sectionId: secId };
+//    var dataPost = { groupName: name, quizId: quizId, sectionId: secId };
 
-    console.log(dataPost);
+//    console.log(dataPost);
 
-    $.ajax({
-        type: "POST",
-        data: dataPost,
-        url: "/Quiz/AddQuestionGroup",
-        dataType: "json",
-        success: function (response) {
-            if (response != null) {
-                console.log("Sent okay", response);
-            } else {
-                console.log("Something went wrong");
-            }
-            // var quizUpdate = JSON.stringify(response);
-            //// $('.quiz-wrapper').html(quizUpdate);
-            // //   $('.quiz-wrapper').html(quizUpdate).html();
-            // $('.quiz-wrapper').load(quizUpdate).html();
+//    $.ajax({
+//        type: "POST",
+//        data: dataPost,
+//        url: "/Quiz/AddQuestionGroup",
+//        dataType: "json",
+//        success: function (response) {
+//            if (response != null) {
+//                console.log("Sent okay", response);
+//            } else {
+//                console.log("Something went wrong");
+//            }
+//            // var quizUpdate = JSON.stringify(response);
+//            //// $('.quiz-wrapper').html(quizUpdate);
+//            // //   $('.quiz-wrapper').html(quizUpdate).html();
+//            // $('.quiz-wrapper').load(quizUpdate).html();
 
-        },
-        failure: function (response) {
-            console.log(response.responseText);
-        },
-        error: function (response) {
-            console.log(response.responseText);
-        },
-        // Working state
-        complete: function (response) {
-            $('.quiz-wrapper').html(response.responseText);
-        }
-    });
-}
+//        },
+//        failure: function (response) {
+//            console.log(response.responseText);
+//        },
+//        error: function (response) {
+//            console.log(response.responseText);
+//        },
+//        // Working state
+//        complete: function (response) {
+//            $('.quiz-wrapper').html(response.responseText);
+//        }
+//    });
+//}
 
 
 function SavePosition() {
@@ -129,10 +130,11 @@ $(document).on("click", "#exit-delete-modal", function () {
 function DeleteSection(id) {
     $("#exampleModalCenter").modal("toggle");
 
-    SavePosition();
+    /*SavePosition();*/
     const button = document.getElementById('del-confirm');
     button.addEventListener('click', function handleClick() {
-        console.log('element clicked');
+        SavePosition();
+        //console.log('element clicked');
         $("#exampleModalCenter").modal("toggle");
 
         $.ajax({
@@ -156,8 +158,8 @@ function DeleteSection(id) {
             },
             complete: function (response) {
                 $('.quiz-wrapper').html(response.responseText);
-                SavePosition();
-                location.reload(true);
+                //SavePosition();
+                //location.reload(true);
             }
         });
     });
@@ -196,7 +198,7 @@ function DeleteQuestion(id) {
             complete: function (response) {
                 $('.quiz-wrapper').html(response.responseText);
                 //SavePosition();
-                //location.reload(true);
+                location.reload(true);
             }
         });
     });
@@ -298,6 +300,7 @@ $(function () {
 
     //$(document).on("click", '[data-save="modal"]', function (event) {
     placeholder.on('click', '[data-save-question="modal"]', function (event) {
+        SavePosition();
         var form = $(this).parents('.modal').find('form');
         var actionUrl = form.attr('action');
         var dataPost = form.serialize();
@@ -307,7 +310,7 @@ $(function () {
             placeholder.find('.modal').modal('hide');
             $('#modal-zone').html("");
             //$('.quiz-wrapper').html(data);
-            SavePosition();
+            //SavePosition();
             location.reload(true);
         })
     });
@@ -808,6 +811,7 @@ $(function () {
 
     //$(document).on("click", '[data-save="modal"]', function (event) {
     placeholder.on('click', '[data-new-question="modal"]', function (event) {
+        SavePosition();
         var form = $(this).parents('.modal').find('form');
         var actionUrl = form.attr('action');
         var dataPost = form.serialize();
@@ -864,7 +868,7 @@ $(function () {
             },
             complete: function (response) {
                 $('.quiz-wrapper').html(response.responseText);
-                SavePosition();
+                //SavePosition();
                 placeholder.find('.modal').modal('hide');
                 $('#modal-zone').html("");
                 location.reload(true);
@@ -894,6 +898,7 @@ $(function () {
     })
 
     placeholder.on('click', '[data-new-casestudy="modal"]', function (event) {
+            SavePosition();
             var form = $(this).parents('.modal').find('form');
             var actionUrl = form.attr('action');
             var dataPost = form.serialize();

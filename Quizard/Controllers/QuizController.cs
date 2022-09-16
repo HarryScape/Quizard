@@ -78,13 +78,16 @@ namespace Quizard.Controllers
         /// <param name="addCaseStudyViewModel"></param>
         public async Task<IActionResult> AddCaseStudy(AddCaseStudyViewModel addCaseStudyViewModel)
         {
-            Question question = new Question()
+            if(addCaseStudyViewModel.CaseStudyName != null)
             {
-                QuestionTitle = addCaseStudyViewModel.CaseStudyName,
-                SectionId = Int32.Parse(addCaseStudyViewModel.SectionSelected),
-                QuestionType = QuestionType.GROUP
-            };
-            _quizRepository.Add(question);
+                Question question = new Question()
+                {
+                    QuestionTitle = addCaseStudyViewModel.CaseStudyName,
+                    SectionId = Int32.Parse(addCaseStudyViewModel.SectionSelected),
+                    QuestionType = QuestionType.GROUP
+                };
+                _quizRepository.Add(question);
+            }
 
             var quizViewModel = await _quizParserService.GenerateQuizViewModel(addCaseStudyViewModel.QuizId);
 
@@ -152,12 +155,18 @@ namespace Quizard.Controllers
             IEnumerable<Section> sections = await _quizRepository.GetQuizSections(id);
             IEnumerable<Question> questions = await _quizRepository.GetQuestionByQuizID(id);
 
-            IEnumerable<UserQuestionResponse> responses = await _takeQuizRepository.GetSingleResponseByQuestionId(questions.First().Id);
-            foreach(UserQuestionResponse response in responses)
+            foreach (Question question in questions)
             {
-                response.QuestionId = null;
-                response.AnswerId = null;
-                _takeQuizRepository.Update(response);
+                IEnumerable<UserQuestionResponse> responses = await _takeQuizRepository.GetSingleResponseByQuestionId(questions.First().Id);
+                if (responses != null)
+                {
+                    foreach (UserQuestionResponse response in responses)
+                    {
+                        response.QuestionId = null;
+                        response.AnswerId = null;
+                        _takeQuizRepository.Update(response);
+                    }
+                }
             }
 
 
@@ -185,13 +194,20 @@ namespace Quizard.Controllers
 
             IEnumerable<Question> questions = await _quizRepository.GetQuestionBySectionID(sectionId);
 
-            IEnumerable<UserQuestionResponse> responses = await _takeQuizRepository.GetSingleResponseByQuestionId(questions.First().Id);
-            foreach (UserQuestionResponse response in responses)
+            foreach (Question question in questions)
             {
-                response.QuestionId = null;
-                response.AnswerId = null;
-                _takeQuizRepository.Update(response);
+                IEnumerable<UserQuestionResponse> responses = await _takeQuizRepository.GetSingleResponseByQuestionId(questions.First().Id);
+                if (responses != null)
+                {
+                    foreach (UserQuestionResponse response in responses)
+                    {
+                        response.QuestionId = null;
+                        response.AnswerId = null;
+                        _takeQuizRepository.Update(response);
+                    }
+                }
             }
+
 
             if (questions != null)
             {
@@ -225,11 +241,14 @@ namespace Quizard.Controllers
             var children = await _quizRepository.GetChildQuestions(questionId);
 
             IEnumerable<UserQuestionResponse> responses = await _takeQuizRepository.GetSingleResponseByQuestionId(question.Id);
-            foreach (UserQuestionResponse response in responses)
+            if(responses != null)
             {
-                response.QuestionId = null;
-                response.AnswerId = null;
-                _takeQuizRepository.Update(response);
+                foreach (UserQuestionResponse response in responses)
+                {
+                    response.QuestionId = null;
+                    response.AnswerId = null;
+                    _takeQuizRepository.Update(response);
+                }
             }
 
             if (children.Any())
