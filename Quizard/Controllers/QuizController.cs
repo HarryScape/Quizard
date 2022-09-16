@@ -208,7 +208,6 @@ namespace Quizard.Controllers
                 }
             }
 
-
             if (questions != null)
             {
                 foreach (Question item in questions)

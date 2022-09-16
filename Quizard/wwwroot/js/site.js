@@ -159,7 +159,7 @@ function DeleteSection(id) {
             complete: function (response) {
                 $('.quiz-wrapper').html(response.responseText);
                 //SavePosition();
-                //location.reload(true);
+                location.reload(true);
             }
         });
     });
