@@ -409,6 +409,7 @@ ol {
     /*max-width: 100%;*/
 }
 
+
 #containers {
     clear: both;
     /*width: 850px;*/
@@ -467,7 +468,6 @@ ol {
         min-width: 50px;*/
         /*color: #fff;*/
         /*float: left;*/
-        width: auto;
         border: 2px dotted #5e5dcd;
         /*background: linear-gradient(to left, rgba(255,255,255,0) 0%, rgb(177, 178, 250, 70%) 100%);*/
         top: -1px;
@@ -481,6 +481,9 @@ ol {
         border-left-style: solid;
         border-image: linear-gradient( to bottom, #5e5dcd, rgba(0, 0, 0, 0) ) 1 100%;*/
         /*position: relative;*/
+        /*DRAG BOX SIZE*/
+        width: auto;
+        min-width: 70%;
     }
 
     #containers .ph {
