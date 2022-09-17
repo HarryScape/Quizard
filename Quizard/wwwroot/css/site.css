@@ -5,13 +5,39 @@
     font-family: 'Inter', sans-serif;
 }
 
-/*body {
+body {
     background: linear-gradient(45deg, rgba(195,6,230,0.06906512605042014) 0%, rgba(19,9,121,0.06906512605042014) 49%, rgba(250,208,120,0.06346288515406162) 100%);
     background-attachment: fixed;
     background-size: cover;
-}*/
+}
 
+header {
+    background-image: transparent;
+}
 
+.navbar-brand {
+    font-weight: bold;
+}
+
+.nav-item:hover {
+    font-weight: bold;
+    color: #5e4dcd;
+    /*text-shadow: 0 0 20px #5e4dcd;*/
+}
+
+.head-logo{
+    width: 35px;
+    height: 35px;
+}
+
+.welcome-text {
+    font-size: 24px;
+    /*font-weight: bold;*/
+}
+
+.greeting-text {
+    font-size: 24px;
+}
 
 
 h1,
@@ -302,7 +328,8 @@ h3 {
     background-color: rgb(217, 217, 245);
     border-radius: 6px;
     margin: 20px;
-    border: solid white 2px;
+    /*border: solid white 2px;*/
+    border: 2px solid rgba(255,255,255,.5);
 }
 
 /*table td:nth-child(1) {
@@ -677,7 +704,7 @@ ol {
         background-color: #5e5dcd;
     }
 
-.home-buttons > p {
+.home-buttons .logged-text > p {
     margin-top: 20px;
 }
 
@@ -755,5 +782,4 @@ ol {
         top: 3px;
         margin-right: 20px;
     }
-
 

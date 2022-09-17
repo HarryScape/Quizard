@@ -5,7 +5,7 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome To Quizard</h1>
-    <p>Build online quizzes with advanced structuring and customisation!</p>
+    <p class="greeting-text">Build online quizzes with advanced structuring and customisation!</p>
 </div>
 
 
@@ -20,14 +20,14 @@
         <div class="home-buttons">
             @if (!(User.Identity.IsAuthenticated))
             {
-            <p>Already a member? Sign in!</p>
+            <p class="welcome-text">Already a member? Sign in!</p>
             <button type="submit" class="home-btn" onclick="location.href='@Url.Action("Login", "Account")'">Log In</button>
-            <p>New member? Create a free account today!</p>
+            <p class="welcome-text">New member? Create a free account today!</p>
                 <button type="submit" class="home-btn" onclick="location.href='@Url.Action("Register", "Account")'">Sign Up</button>
             }
             else if (User.Identity.IsAuthenticated)
             {
-                <p>Continue building quizzes!</p>
+                <p class="welcome-text" id="logged-text">Continue building quizzes!</p>
             <button type="submit" class="home-btn" onclick="location.href='@Url.Action("Index", "Dashboard")'">Dashboard</button>
             }
         </div>
