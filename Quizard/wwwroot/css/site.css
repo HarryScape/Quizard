@@ -22,8 +22,11 @@ header {
 .nav-item:hover {
     font-weight: bold;
     color: #5e4dcd;
-    /*text-shadow: 0 0 20px #5e4dcd;*/
 }
+
+/*.nav-item:active {
+    text-shadow: 0 0 20px #5e4dcd;
+}*/
 
 .head-logo{
     width: 35px;
@@ -32,10 +35,13 @@ header {
 
 .welcome-text {
     font-size: 24px;
-    /*font-weight: bold;*/
 }
 
 .greeting-text {
+    font-size: 24px;
+}
+
+.dash-text {
     font-size: 24px;
 }
 

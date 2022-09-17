@@ -17,7 +17,7 @@
                     @Html.HiddenFor(x => x.SectionId, new { id = "HiddenSectionId" })
 
                     <div class="form-group">
-                        <label asp-for="@Model.Question.QuestionTitle" class="col-form-label">Question TItle:</label>
+                        <label asp-for="@Model.Question.QuestionTitle" class="col-form-label">* Question TItle:</label>
                         <textarea asp-for="@Model.Question.QuestionTitle" class="form-control" id="question-name-text" placeholder="Your Question Title"></textarea>
                     </div>
 
@@ -25,7 +25,7 @@
                     <div class="form-group">
                         <label for="Module" class="col-md-2"></label>
                         <div class="col-md-10">
-                            <label for="Module" class="col-form-label">Question Type:</label>
+                            <label for="Module" class="col-form-label">* Question Type:</label>
                             <select asp-for="@Model.Question.QuestionType" asp-items="@Model.QuestionTypeList" class="form-control" name="QuestionType" id="QuestionType">
                                 <option disabled selected>--Select Question Type--</option>
                             </select>
@@ -37,15 +37,15 @@
                     <div id="new-question-attributes">
                         <div class="form-group" id="attributes">
                             <label asp-for="@Model.Question.Mark" class="col-form-label">Mark Weight:</label>
-                            <input asp-for="@Model.Question.Mark" type="text" class="form-control" id="inlineFormInputMark" placeholder="5" autocomplete="off">
+                            <input asp-for="@Model.Question.Mark" type="text" class="form-control" id="inlineFormInputMark" autocomplete="off">
                         </div>
                         <div class="form-group" id="attributes">
                             <label asp-for="@Model.Question.ErrorMargin" class="col-form-label">Margin of error:</label>
-                            <input asp-for="@Model.Question.ErrorMargin" type="text" class="form-control" id="inlineFormInputMargin" placeholder="0.5" autocomplete="off">
+                            <input asp-for="@Model.Question.ErrorMargin" type="text" class="form-control" id="inlineFormInputMargin" autocomplete="off">
                         </div>
                         <div class="form-group" id="attributes">
                             <label asp-for="@Model.Question.NegativeMark" class="col-form-label">Negative Marking:</label>
-                            <input asp-for="@Model.Question.NegativeMark" type="text" class="form-control" id="inlineFormInputNegative" placeholder="0.25" autocomplete="off">
+                            <input asp-for="@Model.Question.NegativeMark" type="text" class="form-control" id="inlineFormInputNegative" autocomplete="off">
                         </div>
                     </div>
 

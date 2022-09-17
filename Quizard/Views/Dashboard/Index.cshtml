@@ -8,19 +8,19 @@
 {
     @if (User.IsInRole("teacher"))
     {
-        <p> Welcome back, master quizard! </p>
+        <p class="dash-text"> Welcome back, master quizard! </p>
     }
     else if (User.IsInRole("student"))
     {
-        <p> Welcome back, apprentice quizard!</p>
+        <p class="dash-text"> Welcome back, apprentice quizard!</p>
     }
     else if (User.IsInRole("admin"))
     {
-        <p> Welcome back, grand quizard overseer supreme!</p>
+        <p class="dash-text"> Welcome back, grand quizard overseer supreme!</p>
     }
     else
     {
-        <p> There is some error in the cosmos...</p>
+        <p class="dash-text"> There is some error in the cosmos...</p>
     }
 }
 

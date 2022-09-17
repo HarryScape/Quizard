@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "GogM52iRnyU+zRGZxoVKNb9/qNpOeOdODR0MFVB7fdY=",
+  "Hash": "dzUfGXdV4cO55L1838kB/jKam40O53g6mUj0rJoEV/w=",
   "Source": "Quizard",
   "BasePath": "_content/Quizard",
   "Mode": "Default",
@@ -100,6 +100,23 @@
       "CopyToOutputDirectory": "Always",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\delbin.png"
+    },
+    {
+      "Identity": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\Images\\head.svg",
+      "SourceId": "Quizard",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\",
+      "BasePath": "_content/Quizard",
+      "RelativePath": "Images/head.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\head.svg"
     },
     {
       "Identity": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\Images\\QuizardAnim.svg",
