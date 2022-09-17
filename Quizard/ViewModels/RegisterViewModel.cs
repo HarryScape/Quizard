@@ -22,9 +22,9 @@ namespace Quizard.ViewModels
         [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
 
-        public IEnumerable<SelectListItem>? RoleList { get; set; }
-        [Required(ErrorMessage = "Choose account type")]
-        [Display(Name = "* Select Role")]
+        //public IEnumerable<SelectListItem>? RoleList { get; set; }
+        //[Required(ErrorMessage = "Choose account type")]
+        //[Display(Name = "* Select Role")]
         public string RoleSelected { get; set; }
     }
 }

@@ -789,3 +789,52 @@ ol {
         margin-right: 20px;
     }
 
+
+
+
+    /*Reg Toggle*/
+.radio-toggle-container {
+    overflow: hidden;
+    width: 200px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.radio-toggle-input {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
+}
+
+.radio-toggle-label {
+    display: inline-block;
+    height: 30px;
+    color: black;
+    text-align: center;
+    transition: all 0.1s ease-in-out;
+    line-height: 28px;
+    width: 50%;
+    border: solid 1px #5e4dcd;
+}
+
+    .radio-toggle-label:hover {
+        cursor: pointer;
+    }
+
+.radio-toggle-input:checked + label {
+    background-color: #5e4dcd;
+    color: white;
+}
+
+.radio-toggle-label:first-of-type {
+    border-radius: 6px 0 0 6px;
+    margin-right: -2px;
+}
+
+.radio-toggle-label:last-of-type {
+    border-radius: 0 6px 6px 0;
+    margin-left: -2px;
+}

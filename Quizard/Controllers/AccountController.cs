@@ -75,7 +75,7 @@ namespace Quizard.Controllers
             });
 
             var registerVM = new RegisterViewModel();
-            registerVM.RoleList = listItems;
+            //registerVM.RoleList = listItems;
             return View(registerVM);
         }
 
