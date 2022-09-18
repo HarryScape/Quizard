@@ -75,6 +75,11 @@ namespace Quizard.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadQuiz(IFormFile file)
         {
+            if(file == null)
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
+
             string type = await _quizParserService.GetQuizType(file);
 
             if (type.Equals("Blackboard"))

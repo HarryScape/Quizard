@@ -1,6 +1,4 @@
 
-/*GLOBAL*/
-
 * {
     font-family: 'Inter', sans-serif;
 }
@@ -795,7 +793,7 @@ ol {
 
 
 
-    /*Reg Toggle*/
+    /*Registration Toggle*/
 .radio-toggle-container {
     overflow: hidden;
     width: 200px;
