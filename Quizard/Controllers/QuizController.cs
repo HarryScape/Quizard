@@ -169,6 +169,12 @@ namespace Quizard.Controllers
                 }
             }
 
+            IEnumerable<UserQuizAttempt> attempts = await _takeQuizRepository.GetAttemptsByQuizId(id);
+            foreach(UserQuizAttempt attempt in attempts)
+            {
+                attempt.QuizId = null;
+                _takeQuizRepository.Update(attempt);
+            }
 
             if (quiz == null) return View("Error");
 

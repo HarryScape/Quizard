@@ -96,7 +96,8 @@ namespace Quizard.Controllers
             }
             else
             {
-                return View("Error");
+                //return View("Error");
+                return RedirectToAction("Index", "Dashboard");
             }
             
             return RedirectToAction("Index", "Dashboard");

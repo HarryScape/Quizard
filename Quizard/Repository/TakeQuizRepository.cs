@@ -38,6 +38,17 @@ namespace Quizard.Repository
 
 
         /// <summary>
+        /// LINQ retrieve attempts by the quiz id for deleting a quiz
+        /// </summary>
+        /// <param name="quizId"></param>
+        /// <returns>List of attempts</returns>
+        public async Task<IEnumerable<UserQuizAttempt>> GetAttemptsByQuizId(int quizId)
+        {
+            return await _context.UserQuizAttempts.Where(i => i.QuizId.Equals(quizId)).ToListAsync();
+        }
+
+
+        /// <summary>
         /// LINQ retrieve responses by attempt and question Id
         /// </summary>
         /// <param name="attemptId"></param>

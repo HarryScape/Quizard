@@ -11,8 +11,8 @@ namespace Quizard.Models
         public string UserId { get; set; }
         public User User { get; set; }
         [ForeignKey("Quiz")]
-        public int QuizId { get; set; }
-        public Quiz Quiz { get; set; }
+        public int? QuizId { get; set; }
+        public Quiz? Quiz { get; set; }
 
         public double? Score { get; set; }
         public DateTime TimeStarted { get; set; }

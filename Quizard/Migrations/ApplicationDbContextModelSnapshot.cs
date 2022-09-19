@@ -449,7 +449,7 @@ namespace Quizard.Migrations
                     b.Property<bool>("IsMarked")
                         .HasColumnType("bit");
 
-                    b.Property<int>("QuizId")
+                    b.Property<int?>("QuizId")
                         .HasColumnType("int");
 
                     b.Property<bool>("ReleaseFeedback")
@@ -611,7 +611,7 @@ namespace Quizard.Migrations
                     b.HasOne("Quizard.Models.Question", "Question")
                         .WithMany("QuestionResponses")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Quizard.Models.UserQuizAttempt", "UserQuizAttempt")
                         .WithMany("QuestionResponses")
@@ -631,8 +631,7 @@ namespace Quizard.Migrations
                     b.HasOne("Quizard.Models.Quiz", "Quiz")
                         .WithMany("UserQuizAttempts")
                         .HasForeignKey("QuizId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Quizard.Models.User", "User")
                         .WithMany("UserQuizAttempts")
