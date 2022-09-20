@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "dzUfGXdV4cO55L1838kB/jKam40O53g6mUj0rJoEV/w=",
+  "Hash": "rqgemHnfnLsv9d+5jciv/SzXX4UzGbAus5tHlhH1/sI=",
   "Source": "Quizard",
   "BasePath": "_content/Quizard",
   "Mode": "Default",
@@ -85,6 +85,23 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\Images\\AddQ.png",
+      "SourceId": "Quizard",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\",
+      "BasePath": "_content/Quizard",
+      "RelativePath": "Images/AddQ.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\AddQ.png"
+    },
+    {
       "Identity": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\Images\\delbin.png",
       "SourceId": "Quizard",
       "SourceType": "Discovered",
@@ -100,6 +117,40 @@
       "CopyToOutputDirectory": "Always",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\delbin.png"
+    },
+    {
+      "Identity": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\Images\\drag.gif",
+      "SourceId": "Quizard",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\",
+      "BasePath": "_content/Quizard",
+      "RelativePath": "Images/drag.gif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\drag.gif"
+    },
+    {
+      "Identity": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\Images\\EditSec.png",
+      "SourceId": "Quizard",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\",
+      "BasePath": "_content/Quizard",
+      "RelativePath": "Images/EditSec.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\EditSec.png"
     },
     {
       "Identity": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\Images\\head.svg",
@@ -134,6 +185,23 @@
       "CopyToOutputDirectory": "Always",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\QuizardAnim.svg"
+    },
+    {
+      "Identity": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\Images\\UploadTypes.png",
+      "SourceId": "Quizard",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\",
+      "BasePath": "_content/Quizard",
+      "RelativePath": "Images/UploadTypes.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\UploadTypes.png"
     },
     {
       "Identity": "C:\\Users\\IvanU\\Code\\DOTNET\\Quizard\\Quizard\\wwwroot\\js\\site.js",

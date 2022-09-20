@@ -1,0 +1,74 @@
+﻿
+<div class="about-container">
+    <h1 class="about-title"> About Quizard </h1>
+    <br />
+
+    <section class="about-box" id="about-section">
+        <h2>Upload Your Question Banks!</h2>
+        <img class="drag-img" src="~/Images/UploadTypes.png" alt="Upload Format">
+        <p>Upload a .txt Blackboard Question bank or .txt question set and begin structuring quizzes! </p>
+        <a href="https://help.blackboard.com/Learn/Instructor/Original/Tests_Pools_Surveys/Orig_Reuse_Questions/Upload_Questions#:~:text=The%20format%20consists%20of%20a%20list%20of%20choices%2Danswers.,end%20of%20a%20choice%20answer.">
+            Blackboard Question Format Specification
+        </a>
+        <p>When you're done you can deploy your quiz for students to take.</p>
+        <p>Or export it to .docx for interoperability with Learning Management Systems.</p>
+        <a href="https://www.imsglobal.org/question/index.html">
+            QTI Format Export Coming Soon!
+        </a>
+    </section>
+
+    <section class="about-box" id="about-section">
+        <h2> Drag and Drop Functionality! </h2>
+        <img class="drag-img" src="~/Images/drag.gif" alt="Drag And Drop Example">
+        <p>Simply drag and drop questions into the case study or section you want!</p>
+    </section>
+
+    <section class="about-box" id="about-section">
+        <h2>Add new questions and case studies to your quiz!</h2>
+        <img class="drag-img" src="~/Images/AddQ.png" alt="Adding Questions">
+        <p>with a range of question types:</p>
+        <ol>
+            <li>Multiple Choice</li>
+            <li>Multiple Answer</li>
+            <li>Essay</li>
+            <li>Short Answer</li>
+            <li>True or False</li>
+            <li>Fill in the Blank</li>
+        </ol>
+        <p>Or add a case study with multiple question parts!</p>
+    </section>
+
+    <section class="about-box" id="about-section">
+        <h2>Create Optional Question Sets</h2>
+        <img class="drag-img" src="~/Images/EditSec.png" alt="Edit Section">
+        <p>Define the required amount of questions to answer in a section.</p>
+        <p>Give students the option to choose which question to answer.</p>
+    </section>
+
+</div>
+
+
+<button onclick="ScrollTop()" id="button-top" title="Go to top">Back To Top</button>
+
+
+@section scripts {
+
+    <script>
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                } else {
+                    entry.target.classList.remove('show');
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('.about-box');
+        sections.forEach((el) => observer.observe(el));
+
+
+    </script>
+
+}

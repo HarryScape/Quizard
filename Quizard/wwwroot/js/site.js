@@ -739,3 +739,29 @@ $(function () {
     });
 })
 
+
+
+//// about us
+//$(function () {
+//    //const sections = document.querySelectorAll('.about-box');
+//    //console.log(sections.length);
+
+//    const observer = new IntersectionObserver((entries) => {
+//        entries.forEach((entry) => {
+//            if (entry.isIntersecting) {
+//                entry.target.classList.add('show');
+//            } else {
+//                entry.target.classList.remove('show');
+//            }
+//        });
+//    });
+
+//    const sections = document.querySelectorAll('.about-box');
+//    sections.forEach((el) => observer.observe(el));
+
+//})
+
+function ScrollTop() {
+    document.body.scrollTop = 0; // Safari
+    document.documentElement.scrollTop = 0; // Chrome, Firefox, IE, Edge, Opera
+}
