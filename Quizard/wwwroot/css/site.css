@@ -876,7 +876,7 @@ ol {
     align-content: center;
 }
 
-.about-container p, ol{
+.about-text{
     font-size: 25px;
 }
 
