@@ -88,7 +88,7 @@
         <form method="post" enctype="multipart/form-data" asp-controller="Dashboard" asp-action="UploadQuiz">
             <input type="hidden" id="UserId" name="UserId" asp-for="UserId" />
             <div class="input-group">
-                <input type="file" name="file" id="UploadAlt">
+                <input type="file" name="file" id="UploadAlt" placeholder="Click here to choose a file">
                 <input class="button--add" value="Upload" type="submit" id="AddSectionBtn">
             </div>
         </form>

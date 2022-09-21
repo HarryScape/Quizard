@@ -474,7 +474,12 @@ $(document).on('click', '#del-ans', function (e) {
 
 // Begin Quiz
 function BeginQuiz() {
-    Countdown();
+    //Countdown();
+    if (time != 0) {
+        Countdown();
+    } else {
+        document.getElementById('timer').innerText = "Unlimited Time";
+    }
 
     var quizId = document.getElementById("HiddenQuizId").value;
     var description = document.getElementById('description');

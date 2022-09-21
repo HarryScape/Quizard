@@ -122,6 +122,13 @@ namespace Quizard.Controllers
                     Text = module.ModuleCode
                 });
             }
+
+            listItems.Add(new SelectListItem()
+            {
+                Value = null,
+                Text = "No Module"
+            });
+
             EditQuizViewModel editQuizViewModel = new EditQuizViewModel()
             {
                 Quiz = quiz,
@@ -150,8 +157,18 @@ namespace Quizard.Controllers
                 quiz.TimeLimit = updatedQuiz.TimeLimit;
                 quiz.Shuffled = updatedQuiz.Shuffled;
                 quiz.Deployed = updatedQuiz.Deployed;
-                quiz.ModuleId = updatedQuiz.ModuleId;
-                quiz.Module = await _moduleRepository.GetModuleById(modId);
+                //quiz.ModuleId = updatedQuiz.ModuleId;
+                //quiz.Module = await _moduleRepository.GetModuleById(modId);
+                if(updatedQuiz.ModuleId == null)
+                {
+                    quiz.Module = null;
+                    quiz.ModuleId = null;
+                }
+                else
+                {
+                    quiz.ModuleId = updatedQuiz.ModuleId;
+                    quiz.Module = await _moduleRepository.GetModuleById(modId);
+                }
                 quiz.DateCreated = DateTime.Now;
                 _quizRepository.Update(quiz);
             }

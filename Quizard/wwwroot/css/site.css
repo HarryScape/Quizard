@@ -302,16 +302,32 @@ h3 {
 }
 
 ::-webkit-file-upload-button {
-    display: none;
+    /*display: none;*/
     cursor: pointer;
+    /*Styling position*/
+    border: none;
+    border-radius: 6px;
+    background-color: #5e4dcd;
+    min-height: 50px;
+    position: absolute;
+    top: 100%;
+    left: 0px;
+    color: #fff;
+    font-size: 15px;
+    transition: background-color .3s ease-in-out;
 }
 
-/*.table-row:hover {
+    ::-webkit-file-upload-button:hover {
+        background-color: #5e5dcd;
+    }
+
+
+    /*.table-row:hover {
     background-color: #edeef7;
     border-radius: 6rem;
 }*/
 
-.button-table {
+    .button-table {
     /*margin-top: 20px;*/
     min-height: 40px;
     padding: .5em 1em;
