@@ -12,15 +12,9 @@ namespace Quizard.ViewModels
         public IEnumerable<Question> ParentQuestions { get; set; }
         public IEnumerable<Answer> Answers { get; set; }
         public QuestionType QuestionType { get; set; }
-
         public int AttemptId { get; set; }
-
         public IEnumerable<UserQuestionResponse>? QuestionResponses { get; set; }
-        // each checkbox is a seperate response. 
-        // each UserQuestionResponse has a bool checked. 
-        // html.checkmarkfor a collection of responses?? HOW
-        public bool Checked { get; set; } // needs to be a collection...............
-
+        public bool Checked { get; set; } 
 
     }
 }

@@ -19,15 +19,9 @@ namespace Quizard.Services
             _quizRepository = quizRepository;
         }
 
-
-        // need isValidQustion bools. 
-        // public async Task<bool> isValidUpload()
-        // public async Task<bool> isValidQuiz()
-        // .txt, .csv, xml,.zip. answers[] <= 100, must have correct questiontype.
-
-        public async Task<string> GetQuizLMS(IFormFile file)
+        public async Task<string> GetQuizType(IFormFile file)
         {
-            string lms = "";
+            string type = "";
 
             using (StreamReader fileReader = new StreamReader(file.OpenReadStream()))
             {
@@ -35,17 +29,17 @@ namespace Quizard.Services
 
                 if (char.IsDigit(line[0]))
                 {
-                    lms = "Canvas";
+                    type = "MarkdownA";
                 }
                 else if (line.StartsWith("::"))
                 {
-                    lms = "Moodle";
+                    type = "MarkdownB";
                 }
                 else if (char.IsUpper(line[0]) && char.IsUpper(line[1])){
-                    lms = "Blackboard";
+                    type = "Blackboard";
                 }
             }
-            return lms;
+            return type;
         }
 
         public async Task<CreateQuizViewModel> GenerateQuizViewModel(int id)

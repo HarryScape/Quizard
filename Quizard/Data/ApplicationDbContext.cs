@@ -6,7 +6,6 @@ namespace Quizard.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {
-        // Pass to the base class which is "context"
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
@@ -28,7 +27,6 @@ namespace Quizard.Data
         {
             base.OnModelCreating(builder);
 
-            // USER MODULES
             // Composite key
             builder.Entity<UserModule>()
                 .HasKey(um => new { um.UserId, um.ModuleId });
@@ -46,8 +44,6 @@ namespace Quizard.Data
                 .HasForeignKey(um => um.UserId);
 
 
-
-            // USER QUIZ ATTEMPTS
             // Relation for user to have many quiz attempts
             builder.Entity<UserQuizAttempt>()
                 .HasOne(qa => qa.Quiz)
@@ -63,8 +59,6 @@ namespace Quizard.Data
                 .OnDelete(DeleteBehavior.NoAction);
 
 
-
-            // responses
             // Relation for user attempt to have many question responses
             builder.Entity<UserQuestionResponse>()
                 .HasOne(qr => qr.UserQuizAttempt)
@@ -72,16 +66,22 @@ namespace Quizard.Data
                 .HasForeignKey(qr => qr.UserQuizAttemptId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            // Relation for question to have many user responses
+            //Relation for question to have many user responses
+           builder.Entity<UserQuestionResponse>()
+               .HasOne(qr => qr.Question)
+               .WithMany(qr => qr.QuestionResponses)
+               .HasForeignKey(qr => qr.QuestionId)
+               .OnDelete(DeleteBehavior.SetNull)
+               .IsRequired(false);
+
+            //Relation for answer to have many user responses
             builder.Entity<UserQuestionResponse>()
-                .HasOne(qr => qr.Question)
+                .HasOne(qr => qr.Answer)
                 .WithMany(qr => qr.QuestionResponses)
-                .HasForeignKey(qr => qr.QuestionId)
-                .OnDelete(DeleteBehavior.NoAction);
-
+                .HasForeignKey(qr => qr.AnswerId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired(false);
         }
-
-
-
     }
 }
+

@@ -24,7 +24,7 @@
                         <input for="Module" type="text" class="form-control" id="inlineFormInputName" placeholder="CS101">
                     </div>*@
                     <div class="form-group">
-                        <label asp-for="@Model.Quiz.TimeLimit" class="col-form-label">Quiz Duration:</label>
+                        <label asp-for="@Model.Quiz.TimeLimit" class="col-form-label">Quiz Duration: (Minutes)</label>
                         <input asp-for="@Model.Quiz.TimeLimit" type="text" name="TimeLimit" class="form-control" id="inlineFormInputName" placeholder="45" value="@Model.Quiz.TimeLimit">
                     </div>
 

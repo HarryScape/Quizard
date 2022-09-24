@@ -55,7 +55,7 @@
             foreach (var ans in question.QuestionAnswers)
             {
                 var userChecked = Model.QuestionResponses.Any(x => x.AnswerId == ans.Id);
-                <div class="add-ans" data-ansId="@ans.Id">
+                <div class="add-ans" id="single" data-ansId="@ans.Id">
                     <div id="custom-add-box">
                         <div id="choice-container">
                             <label class="check-container">
@@ -68,7 +68,7 @@
                                 {
                                     <input value="0" type="checkbox" id="check-single" no="@ans.Id">
                                 }
-                                <div class="checkmark"></div>
+                                <div class="checkmark" id="check-single"></div>
                             </label>
                             <label for="answer" class="col-form-label" id="ans-txt" value="@question.Id">@ans.QuestionAnswer</label>
                         </div>
@@ -89,11 +89,11 @@
                                 @*<input value="1" type="checkbox">*@
                                 @if (userChecked == true)
                                 {
-                                    <input value="1" type="checkbox" id="check-single" no="@ans.Id" checked>
+                                    <input value="1" type="checkbox" no="@ans.Id" checked>
                                 }
                                 else
                                 {
-                                    <input value="0" type="checkbox" id="check-single" no="@ans.Id">
+                                    <input value="0" type="checkbox" no="@ans.Id">
                                 }
                                 <div class="checkmark"></div>
                             </label>
@@ -105,20 +105,12 @@
         }
 
 
-
-
-
-
         @if (question.Mark != null)
         {
             <i> @question.Mark Marks </i>
         }
 
 
-        @*@if (question.Children != null)
-    {
-    @await Component.InvokeAsync("Question", new { questions = question.Children, questionResponses = Model.QuestionResponses });
-    }*@
         @await Component.InvokeAsync("Question", new {questions = question.Children, questionResponses = Model.QuestionResponses})
 
 

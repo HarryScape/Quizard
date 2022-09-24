@@ -5,8 +5,6 @@ namespace Quizard.ViewModels
 {
     public class CreateQuizViewModel
     {
-        // figure out which quiz to use...
-        // public IEnumerable<Quiz> Quizzes { get; set; }
         public Quiz Quiz { get; set; }
         public IEnumerable<Section> Sections { get; set; }
         public string SectionName { get; set; }

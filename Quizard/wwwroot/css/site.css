@@ -1,17 +1,47 @@
 
-/*GLOBAL*/
-
 * {
     font-family: 'Inter', sans-serif;
 }
 
-/*body {
+body {
     background: linear-gradient(45deg, rgba(195,6,230,0.06906512605042014) 0%, rgba(19,9,121,0.06906512605042014) 49%, rgba(250,208,120,0.06346288515406162) 100%);
     background-attachment: fixed;
     background-size: cover;
+}
+
+header {
+    background-image: transparent;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.nav-item:hover {
+    font-weight: bold;
+    color: #5e4dcd;
+}
+
+/*.nav-item:active {
+    text-shadow: 0 0 20px #5e4dcd;
 }*/
 
+.head-logo{
+    width: 35px;
+    height: 35px;
+}
 
+.welcome-text {
+    font-size: 24px;
+}
+
+.greeting-text {
+    font-size: 24px;
+}
+
+.dash-text {
+    font-size: 24px;
+}
 
 
 h1,
@@ -76,6 +106,22 @@ h3 {
     border: none;
     position: absolute;
     right: 30px;
+    background: transparent;
+    cursor: pointer;
+    color: #5e5dcd;
+}
+
+.hi-plus-circle {
+    width: 1.5em;
+    height: 1.5em;
+    display: inline-block;
+    align-self: center;
+    vertical-align: middle;
+    margin-top: -0.1em;
+    padding: 0;
+    border: none;
+    position: absolute;
+    right: 55px;
     background: transparent;
     cursor: pointer;
     color: #5e5dcd;
@@ -174,12 +220,16 @@ h3 {
         align-items: center;
     }
 
-/*QUIZ CONTROLS*/
-.input-group {
-    display: flex;
-    align-items: center;
-    padding-bottom: 10px;
-}
+    .controls #AddSectionName, #AddGroupName {
+        margin-left: 5px;
+    }
+
+    /*QUIZ CONTROLS*/
+    .input-group {
+        display: flex;
+        align-items: center;
+        padding-bottom: 10px;
+    }
 
 .input {
     min-height: 50px;
@@ -202,6 +252,7 @@ h3 {
     font-size: 15px;
     cursor: pointer;
     transition: background-color .3s ease-in-out;
+    margin-right: 5px;
 }
 
     .button--add:hover {
@@ -251,16 +302,32 @@ h3 {
 }
 
 ::-webkit-file-upload-button {
-    display: none;
+    /*display: none;*/
     cursor: pointer;
+    /*Styling position*/
+    border: none;
+    border-radius: 6px;
+    background-color: #5e4dcd;
+    min-height: 50px;
+    position: absolute;
+    top: 100%;
+    left: 0px;
+    color: #fff;
+    font-size: 15px;
+    transition: background-color .3s ease-in-out;
 }
 
-/*.table-row:hover {
+    ::-webkit-file-upload-button:hover {
+        background-color: #5e5dcd;
+    }
+
+
+    /*.table-row:hover {
     background-color: #edeef7;
     border-radius: 6rem;
 }*/
 
-.button-table {
+    .button-table {
     /*margin-top: 20px;*/
     min-height: 40px;
     padding: .5em 1em;
@@ -281,7 +348,8 @@ h3 {
     background-color: rgb(217, 217, 245);
     border-radius: 6px;
     margin: 20px;
-    border: solid white 2px;
+    /*border: solid white 2px;*/
+    border: 2px solid rgba(255,255,255,.5);
 }
 
 /*table td:nth-child(1) {
@@ -355,6 +423,7 @@ ol {
     /*max-width: 100%;*/
 }
 
+
 #containers {
     clear: both;
     /*width: 850px;*/
@@ -413,7 +482,6 @@ ol {
         min-width: 50px;*/
         /*color: #fff;*/
         /*float: left;*/
-        width: auto;
         border: 2px dotted #5e5dcd;
         /*background: linear-gradient(to left, rgba(255,255,255,0) 0%, rgb(177, 178, 250, 70%) 100%);*/
         top: -1px;
@@ -427,6 +495,9 @@ ol {
         border-left-style: solid;
         border-image: linear-gradient( to bottom, #5e5dcd, rgba(0, 0, 0, 0) ) 1 100%;*/
         /*position: relative;*/
+        /*DRAG BOX SIZE*/
+        width: auto;
+        min-width: 70%;
     }
 
     #containers .ph {
@@ -656,7 +727,7 @@ ol {
         background-color: #5e5dcd;
     }
 
-.home-buttons > p {
+.home-buttons .logged-text > p {
     margin-top: 20px;
 }
 
@@ -736,3 +807,121 @@ ol {
     }
 
 
+
+
+    /*Registration Toggle*/
+.radio-toggle-container {
+    overflow: hidden;
+    width: 200px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.radio-toggle-input {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
+}
+
+.radio-toggle-label {
+    display: inline-block;
+    height: 30px;
+    color: black;
+    text-align: center;
+    transition: all 0.1s ease-in-out;
+    line-height: 28px;
+    width: 50%;
+    border: solid 1px #5e4dcd;
+}
+
+    .radio-toggle-label:hover {
+        cursor: pointer;
+    }
+
+.radio-toggle-input:checked + label {
+    background-color: #5e4dcd;
+    color: white;
+}
+
+.radio-toggle-label:first-of-type {
+    border-radius: 6px 0 0 6px;
+    margin-right: -2px;
+}
+
+.radio-toggle-label:last-of-type {
+    border-radius: 0 6px 6px 0;
+    margin-left: -2px;
+}
+
+
+
+.about-container section {
+    display: grid;
+    place-items: center;
+    align-content: center;
+    /*min-height: 100vh;*/
+    /*width: 100%;*/
+    margin-bottom: 200px;
+    margin-top: 40px;
+/*    background-color: rgba(94, 77, 205, .3);
+    border-radius: 30px;*/
+}
+
+.about-title {
+    display: grid;
+    place-items: center;
+    align-content: center;
+}
+
+.about-text{
+    font-size: 25px;
+}
+
+
+.about-box {
+    opacity: 0;
+    transition: all 1s;
+    filter: blur(5px);
+    transform: translateX(-100%);
+}
+
+.show{
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+    color: black;
+}
+
+
+/*@media(prefers-reduced-motion){
+    #about-section {
+        transition: none;
+    }
+}*/
+
+.drag-img{
+    width: 800px;
+    height: auto;
+}
+
+#button-top {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    border:none;
+    border-radius: 6px;
+    background-color: #5e4dcd;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color .3s ease-in-out;
+    min-height: 30px;
+    min-width: 110px;
+}
+
+    #button-top:hover {
+        background-color: #5e5dcd;
+    }

@@ -14,20 +14,14 @@ namespace Quizard.Models
         [ForeignKey("Section")]
         public int SectionId { get; set; }
         public Section Section { get; set; }
-        // Add isActive bool for question selection
         public ICollection<Answer>? QuestionAnswers { get; set; }
-
-        // Sub-question addon
         [ForeignKey(nameof(ParentQuestion))]
         public int? ParentId { get; set; }
-
         public Question? ParentQuestion { get; set; }
         public ICollection<Question>? Children { get; set; }
-
         public int? Mark { get; set; }
         public double? NegativeMark { get; set; }
         public double? ErrorMargin { get; set; }
-
         public ICollection<UserQuestionResponse>? QuestionResponses { get; set; }
 
     }

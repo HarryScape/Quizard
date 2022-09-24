@@ -31,12 +31,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXF9RdWl6T3B0aW9uc1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Home/About.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Module/Index.cshtml]
@@ -67,12 +67,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Quiz/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Quiz/Upload.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxVcGxvYWQuY3NodG1s
+[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Quiz/_AddCaseStudyModalPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxfQWRkQ2FzZVN0dWR5TW9kYWxQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/Quiz/_AddQuestionModalPartial.cshtml]
@@ -121,10 +117,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/TakeQuiz/_SubmitModalPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFrZVF1aXpcX1N1Ym1pdE1vZGFsUGFydGlhbC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/TakeQuiz/_TakeQuestionPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFrZVF1aXpcX1Rha2VRdWVzdGlvblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/IvanU/Code/DOTNET/Quizard/Quizard/Views/TakeQuiz/_TakeSectionPartial.cshtml]

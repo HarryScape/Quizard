@@ -4,16 +4,10 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aaf2d053-6bed-4af9-a6bd-592cdd9da7fc</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Content\Images\delbin.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="TempUpload\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
@@ -36,12 +30,6 @@
     <Content Update="wwwroot\Images\QuizardAnim.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Content\Images\QuizardAnim.svg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

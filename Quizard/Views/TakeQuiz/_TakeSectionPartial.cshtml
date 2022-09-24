@@ -75,7 +75,7 @@
                                              <input value="0" type="checkbox" id="check-single" no="@ans.Id">
                                         }
                                         @*@Html.CheckBoxFor(model => model.Checked, new { id="check-single"})*@
-                                        <div class="checkmark"></div>
+                                        <div class="checkmark" id="check-single"></div>
                                     </label>
                                     <label for="answer" class="col-form-label" id="ans-txt" value="@question.Id">@ans.QuestionAnswer</label>
                                 </div>
@@ -97,11 +97,11 @@
                                         @*@Html.CheckBoxFor(model => model.Checked, new { id="ansCheck"})*@
                                         @if(userChecked == true)
                                         {
-                                            <input value="1" type="checkbox" id="check-single" no="@ans.Id" checked>
+                                            <input value="1" type="checkbox" no="@ans.Id" checked>
                                         }
                                         else
                                         {
-                                             <input value="0" type="checkbox" id="check-single" no="@ans.Id">
+                                             <input value="0" type="checkbox" no="@ans.Id">
                                         }
                                         <div class="checkmark"></div>
                                     </label>
@@ -117,14 +117,8 @@
                     <i> @question.Mark Marks </i>
                 }
 
-                @*@Html.Partial("_TakeQuestionPartial", question.Children)*@
                 @await Component.InvokeAsync("Question", new {questions = question.Children, questionResponses = Model.QuestionResponses})
-                @*<vc: Question questions=question.Children, questionResponses=Model.QuestionResponses></vc: Question>*@
 
-                @*@if (question.Children != null)
-                {
-                    await Component.InvokeAsync("Question", new { questions = question.Children, questionResponses = Model.QuestionResponses });
-                }*@
 
             </div>
 

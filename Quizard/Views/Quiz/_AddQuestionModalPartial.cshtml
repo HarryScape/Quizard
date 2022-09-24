@@ -13,9 +13,11 @@
                 <form action="AddQuestion">
 
                     <input type="hidden" asp-for="@Model.QuizId" name="Id" value="@Model.QuizId">
+                    @*<input type="hidden" asp-for="@Model.SectionId" name="secId" value="@Model.SectionId">*@
+                    @Html.HiddenFor(x => x.SectionId, new { id = "HiddenSectionId" })
 
                     <div class="form-group">
-                        <label asp-for="@Model.Question.QuestionTitle" class="col-form-label">Question TItle:</label>
+                        <label asp-for="@Model.Question.QuestionTitle" class="col-form-label">* Question TItle:</label>
                         <textarea asp-for="@Model.Question.QuestionTitle" class="form-control" id="question-name-text" placeholder="Your Question Title"></textarea>
                     </div>
 
@@ -23,7 +25,7 @@
                     <div class="form-group">
                         <label for="Module" class="col-md-2"></label>
                         <div class="col-md-10">
-                            <label for="Module" class="col-form-label">Question Type:</label>
+                            <label for="Module" class="col-form-label">* Question Type:</label>
                             <select asp-for="@Model.Question.QuestionType" asp-items="@Model.QuestionTypeList" class="form-control" name="QuestionType" id="QuestionType">
                                 <option disabled selected>--Select Question Type--</option>
                             </select>
@@ -35,11 +37,11 @@
                     <div id="new-question-attributes">
                         <div class="form-group" id="attributes">
                             <label asp-for="@Model.Question.Mark" class="col-form-label">Mark Weight:</label>
-                            <input asp-for="@Model.Question.Mark" type="text" class="form-control" id="inlineFormInputMark" placeholder="5" autocomplete="off">
+                            <input asp-for="@Model.Question.Mark" type="text" class="form-control" id="inlineFormInputMark" placeholder="2" autocomplete="off">
                         </div>
                         <div class="form-group" id="attributes">
                             <label asp-for="@Model.Question.ErrorMargin" class="col-form-label">Margin of error:</label>
-                            <input asp-for="@Model.Question.ErrorMargin" type="text" class="form-control" id="inlineFormInputMargin" placeholder="0.5" autocomplete="off">
+                            <input asp-for="@Model.Question.ErrorMargin" type="text" class="form-control" id="inlineFormInputMargin" placeholder="0.05" autocomplete="off">
                         </div>
                         <div class="form-group" id="attributes">
                             <label asp-for="@Model.Question.NegativeMark" class="col-form-label">Negative Marking:</label>
@@ -76,11 +78,10 @@
                 </form>
             </div>
 
-
             <div class="modal-footer">
                 <div class="col text-center">
                     <button type="button" class="button--save" data-bs-dismiss="modal" id="exit-edit-modal">Cancel</button>
-                    <button type="button" class="button--save" data-new-question="modal" id="save-confirm">Save Changes</button>
+                    <button type="button" class="button--save" data-new-question="modal" id="save-confirm">Add Question</button>
                 </div>
             </div>
         </div>

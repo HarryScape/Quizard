@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Quizard.Data.Enum;
 using Quizard.Interfaces;
 using Quizard.Models;
@@ -10,25 +11,14 @@ namespace Quizard.Controllers
     {
         private readonly IQuizRepository _quizRepository;
         private readonly IQuizParserService _quizParserService;
+        private readonly ITakeQuizRepository _takeQuizRepository;
 
-        public QuizController(IQuizRepository quizRepository, IQuizParserService quizParserService)
+
+        public QuizController(IQuizRepository quizRepository, IQuizParserService quizParserService, ITakeQuizRepository takeQuizRepository)
         {
             _quizRepository = quizRepository;
             _quizParserService = quizParserService;
-        }
-
-        // UPLOAD
-
-        [HttpGet]
-        public IActionResult Upload()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult> Index()
-        {
-            IEnumerable<Quiz> quizzes = await _quizRepository.GetAll();
-            return View(quizzes);
+            _takeQuizRepository = takeQuizRepository;
         }
 
 
@@ -40,6 +30,8 @@ namespace Quizard.Controllers
             return View(quizViewModel);
         }
 
+
+        // Generates quiz sections in view
         [HttpPost]
         public ActionResult SectionPartialView(string sectionName, int quizId)
         {
@@ -56,32 +48,70 @@ namespace Quizard.Controllers
             return PartialView("_Section", quizViewModel);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddQuestionGroup(string groupName, int quizId, int sectionId)
-        {
-            var questionGroup = new Question()
-            {
-                QuestionType = QuestionType.GROUP,
-                QuestionTitle = groupName,
-                QuestionPosition = 0,
-                SectionId = sectionId
-            };
-            _quizRepository.Add(questionGroup);
 
-            var quizViewModel = await _quizParserService.GenerateQuizViewModel(quizId);
+        // Generate Modal Popup
+        public async Task<IActionResult> ShowCaseStudyModal(int quizId)
+        {
+            IEnumerable<Section> sections = await _quizRepository.GetQuizSections(quizId);
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            foreach (Section section in sections)
+            {
+                listItems.Add(new SelectListItem()
+                {
+                    Value = section.Id.ToString(),
+                    Text = section.SectionName
+                });
+            }
+
+            AddCaseStudyViewModel addCaseStudyViewModel = new AddCaseStudyViewModel();
+            addCaseStudyViewModel.SectionList = listItems;
+            addCaseStudyViewModel.QuizId = quizId;
+
+            return PartialView("_AddCaseStudyModalPartial", addCaseStudyViewModel);
+        }
+
+
+        /// <summary>
+        /// Adds a new case study or question group
+        /// </summary>
+        /// <param name="addCaseStudyViewModel"></param>
+        public async Task<IActionResult> AddCaseStudy(AddCaseStudyViewModel addCaseStudyViewModel)
+        {
+            if(addCaseStudyViewModel.CaseStudyName != null)
+            {
+                Question question = new Question()
+                {
+                    QuestionTitle = addCaseStudyViewModel.CaseStudyName,
+                    SectionId = Int32.Parse(addCaseStudyViewModel.SectionSelected),
+                    QuestionType = QuestionType.GROUP
+                };
+                _quizRepository.Add(question);
+            }
+
+            var quizViewModel = await _quizParserService.GenerateQuizViewModel(addCaseStudyViewModel.QuizId);
 
             return PartialView("_Section", quizViewModel);
         }
 
+
+        /// <summary>
+        /// Adds a new section to the quiz
+        /// </summary>
+        /// <param name="sectionName"></param>
+        /// <param name="quizId"></param>
         [HttpPost]
         public async Task<IActionResult> AddSectionDB(string sectionName, int quizId)
         {
-            var section = new Section()
+            if(sectionName != null)
             {
-                SectionName = sectionName,
-                QuizId = quizId
-            };
-            _quizRepository.Add(section);
+                var section = new Section()
+                {
+                    SectionName = sectionName,
+                    QuizId = quizId
+                };
+                _quizRepository.Add(section);
+            }
 
             var quizViewModel = await _quizParserService.GenerateQuizViewModel(quizId);
 
@@ -89,6 +119,10 @@ namespace Quizard.Controllers
         }
 
 
+        /// <summary>
+        /// Saves the position of questions in the quiz
+        /// </summary>
+        /// <param name="updates"> Question model mapped to a JSON class</param>
         [HttpPost]
         public async Task<IActionResult> SaveQuiz(List<QuestionJsonHelper> updates)
         {
@@ -109,12 +143,38 @@ namespace Quizard.Controllers
             return Json(message);
         }
 
+
+        /// <summary>
+        /// Manually deletes a quiz as cascading delete constraint in the DB is disabled
+        /// </summary>
+        /// <param name="id"></param>
         public async Task<IActionResult> DeleteQuiz(int id)
         {
             var quiz = await _quizRepository.GetQuizById(id);
             IEnumerable<Answer> answers = await _quizRepository.GetSpecificAnswers(id);
             IEnumerable<Section> sections = await _quizRepository.GetQuizSections(id);
             IEnumerable<Question> questions = await _quizRepository.GetQuestionByQuizID(id);
+
+            foreach (Question question in questions)
+            {
+                IEnumerable<UserQuestionResponse> responses = await _takeQuizRepository.GetSingleResponseByQuestionId(questions.First().Id);
+                if (responses != null)
+                {
+                    foreach (UserQuestionResponse response in responses)
+                    {
+                        response.QuestionId = null;
+                        response.AnswerId = null;
+                        _takeQuizRepository.Update(response);
+                    }
+                }
+            }
+
+            IEnumerable<UserQuizAttempt> attempts = await _takeQuizRepository.GetAttemptsByQuizId(id);
+            foreach(UserQuizAttempt attempt in attempts)
+            {
+                attempt.QuizId = null;
+                _takeQuizRepository.Update(attempt);
+            }
 
             if (quiz == null) return View("Error");
 
@@ -126,6 +186,11 @@ namespace Quizard.Controllers
             return Json(new { redirectToUrl = Url.Action("Index", "Dashboard") });
         }
 
+
+        /// <summary>
+        /// Deletes a section including questions within the section
+        /// </summary>
+        /// <param name="sectionId"></param>
         [HttpPost]
         public async Task<IActionResult> DeleteSection(int sectionId)
         {
@@ -134,6 +199,21 @@ namespace Quizard.Controllers
 
 
             IEnumerable<Question> questions = await _quizRepository.GetQuestionBySectionID(sectionId);
+
+            foreach (Question question in questions)
+            {
+                IEnumerable<UserQuestionResponse> responses = await _takeQuizRepository.GetSingleResponseByQuestionId(questions.First().Id);
+                if (responses != null)
+                {
+                    foreach (UserQuestionResponse response in responses)
+                    {
+                        response.QuestionId = null;
+                        response.AnswerId = null;
+                        _takeQuizRepository.Update(response);
+                    }
+                }
+            }
+
             if (questions != null)
             {
                 foreach (Question item in questions)
@@ -153,11 +233,28 @@ namespace Quizard.Controllers
             return PartialView("_Section", quizViewModel);
         }
 
+
+        /// <summary>
+        /// Deletes a question. If the question has question parts they are detached from the parent question
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <param name="quizId"></param>
         [HttpPost]
         public async Task<IActionResult> DeleteQuestion(int questionId, int quizId)
         {
             Question question = await _quizRepository.GetQuestionById(questionId);
             var children = await _quizRepository.GetChildQuestions(questionId);
+
+            IEnumerable<UserQuestionResponse> responses = await _takeQuizRepository.GetSingleResponseByQuestionId(question.Id);
+            if(responses != null)
+            {
+                foreach (UserQuestionResponse response in responses)
+                {
+                    response.QuestionId = null;
+                    response.AnswerId = null;
+                    _takeQuizRepository.Update(response);
+                }
+            }
 
             if (children.Any())
             {
@@ -179,6 +276,8 @@ namespace Quizard.Controllers
             return PartialView("_Section", quizViewModel);
         }
 
+
+        // Generate Modal Popup
         [HttpGet]
         public async Task<IActionResult> ShowDeleteModal(int id)
         {
@@ -186,6 +285,8 @@ namespace Quizard.Controllers
             return PartialView("_DeleteModalPartial");
         }
 
+
+        // Generate Modal Popup
         [HttpGet]
         public async Task<IActionResult> ShowEditModal(int id)
         {
@@ -193,6 +294,11 @@ namespace Quizard.Controllers
             return PartialView("_EditModalPartial", question);
         }
 
+
+        /// <summary>
+        /// Updates a questions attributes
+        /// </summary>
+        /// <param name="updatedQuestion"></param>
         [HttpPost]
         public async Task<IActionResult> UpdateQuestion(Question updatedQuestion)
         {
@@ -210,6 +316,7 @@ namespace Quizard.Controllers
         }
 
 
+        // Generate Modal Popup
         [HttpGet]
         public async Task<IActionResult> ShowEditSectionModal(int id)
         {
@@ -217,66 +324,86 @@ namespace Quizard.Controllers
             return PartialView("_EditSectionModalPartial", section);
         }
 
+
+        /// <summary>
+        /// Updates a sections attributes
+        /// </summary>
+        /// <param name="updatedSection"></param>
         [HttpPost]
         public async Task<IActionResult> UpdateSection(Section updatedSection)
         {
             Section section = await _quizRepository.GetSectionById(updatedSection.Id);
-            section.SectionName = updatedSection.SectionName;
-            section.RequiredQuestions = updatedSection.RequiredQuestions;
+            if (updatedSection.SectionName != null)
+            {
+                section.SectionName = updatedSection.SectionName;
+                section.RequiredQuestions = updatedSection.RequiredQuestions;
 
-            _quizRepository.Update(section);
+                _quizRepository.Update(section);
+            }
 
             var quizViewModel = await _quizParserService.GenerateQuizViewModel(section.QuizId);
             return PartialView("_Section", quizViewModel);
         }
 
 
+        // Generate Modal Popup
         [HttpGet]
-        public async Task<IActionResult> ShowAddQuestionModal(int id)
+        public async Task<IActionResult> ShowAddQuestionModal(int id, int sectionId)
         {
             var addQuestionViewModel = new AddQuestionViewModel();
             addQuestionViewModel.Quiz = await _quizRepository.GetQuizById(id);
+            addQuestionViewModel.SectionId = sectionId;
             addQuestionViewModel.QuestionTypeList = await _quizParserService.GenerateQuestionTypes();
             return PartialView("_AddQuestionModalPartial", addQuestionViewModel);
         }
 
+
+        /// <summary>
+        /// Adds a new question to the quiz. Params are List<> due to multiple complex objects posted with AJAX
+        /// </summary>
+        /// <param name="questionBody"></param>
+        /// <param name="answers"></param>
+        /// <param name="answersCheck"></param>
         [ActionName("AddQuestion")]
         [HttpPost]
         public async Task<IActionResult> AddQuestion(List<string> questionBody, List<string> answers, List<string> answersCheck)
         {
-            Question question = new Question()
+            if(questionBody[0] != null)
             {
-                SectionId = Int32.Parse(questionBody[5]),
-                QuestionTitle = questionBody[0],
-                QuestionType = Enum.Parse<QuestionType>(questionBody[6]),
-            };
-            if (questionBody[1] != null)
-            {
-                question.Mark = Int32.Parse(questionBody[1]);
-            }
-            if (questionBody[2] != null)
-            {
-                question.ErrorMargin = double.Parse(questionBody[2]);
-            }
-            if (questionBody[3] != null)
-            {
-                question.NegativeMark = double.Parse(questionBody[3]);
-            }
-
-            _quizRepository.Add(question);
-
-            for (int i = 0; i < answers.Count; i++)
-            {
-                Answer answer = new Answer()
+                Question question = new Question()
                 {
-                    QuestionAnswer = answers[i],
-                    QuestionId = question.Id,
+                    SectionId = Int32.Parse(questionBody[5]),
+                    QuestionTitle = questionBody[0],
+                    QuestionType = Enum.Parse<QuestionType>(questionBody[6]),
                 };
-                if (answersCheck[i].Equals("true"))
+                if (questionBody[1] != null)
                 {
-                    answer.isCorrect = true;
+                    question.Mark = Int32.Parse(questionBody[1]);
                 }
-                _quizRepository.Add(answer);
+                if (questionBody[2] != null)
+                {
+                    question.ErrorMargin = double.Parse(questionBody[2]);
+                }
+                if (questionBody[3] != null)
+                {
+                    question.NegativeMark = double.Parse(questionBody[3]);
+                }
+
+                _quizRepository.Add(question);
+
+                for (int i = 0; i < answers.Count; i++)
+                {
+                    Answer answer = new Answer()
+                    {
+                        QuestionAnswer = answers[i],
+                        QuestionId = question.Id,
+                    };
+                    if (answersCheck[i].Equals("true"))
+                    {
+                        answer.isCorrect = true;
+                    }
+                    _quizRepository.Add(answer);
+                }
             }
 
             var quizViewModel = await _quizParserService.GenerateQuizViewModel(Int32.Parse(questionBody[4]));

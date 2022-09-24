@@ -15,6 +15,10 @@ namespace Quizard.Repository
             _httpContextAccessor = httpContextAccessor;
         }
 
+        /// <summary>
+        /// LINQ retrieves logged in teacher quizzes 
+        /// </summary>
+        /// <returns>List of user quizzes</returns>
         public async Task<List<Quiz>> GetAllTeacherQuizzes()
         {
             var currentUser = _httpContextAccessor.HttpContext?.User.GetUserId();
@@ -22,6 +26,10 @@ namespace Quizard.Repository
             return userQuizes.ToList();
         }
 
+        /// <summary>
+        /// LINQ retrieves logged in student quizzes
+        /// </summary>
+        /// <returns>List of user quizzes</returns>
         public async Task<List<Quiz>> GetAllStudentQuizzes()
         {
             var currentUser = _httpContextAccessor.HttpContext?.User.GetUserId();

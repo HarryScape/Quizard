@@ -16,88 +16,149 @@ namespace Quizard.Repository
             _context = context;
         }
 
-        // Join between all three tables
-        //public async Task<Quiz> GetFullQuizById(int id)
-        //{
-        //    return await _context.Quizzes
-        //        .Include(i => i.QuizQuestions)
-        //        .ThenInclude(j => j.QuestionAnswers)
-        //        .FirstOrDefaultAsync(i => i.Id == id);
-        //}
 
-        // Get Quiz
+        /// <summary>
+        /// LINQ retrieves all quizzes for Admin user
+        /// </summary>
+        /// <returns>List of quizzes</returns>
         public async Task<IEnumerable<Quiz>> GetAll()
         {
             return await _context.Quizzes.ToListAsync();
         }
+
+
+        /// <summary>
+        /// LINQ retrieves specific quiz by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Quiz object</returns>
         public async Task<Quiz> GetQuizById(int id)
         {
             return await _context.Quizzes.FirstOrDefaultAsync(i => i.Id == id);
         }
 
 
-        // Get Sections
+        /// <summary>
+        /// Get quiz sections that belong to a quiz
+        /// </summary>
+        /// <param name="Quizid"></param>
+        /// <returns>List of sections</returns>
         public async Task<IEnumerable<Section>> GetQuizSections(int Quizid)
         {
             return await _context.Sections.Where(c => c.Quiz.Id.Equals(Quizid)).ToListAsync();
         }
+
+
+        /// <summary>
+        /// LINQ retrieves a section by its Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Section object</returns>
         public async Task<Section> GetSectionById(int id)
         {
             return await _context.Sections.FirstOrDefaultAsync(i => i.Id == id);
         }
 
 
-        // Get Question
+        /// <summary>
+        /// Get all questions for Admin user
+        /// </summary>
+        /// <returns>List of questions</returns>
         public async Task<IEnumerable<Question>> GetAllQuestions()
         {
             return await _context.Questions.ToListAsync();
         }
+
+
+        /// <summary>
+        /// LINQ retrieves all questions belonging to a quiz
+        /// </summary>
+        /// <param name="Quizid"></param>
+        /// <returns>List of questions</returns>
         public async Task<IEnumerable<Question>> GetQuestionByQuizID(int Quizid)
         {
-            //return await _context.Questions.Where(c => c.Quiz.Id.Equals(Quizid)).ToListAsync();
             return await _context.Questions.OrderBy(o => o.QuestionPosition).Where(i => i.SectionId == i.Section.Id).Where(j => j.Section.Quiz.Id == Quizid).ToListAsync();
         }
+
+
+        /// <summary>
+        /// LINQ retrieves questions by the section Id they belong to
+        /// </summary>
+        /// <param name="sectionId"></param>
+        /// <returns>List of questions</returns>
         public async Task<IEnumerable<Question>> GetQuestionBySectionID(int sectionId)
         {
             return await _context.Questions.Where(i => i.SectionId == sectionId).ToListAsync();
         }
+
+
+        /// <summary>
+        /// LINQ retrieves a question by it's Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Question object</returns>
         public async Task<Question> GetQuestionById(int id)
         {
             return await _context.Questions.FirstOrDefaultAsync(i => i.Id == id);
         }
+
+
+        /// <summary>
+        /// LINQ Retrieves only questions that have child question parts
+        /// </summary>
+        /// <param name="quizId"></param>
+        /// <returns>List of questions</returns>
         public async Task<IEnumerable<Question>> GetParentQuestions(int quizId)
         {
             return await _context.Questions.Where(i => i.SectionId == i.Section.Id).Where(j => j.Section.Quiz.Id == quizId).Where(i => i.ParentId == null).ToListAsync();
         }
+
+        /// <summary>
+        /// LINQ Retrieves only questions that have a parent question / case study
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>List of questions</returns>
         public async Task<IEnumerable<Question>> GetChildQuestions(int id)
         {
             return await _context.Questions.Where(i => i.ParentId == id).ToListAsync();
         }
 
 
-
-        // Get Answer
+        /// <summary>
+        /// LINQ retrieves all answers for admin user
+        /// </summary>
+        /// <returns>List of answers</returns>
         public async Task<IEnumerable<Answer>> GetAllAnswers()
         {
             return await _context.Answers.ToListAsync();
         }
-        public async Task<IEnumerable<Answer>> GetSpecificAnswers(int QuizId)
+
+
+        /// <summary>
+        /// LINQ retrieves answers belonging to a quiz
+        /// </summary>
+        /// <param name="quizId"></param>
+        /// <returns>List of answers</returns>
+        public async Task<IEnumerable<Answer>> GetSpecificAnswers(int quizId)
         {
-            //return await _context.Answers.Where(i => i.QuestionId == i.Question.Id).Where(j => j.Question.QuizId == QuizId).ToListAsync();
             return await _context.Answers.Where(i => i.QuestionId == i.Question.Id)
                 .Where(j => j.Question.SectionId == j.Question.Section.Id)
-                .Where(c => c.Question.Section.QuizId == QuizId).ToListAsync();
+                .Where(c => c.Question.Section.QuizId == quizId).ToListAsync();
         }
+
+
+        /// <summary>
+        /// LINQ retrieves answers belonging to a specific question
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>List of answers</returns>
         public async Task<IEnumerable<Answer>> GetAnswersByQuestion(int id)
         {
             return await _context.Answers.Where(i => i.QuestionId == id).ToListAsync();
         }
 
 
-
-
-        // CRUD
-
+        // CRUD operations
         public bool Add(Quiz quiz)
         {
             _context.Add(quiz);
@@ -155,9 +216,6 @@ namespace Quizard.Repository
             return Save();
         }
 
-
-
-
         public bool DeleteAns(IEnumerable<Answer> answers)
         {
             if (answers != null)
@@ -169,6 +227,7 @@ namespace Quizard.Repository
             }
             return Save();
         }
+
         public bool DeleteQuestions(IEnumerable<Question> questions)
         {
             if (questions != null)
@@ -180,6 +239,7 @@ namespace Quizard.Repository
             }
             return Save();
         }
+
         public bool DeleteSections(IEnumerable<Section> sections)
         {
             if (sections != null)
@@ -191,9 +251,6 @@ namespace Quizard.Repository
             }
             return Save();
         }
-
-
-
 
         public bool Save()
         {

@@ -37,6 +37,7 @@ namespace Quizard.Controllers
             return View(moduleViewModel);
         }
 
+        // Generate Modal popup
         [HttpGet]
         public async Task<IActionResult> ShowAddModuleModal()
         {
@@ -44,22 +45,30 @@ namespace Quizard.Controllers
             return PartialView("_AddModuleModalPartial", module);
         }
 
+
+        /// <summary>
+        /// Recieves form data and creates a new module
+        /// </summary>
+        /// <param name="newModule"></param>
         [HttpPost]
         public async Task<IActionResult> AddModule(Module newModule)
         {
-            Module module = new Module()
+            if(newModule.ModuleCode != null)
             {
-                Id = newModule.Id,
-                Description = newModule.Description,
-                ModuleCode = newModule.ModuleCode,
-                ModuleLeaderId = _contextAccessor.HttpContext.User.GetUserId(),
-            };
-            _moduleRepository.Add(module);
-
+                Module module = new Module()
+                {
+                    Id = newModule.Id,
+                    Description = newModule.Description,
+                    ModuleCode = newModule.ModuleCode,
+                    ModuleLeaderId = _contextAccessor.HttpContext.User.GetUserId(),
+                };
+                _moduleRepository.Add(module);
+            }
+           
             return RedirectToAction("Index", "Module");
         }
 
-
+        // Generate Modal popup
         [HttpGet]
         public async Task<IActionResult> ShowEditModuleModal(int id)
         {
@@ -67,22 +76,29 @@ namespace Quizard.Controllers
             return PartialView("_EditModuleModalPartial", module);
         }
 
+
+        /// <summary>
+        /// Edits an existing module
+        /// </summary>
+        /// <param name="updatedModule"></param>
         [ActionName("EditModule")]
         [HttpPost]
         public async Task<IActionResult> EditModule(Module updatedModule)
         {
-            Module module = await _moduleRepository.GetModuleById(updatedModule.Id);
-            module.Description = updatedModule.Description;
-            module.ModuleCode = updatedModule.ModuleCode;
-            _moduleRepository.Update(module);
+            if(updatedModule.ModuleCode != null)
+            {
+                Module module = await _moduleRepository.GetModuleById(updatedModule.Id);
+                module.Description = updatedModule.Description;
+                module.ModuleCode = updatedModule.ModuleCode;
+                _moduleRepository.Update(module);
+            }
 
             return RedirectToAction("Index", "Module");
         }
 
+
         public async Task<IActionResult> DeleteModule(int id)
         {
-            // REMEMBER TO UNENROLL STUDENTS,
-
             Module module = await _moduleRepository.GetModuleById(id);
             var userQuizes = await _dashboardRepository.GetAllTeacherQuizzes();
 
@@ -97,7 +113,7 @@ namespace Quizard.Controllers
         }
 
 
-
+        // Generate Modal Popup
         [HttpGet]
         public async Task<IActionResult> ShowEnrollModuleModal(int id)
         {
@@ -115,6 +131,11 @@ namespace Quizard.Controllers
         }
 
 
+        /// <summary>
+        /// Enrolls a list of students into a module so they can take deployed quizzes belonging to the module
+        /// </summary>
+        /// <param name="studentForm"></param>
+        /// <param name="moduleId"></param>
         [ActionName("EnrollStudents")]
         [HttpPost]
         public async Task<IActionResult> EnrollStudents(string studentForm, int moduleId)
@@ -144,7 +165,7 @@ namespace Quizard.Controllers
             return RedirectToAction("Index", "Module");
         }
 
-
+        // Generate Modal Popup
         [HttpGet]
         public async Task<IActionResult> ShowRemoveStudentModal(int id)
         {
@@ -162,11 +183,15 @@ namespace Quizard.Controllers
         }
 
 
+        /// <summary>
+        /// Removes a student from a module, preventing them seeing module quizzes in their dashboard
+        /// </summary>
+        /// <param name="studentEmail"></param>
+        /// <param name="moduleId"></param>
         [ActionName("RemoveStudents")]
         [HttpPost]
         public async Task<IActionResult> RemoveStudents(string studentEmail, int moduleId)
         {
-            // table to remove
             var user = await _userManager.FindByEmailAsync(studentEmail);
             if (user != null)
             {
@@ -186,7 +211,6 @@ namespace Quizard.Controllers
             }
 
             return PartialView("_RemoveStudentsModalPartial", enrollmentViewModel);
-            //return RedirectToAction("Index", "Module");
         }
 
     }

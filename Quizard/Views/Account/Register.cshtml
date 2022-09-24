@@ -30,11 +30,16 @@
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
+
+                    <br />
+
                     <div class="form-group">
                         <label asp-for="EmailAddress" class="control-label"></label>
                         <input asp-for="EmailAddress" class="form-control" />
                         <span asp-validation-for="EmailAddress" class="text-danger"></span>
                     </div>
+
+                    <br />
 
                     <div class="pw-instructions">
                         <p>Passwords must contain:</p>
@@ -48,21 +53,41 @@
 
                     <div class="form-group">
                         <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control" />
+                        <input asp-for="Password" autocomplete="off" class="form-control" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="ConfirmPassword" class="control-label"></label>
-                        <input asp-for="ConfirmPassword" class="form-control" />
+                        <input asp-for="ConfirmPassword" autocomplete="off" class="form-control" />
                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     </div>
 
+                    <br />
+
+                    @*<div class="form-group">
+                    <label asp-for="RoleSelected" class="col-md-2"></label>
+                    <div class="col-md-10">
+                    <select asp-for="RoleSelected" asp-items="@Model.RoleList" class="form-control">
+                    <option disabled selected>--Select Role--</option>
+                    </select>
+                    </div>
+                    </div>*@
+
                     <div class="form-group">
-                        <label asp-for="RoleSelected" class="col-md-2"></label>
-                        <div class="col-md-10">
-                            <select asp-for="RoleSelected" asp-items="@Model.RoleList" class="form-control">
-                                <option disabled selected>--Select Role--</option>
-                            </select>
+                        <label asp-for="RoleSelected" class="col-md-2">* I'm a:</label>
+
+                        <div class="radio-toggle-container">
+                            <input class="radio-toggle-input" asp-for="RoleSelected"
+                                   type="radio" id="option_1" value="teacher" checked />
+                            <label class="radio-toggle-label" for="option_1" asp-for="RoleSelected">
+                                Teacher
+                            </label>
+
+                            <input class="radio-toggle-input"asp-for="RoleSelected"
+                                   type="radio" id="option_2" value="student" />
+                            <label class="radio-toggle-label" for="option_2" asp-for="RoleSelected">
+                                Student
+                            </label>
                         </div>
                     </div>
 
@@ -80,9 +105,11 @@
     </div>
 </div>
 
+<br />
 @*<div class="form-group" id="role-menu">
     <input asp-for="RoleSelected" asp-items="@Model.RoleList" id="toggle-on" class="toggle toggle-left" name="toggle" value="Teacher" type="radio" checked>
     <label asp-for="RoleSelected" for="toggle-on" class="btn">Teacher</label>
     <input asp-for="RoleSelected" asp-items="@Model.RoleList" id="toggle-off" class="toggle toggle-right" name="toggle" value="Student" type="radio">
     <label asp-for="RoleSelected" for="toggle-off" class="btn">Student</label>
 </div>*@
+
