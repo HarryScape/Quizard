@@ -925,3 +925,14 @@ ol {
     #button-top:hover {
         background-color: #5e5dcd;
     }
+
+.case-title {
+    display: grid;
+    place-items: center;
+    align-content: center;
+}
+
+.case-image {
+    /*max-width: 600px;*/
+    width: 100px;
+}

@@ -12,13 +12,16 @@ namespace Quizard.Controllers
         private readonly IQuizRepository _quizRepository;
         private readonly IQuizParserService _quizParserService;
         private readonly ITakeQuizRepository _takeQuizRepository;
+        private readonly IImageService _imageService;
 
 
-        public QuizController(IQuizRepository quizRepository, IQuizParserService quizParserService, ITakeQuizRepository takeQuizRepository)
+
+        public QuizController(IQuizRepository quizRepository, IQuizParserService quizParserService, ITakeQuizRepository takeQuizRepository, IImageService imageService)
         {
             _quizRepository = quizRepository;
             _quizParserService = quizParserService;
             _takeQuizRepository = takeQuizRepository;
+            _imageService = imageService;
         }
 
 
@@ -291,7 +294,11 @@ namespace Quizard.Controllers
         public async Task<IActionResult> ShowEditModal(int id)
         {
             Question question = await _quizRepository.GetQuestionById(id);
-            return PartialView("_EditModalPartial", question);
+            UpdateQuestionViewModel update = new UpdateQuestionViewModel();
+            update.Question = question;
+            //return PartialView("_EditModalPartial", question);
+            return PartialView("_EditModalPartial", update);
+
         }
 
 
@@ -300,16 +307,49 @@ namespace Quizard.Controllers
         /// </summary>
         /// <param name="updatedQuestion"></param>
         [HttpPost]
-        public async Task<IActionResult> UpdateQuestion(Question updatedQuestion)
+        //public async Task<IActionResult> UpdateQuestion(Question updatedQuestion, IFormFile? file)
+        //{
+        //    Question question = await _quizRepository.GetQuestionById(updatedQuestion.Id);
+        //    question.QuestionTitle = updatedQuestion.QuestionTitle;
+        //    question.Mark = updatedQuestion.Mark;
+        //    question.NegativeMark = updatedQuestion.NegativeMark;
+        //    question.ErrorMargin = updatedQuestion.ErrorMargin;
+        //    var section = await _quizRepository.GetSectionById(question.SectionId);
+
+        //    //if (updatedQuestion.QuestionType == QuestionType.GROUP)
+        //    //{
+        //    //    if (file != null)
+        //    //    {
+        //    //        var result = await _imageService.AddImage(file);
+        //    //        //question.contentUrl = result.Url.ToString();
+        //    //    }
+        //    //}
+
+        //    _quizRepository.Update(question);
+
+        //    var quizViewModel = await _quizParserService.GenerateQuizViewModel(section.QuizId);
+        //    return PartialView("_Section", quizViewModel);
+        //}
+        public async Task<IActionResult> UpdateQuestion(UpdateQuestionViewModel updatedQuestion)
         {
-            Question question = await _quizRepository.GetQuestionById(updatedQuestion.Id);
-            question.QuestionTitle = updatedQuestion.QuestionTitle;
-            question.Mark = updatedQuestion.Mark;
-            question.NegativeMark = updatedQuestion.NegativeMark;
-            question.ErrorMargin = updatedQuestion.ErrorMargin;
+            Question question = await _quizRepository.GetQuestionById(updatedQuestion.Question.Id);
+            question.QuestionTitle = updatedQuestion.Question.QuestionTitle;
+            question.Mark = updatedQuestion.Question.Mark;
+            question.NegativeMark = updatedQuestion.Question.NegativeMark;
+            question.ErrorMargin = updatedQuestion.Question.ErrorMargin;
             var section = await _quizRepository.GetSectionById(question.SectionId);
 
-            _quizRepository.Update(question);
+            if (question.QuestionType == QuestionType.GROUP)
+            {
+                if (updatedQuestion.file.Length > 0)
+                {
+                    var result = await _imageService.AddImage(updatedQuestion.file);
+                    //question.contentUrl = result.Url.ToString();
+                    string yes = result.Url.ToString();
+                }
+            }
+
+            //_quizRepository.Update(question);
 
             var quizViewModel = await _quizParserService.GenerateQuizViewModel(section.QuizId);
             return PartialView("_Section", quizViewModel);
