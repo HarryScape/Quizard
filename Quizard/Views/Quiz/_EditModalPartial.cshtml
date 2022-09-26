@@ -39,7 +39,14 @@
                     @if (Model.Question.QuestionType == Quizard.Data.Enum.QuestionType.GROUP)
                     {
                         <br />
-                        <div class="form-group">
+                        @if(Model.Question.ContentUrl != null)
+                        {
+                            <img class="edit-case-image" src="@Model.Question.ContentUrl" alt="Case Study Image">
+                            <button type="button" class="button--save" onclick="location.href='@Url.Action("DeleteImage", "Quiz", new { questionId = @Model.Question.Id })'">Delete Image</button>
+                        }
+                        else
+                        {
+                           <div class="form-group">
                             <div class="upload-container">
                                 <label for="question-text" class="col-form-label">Upload supplimentary Image:</label>
                                 <div class="mb-3 mt-3">
@@ -52,7 +59,8 @@
                                     @*</form>*@
                                 </div>
                             </div>
-                        </div>
+                        </div> 
+                        }
                     }
 
                     <br />

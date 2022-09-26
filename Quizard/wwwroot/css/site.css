@@ -959,3 +959,14 @@ ol {
     cursor: -moz-zoom-out;
     cursor: zoom-out;
 }
+
+
+.edit-case-image{
+    width: 150px;
+    height: auto;
+}
+
+.take-image{
+    width: 600px;
+    height: auto;
+}

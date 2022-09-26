@@ -170,6 +170,10 @@ namespace Quizard.Controllers
                         _takeQuizRepository.Update(response);
                     }
                 }
+                if (!string.IsNullOrEmpty(question.ContentUrl))
+                {
+                    _ = _imageService.DeleteImage(question.ContentUrl);
+                }
             }
 
             IEnumerable<UserQuizAttempt> attempts = await _takeQuizRepository.GetAttemptsByQuizId(id);
@@ -226,6 +230,10 @@ namespace Quizard.Controllers
                     {
                         _quizRepository.DeleteAns(answers);
                     }
+                    if (!string.IsNullOrEmpty(item.ContentUrl))
+                    {
+                        _ = _imageService.DeleteImage(item.ContentUrl);
+                    }
                 }
                 _quizRepository.DeleteQuestions(questions);
             }
@@ -247,6 +255,11 @@ namespace Quizard.Controllers
         {
             Question question = await _quizRepository.GetQuestionById(questionId);
             var children = await _quizRepository.GetChildQuestions(questionId);
+
+            if (!string.IsNullOrEmpty(question.ContentUrl))
+            {
+                _ = _imageService.DeleteImage(question.ContentUrl);
+            }
 
             IEnumerable<UserQuestionResponse> responses = await _takeQuizRepository.GetSingleResponseByQuestionId(question.Id);
             if(responses != null)
@@ -355,6 +368,18 @@ namespace Quizard.Controllers
             _quizRepository.Update(question);
 
             //var quizViewModel = await _quizParserService.GenerateQuizViewModel(section.QuizId);
+            return RedirectToAction("Create", new { quizId = section.QuizId });
+        }
+
+        public async Task<IActionResult> DeleteImage(int questionId)
+        {
+            Question question = await _quizRepository.GetQuestionById(questionId);
+            var section = await _quizRepository.GetSectionById(question.SectionId);
+
+            await _imageService.DeleteImage(question.ContentUrl);
+            question.ContentUrl = null;
+            _quizRepository.Update(question);
+
             return RedirectToAction("Create", new { quizId = section.QuizId });
         }
 
