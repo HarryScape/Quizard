@@ -766,7 +766,17 @@ $(function () {
 
 //})
 
+
+// About Us top button
 function ScrollTop() {
     document.body.scrollTop = 0; // Safari
     document.documentElement.scrollTop = 0; // Chrome, Firefox, IE, Edge, Opera
 }
+
+
+// image zoom
+$(document).ready(function () {
+    $('.case-image').click(function () {
+        $(this).toggleClass('case-image-zoom');
+    });
+});

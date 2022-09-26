@@ -55,11 +55,10 @@
                     {
                         <div class="case-title">
                             <strong>@question.QuestionTitle</strong>
-
-                            @*<iframe width="560" height="345" src="https://www.youtube.com/embed/w9rCP3JouAM"></iframe>*@
-                            @*<img src="https://images.squarespace-cdn.com/content/v1/54e310f0e4b0f4a6ba3ac899/1530529694750-C7JA6YJDT8OQYURMH4MR/The+Twilight+Zone.jpg" alt="Test Image Embed">*@
-                            @*<img src="@question.contentUrl" alt="Test Image Embed">*@
-                            <img class="case-image" src="http://res.cloudinary.com/duqc0phlv/image/upload/v1664126477/fdj8sfuzvcpccctumohj.jpg" alt="Test Image Embed">
+                            @if(question.ContentUrl != null)
+                            {
+                                <img class="case-image" src="@question.ContentUrl" alt="Test Image Embed">
+                            }
                         </div>
                     }
                     else
@@ -67,7 +66,6 @@
                         @question.QuestionTitle
                     }
 
-                    @*@question.QuestionTitle*@
 
                     <div class="panel">
                         <ol>

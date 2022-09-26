@@ -24,6 +24,10 @@
                 @if (question.QuestionType == Quizard.Data.Enum.QuestionType.GROUP)
                 {
                     <strong>Question @i: @question.QuestionTitle</strong>
+                    @if (question.ContentUrl != null)
+                    {
+                        <img class="case-image" src="@question.ContentUrl" alt="Test Image Embed">
+                    }
                 }
                 else
                 {
@@ -48,7 +52,7 @@
                     <div class="form-group">
                         @if (exists)
                         {
-                           <input for="@question.QuestionAnswers" type="text" class="form-control" value="@Model.QuestionResponses.First(i => i.QuestionId == question.Id).AnswerResponse" autocomplete="off" question="@question.Id">
+                            <input for="@question.QuestionAnswers" type="text" class="form-control" value="@Model.QuestionResponses.First(i => i.QuestionId == question.Id).AnswerResponse" autocomplete="off" question="@question.Id">
                         }
                         else
                         {
@@ -66,13 +70,13 @@
                             <div id="custom-add-box">
                                 <div id="choice-container">
                                     <label class="check-container">
-                                        @if(userChecked == true)
+                                        @if (userChecked == true)
                                         {
                                             <input value="1" type="checkbox" id="check-single" no="@ans.Id" checked>
                                         }
                                         else
                                         {
-                                             <input value="0" type="checkbox" id="check-single" no="@ans.Id">
+                                            <input value="0" type="checkbox" id="check-single" no="@ans.Id">
                                         }
                                         @*@Html.CheckBoxFor(model => model.Checked, new { id="check-single"})*@
                                         <div class="checkmark" id="check-single"></div>
@@ -95,13 +99,13 @@
                                     <label class="check-container">
                                         @*<input value="1" type="checkbox">*@
                                         @*@Html.CheckBoxFor(model => model.Checked, new { id="ansCheck"})*@
-                                        @if(userChecked == true)
+                                        @if (userChecked == true)
                                         {
                                             <input value="1" type="checkbox" no="@ans.Id" checked>
                                         }
                                         else
                                         {
-                                             <input value="0" type="checkbox" no="@ans.Id">
+                                            <input value="0" type="checkbox" no="@ans.Id">
                                         }
                                         <div class="checkmark"></div>
                                     </label>

@@ -306,7 +306,7 @@ namespace Quizard.Controllers
         /// Updates a questions attributes
         /// </summary>
         /// <param name="updatedQuestion"></param>
-        [HttpPost]
+        //[HttpPost]
         //public async Task<IActionResult> UpdateQuestion(Question updatedQuestion, IFormFile? file)
         //{
         //    Question question = await _quizRepository.GetQuestionById(updatedQuestion.Id);
@@ -333,26 +333,29 @@ namespace Quizard.Controllers
         public async Task<IActionResult> UpdateQuestion(UpdateQuestionViewModel updatedQuestion)
         {
             Question question = await _quizRepository.GetQuestionById(updatedQuestion.Question.Id);
-            question.QuestionTitle = updatedQuestion.Question.QuestionTitle;
-            question.Mark = updatedQuestion.Question.Mark;
-            question.NegativeMark = updatedQuestion.Question.NegativeMark;
-            question.ErrorMargin = updatedQuestion.Question.ErrorMargin;
             var section = await _quizRepository.GetSectionById(question.SectionId);
 
             if (question.QuestionType == QuestionType.GROUP)
             {
-                if (updatedQuestion.file.Length > 0)
+                if (updatedQuestion.file != null && updatedQuestion.file.Length > 0)
                 {
                     var result = await _imageService.AddImage(updatedQuestion.file);
-                    //question.contentUrl = result.Url.ToString();
-                    string yes = result.Url.ToString();
+                    question.ContentUrl = result.Url.ToString();
                 }
+                question.QuestionTitle = updatedQuestion.Question.QuestionTitle;
+            }
+            else
+            {
+                question.QuestionTitle = updatedQuestion.Question.QuestionTitle;
+                question.Mark = updatedQuestion.Question.Mark;
+                question.NegativeMark = updatedQuestion.Question.NegativeMark;
+                question.ErrorMargin = updatedQuestion.Question.ErrorMargin;
             }
 
-            //_quizRepository.Update(question);
+            _quizRepository.Update(question);
 
-            var quizViewModel = await _quizParserService.GenerateQuizViewModel(section.QuizId);
-            return PartialView("_Section", quizViewModel);
+            //var quizViewModel = await _quizParserService.GenerateQuizViewModel(section.QuizId);
+            return RedirectToAction("Create", new { quizId = section.QuizId });
         }
 
 
