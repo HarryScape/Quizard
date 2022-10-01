@@ -318,31 +318,8 @@ namespace Quizard.Controllers
         /// <summary>
         /// Updates a questions attributes
         /// </summary>
-        /// <param name="updatedQuestion"></param>
-        //[HttpPost]
-        //public async Task<IActionResult> UpdateQuestion(Question updatedQuestion, IFormFile? file)
-        //{
-        //    Question question = await _quizRepository.GetQuestionById(updatedQuestion.Id);
-        //    question.QuestionTitle = updatedQuestion.QuestionTitle;
-        //    question.Mark = updatedQuestion.Mark;
-        //    question.NegativeMark = updatedQuestion.NegativeMark;
-        //    question.ErrorMargin = updatedQuestion.ErrorMargin;
-        //    var section = await _quizRepository.GetSectionById(question.SectionId);
-
-        //    //if (updatedQuestion.QuestionType == QuestionType.GROUP)
-        //    //{
-        //    //    if (file != null)
-        //    //    {
-        //    //        var result = await _imageService.AddImage(file);
-        //    //        //question.contentUrl = result.Url.ToString();
-        //    //    }
-        //    //}
-
-        //    _quizRepository.Update(question);
-
-        //    var quizViewModel = await _quizParserService.GenerateQuizViewModel(section.QuizId);
-        //    return PartialView("_Section", quizViewModel);
-        //}
+        /// <param name="updatedQuestion"></param> 
+        [HttpPost]
         public async Task<IActionResult> UpdateQuestion(UpdateQuestionViewModel updatedQuestion)
         {
             Question question = await _quizRepository.GetQuestionById(updatedQuestion.Question.Id);
@@ -367,10 +344,14 @@ namespace Quizard.Controllers
 
             _quizRepository.Update(question);
 
-            //var quizViewModel = await _quizParserService.GenerateQuizViewModel(section.QuizId);
             return RedirectToAction("Create", new { quizId = section.QuizId });
         }
 
+
+        /// <summary>
+        /// Delete an image from a case study
+        /// </summary>
+        /// <param name="questionId"></param>
         public async Task<IActionResult> DeleteImage(int questionId)
         {
             Question question = await _quizRepository.GetQuestionById(questionId);

@@ -159,6 +159,7 @@ $('#containers .popup, #containers .object ').droppable({
         ui.draggable.detach().appendTo($(this));
     }
 });
+
 // Adds attributes to move objects
 $('#containers .popup').sortable();
 $('#containers .frame').droppable({
@@ -171,9 +172,16 @@ $('#containers .frame').droppable({
         $(ui.draggable).removeClass("insidePopup");
     }
 });
+
 $('#containers .object').draggable({
     helper: 'clone',
     containment: "document"
+});
+
+
+// Autosave before editting a question
+$('a').click(function (event) {
+    SavePosition();
 });
 
 
