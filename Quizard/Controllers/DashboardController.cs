@@ -155,6 +155,7 @@ namespace Quizard.Controllers
                 Quiz quiz = await _quizRepository.GetQuizById(updatedQuiz.Id);
                 quiz.QuizName = updatedQuiz.QuizName;
                 quiz.TimeLimit = updatedQuiz.TimeLimit;
+                quiz.ExtraTime = updatedQuiz.ExtraTime;
                 quiz.Shuffled = updatedQuiz.Shuffled;
                 quiz.Deployed = updatedQuiz.Deployed;
                 //quiz.ModuleId = updatedQuiz.ModuleId;
