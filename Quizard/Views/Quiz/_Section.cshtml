@@ -29,7 +29,6 @@
                     </svg>
                 </a>
 
-
                 <h3> @Qsection.SectionName </h3>
             </div>
 
@@ -53,17 +52,19 @@
 
                     @if (question.QuestionType == Quizard.Data.Enum.QuestionType.GROUP)
                     {
-                        <strong>@question.QuestionTitle</strong>
-
-                        @*<iframe width="560" height="345" src="https://www.youtube.com/embed/w9rCP3JouAM"></iframe>*@
-                    @*<img src="https://images.squarespace-cdn.com/content/v1/54e310f0e4b0f4a6ba3ac899/1530529694750-C7JA6YJDT8OQYURMH4MR/The+Twilight+Zone.jpg" alt="Test Image Embed">*@
+                        <div class="case-title">
+                            <strong>@question.QuestionTitle</strong>
+                            @if(question.ContentUrl != null)
+                            {
+                                <img class="case-image" src="@question.ContentUrl" alt="Case Study Image">
+                            }
+                        </div>
                     }
                     else
                     {
                         @question.QuestionTitle
                     }
 
-                    @*@question.QuestionTitle*@
 
                     <div class="panel">
                         <ol>

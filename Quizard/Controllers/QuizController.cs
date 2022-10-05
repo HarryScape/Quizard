@@ -12,13 +12,16 @@ namespace Quizard.Controllers
         private readonly IQuizRepository _quizRepository;
         private readonly IQuizParserService _quizParserService;
         private readonly ITakeQuizRepository _takeQuizRepository;
+        private readonly IImageService _imageService;
 
 
-        public QuizController(IQuizRepository quizRepository, IQuizParserService quizParserService, ITakeQuizRepository takeQuizRepository)
+
+        public QuizController(IQuizRepository quizRepository, IQuizParserService quizParserService, ITakeQuizRepository takeQuizRepository, IImageService imageService)
         {
             _quizRepository = quizRepository;
             _quizParserService = quizParserService;
             _takeQuizRepository = takeQuizRepository;
+            _imageService = imageService;
         }
 
 
@@ -167,6 +170,10 @@ namespace Quizard.Controllers
                         _takeQuizRepository.Update(response);
                     }
                 }
+                if (!string.IsNullOrEmpty(question.ContentUrl))
+                {
+                    _ = _imageService.DeleteImage(question.ContentUrl);
+                }
             }
 
             IEnumerable<UserQuizAttempt> attempts = await _takeQuizRepository.GetAttemptsByQuizId(id);
@@ -223,6 +230,10 @@ namespace Quizard.Controllers
                     {
                         _quizRepository.DeleteAns(answers);
                     }
+                    if (!string.IsNullOrEmpty(item.ContentUrl))
+                    {
+                        _ = _imageService.DeleteImage(item.ContentUrl);
+                    }
                 }
                 _quizRepository.DeleteQuestions(questions);
             }
@@ -244,6 +255,11 @@ namespace Quizard.Controllers
         {
             Question question = await _quizRepository.GetQuestionById(questionId);
             var children = await _quizRepository.GetChildQuestions(questionId);
+
+            if (!string.IsNullOrEmpty(question.ContentUrl))
+            {
+                _ = _imageService.DeleteImage(question.ContentUrl);
+            }
 
             IEnumerable<UserQuestionResponse> responses = await _takeQuizRepository.GetSingleResponseByQuestionId(question.Id);
             if(responses != null)
@@ -291,28 +307,61 @@ namespace Quizard.Controllers
         public async Task<IActionResult> ShowEditModal(int id)
         {
             Question question = await _quizRepository.GetQuestionById(id);
-            return PartialView("_EditModalPartial", question);
+            UpdateQuestionViewModel update = new UpdateQuestionViewModel();
+            update.Question = question;
+            //return PartialView("_EditModalPartial", question);
+            return PartialView("_EditModalPartial", update);
+
         }
 
 
         /// <summary>
         /// Updates a questions attributes
         /// </summary>
-        /// <param name="updatedQuestion"></param>
+        /// <param name="updatedQuestion"></param> 
         [HttpPost]
-        public async Task<IActionResult> UpdateQuestion(Question updatedQuestion)
+        public async Task<IActionResult> UpdateQuestion(UpdateQuestionViewModel updatedQuestion)
         {
-            Question question = await _quizRepository.GetQuestionById(updatedQuestion.Id);
-            question.QuestionTitle = updatedQuestion.QuestionTitle;
-            question.Mark = updatedQuestion.Mark;
-            question.NegativeMark = updatedQuestion.NegativeMark;
-            question.ErrorMargin = updatedQuestion.ErrorMargin;
+            Question question = await _quizRepository.GetQuestionById(updatedQuestion.Question.Id);
             var section = await _quizRepository.GetSectionById(question.SectionId);
+
+            if (question.QuestionType == QuestionType.GROUP)
+            {
+                if (updatedQuestion.file != null && updatedQuestion.file.Length > 0)
+                {
+                    var result = await _imageService.AddImage(updatedQuestion.file);
+                    question.ContentUrl = result.Url.ToString();
+                }
+                question.QuestionTitle = updatedQuestion.Question.QuestionTitle;
+            }
+            else
+            {
+                question.QuestionTitle = updatedQuestion.Question.QuestionTitle;
+                question.Mark = updatedQuestion.Question.Mark;
+                question.NegativeMark = updatedQuestion.Question.NegativeMark;
+                question.ErrorMargin = updatedQuestion.Question.ErrorMargin;
+            }
 
             _quizRepository.Update(question);
 
-            var quizViewModel = await _quizParserService.GenerateQuizViewModel(section.QuizId);
-            return PartialView("_Section", quizViewModel);
+            return RedirectToAction("Create", new { quizId = section.QuizId });
+        }
+
+
+        /// <summary>
+        /// Delete an image from a case study
+        /// </summary>
+        /// <param name="questionId"></param>
+        public async Task<IActionResult> DeleteImage(int questionId)
+        {
+            Question question = await _quizRepository.GetQuestionById(questionId);
+            var section = await _quizRepository.GetSectionById(question.SectionId);
+
+            await _imageService.DeleteImage(question.ContentUrl);
+            question.ContentUrl = null;
+            _quizRepository.Update(question);
+
+            return RedirectToAction("Create", new { quizId = section.QuizId });
         }
 
 

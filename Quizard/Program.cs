@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Quizard.Data;
+using Quizard.Helpers;
 using Quizard.Interfaces;
 using Quizard.Models;
 using Quizard.Repository;
@@ -29,6 +31,10 @@ builder.Services.AddMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 builder.Services.AddHttpClient();
+var cloudinaryConfig = builder.Configuration.GetSection("CloudinaryAcc").Get<CloudinaryConfig>();
+////cloudinaryConfig.CloudName = builder.Configuration["CloudinaryAcc:CloudName"];
+////builder.Services.AddSingleton<CloudinaryConfig>(cloudinaryConfig);
+builder.Services.AddScoped<IImageService, ImageService>();
 
 var app = builder.Build();
 

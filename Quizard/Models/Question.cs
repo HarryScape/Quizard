@@ -23,6 +23,7 @@ namespace Quizard.Models
         public double? NegativeMark { get; set; }
         public double? ErrorMargin { get; set; }
         public ICollection<UserQuestionResponse>? QuestionResponses { get; set; }
+        public string? ContentUrl { get; set; }
 
     }
 }

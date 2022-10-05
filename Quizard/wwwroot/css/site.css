@@ -925,3 +925,48 @@ ol {
     #button-top:hover {
         background-color: #5e5dcd;
     }
+
+.case-title {
+    display: grid;
+    place-items: center;
+    align-content: center;
+}
+
+
+.case-image {
+    object-fit: cover;
+    width: 600px;
+    height: 50px;
+    margin-top: 15px;
+    background-position: 0px -200px;
+    background-size: 1024px 1024px;
+    transition: width 0.5s, height 0.5s, background-position 0.5s, margin 0.5s;
+    -moz-transition: width 0.5s, height 0.5s, background-position 0.5s, margin 0.5s;
+    -webkit-transition: width 0.5s, height 0.5s, background-position 0.5s, margin 0.5s;
+    -o-transition: width 0.5s, height 0.5s, background-position 0.5s, margin 0.5s;
+    cursor: -moz-zoom-in;
+    cursor: zoom-in;
+}
+
+    .case-image:hover {
+        -webkit-filter: brightness(50%);
+    }
+
+.case-image-zoom {
+    width: 600px;
+    height: auto;
+    background-position: 0px 0px;
+    cursor: -moz-zoom-out;
+    cursor: zoom-out;
+}
+
+
+.edit-case-image{
+    width: 150px;
+    height: auto;
+}
+
+.take-image{
+    width: 600px;
+    height: auto;
+}
