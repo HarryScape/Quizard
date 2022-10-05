@@ -78,10 +78,15 @@ h3 {
     color: black;
 }*/
 
-
-.hi-pencil {
+.dash-icons {
     width: 1.5em;
     height: 1.5em;
+}
+
+
+.hi-pencil {
+    width: 2em;
+    height: 2em;
     display: inline-block;
     align-self: center;
     vertical-align: middle;
@@ -96,8 +101,8 @@ h3 {
 }
 
 .hi-trash {
-    width: 1.5em;
-    height: 1.5em;
+    width: 2em;
+    height: 2em;
     display: inline-block;
     align-self: center;
     vertical-align: middle;
@@ -105,15 +110,15 @@ h3 {
     padding: 0;
     border: none;
     position: absolute;
-    right: 30px;
+    right: 35px;
     background: transparent;
     cursor: pointer;
     color: #5e5dcd;
 }
 
 .hi-plus-circle {
-    width: 1.5em;
-    height: 1.5em;
+    width: 2em;
+    height: 2em;
     display: inline-block;
     align-self: center;
     vertical-align: middle;
@@ -121,7 +126,7 @@ h3 {
     padding: 0;
     border: none;
     position: absolute;
-    right: 55px;
+    right: 65px;
     background: transparent;
     cursor: pointer;
     color: #5e5dcd;
@@ -282,11 +287,15 @@ h3 {
 
 .quizName {
     text-align: center;
-    margin-bottom: 40px;
+    /*margin-bottom: 40px;*/
 }
 
 
 /*DASHBOARD*/
+
+#upload-text{
+    margin-bottom: 60px;
+}
 
 #UploadAlt {
     cursor: pointer;
@@ -310,7 +319,7 @@ h3 {
     background-color: #5e4dcd;
     min-height: 50px;
     position: absolute;
-    top: 100%;
+    bottom: 115%;
     left: 0px;
     color: #fff;
     font-size: 15px;
@@ -338,6 +347,8 @@ h3 {
     font-size: 15px;
     cursor: pointer;
     transition: background-color .3s ease-in-out;
+    margin-right: 5px;
+    margin-top: 5px;
 }
 
     .button-table:hover {
@@ -485,7 +496,7 @@ ol {
         border: 2px dotted #5e5dcd;
         /*background: linear-gradient(to left, rgba(255,255,255,0) 0%, rgb(177, 178, 250, 70%) 100%);*/
         top: -1px;
-        max-width: 90%;
+        max-width: 89%;
         margin: 10px;
         margin-left: 20px;
         cursor: pointer;
@@ -970,3 +981,5 @@ ol {
     width: 600px;
     height: auto;
 }
+
+

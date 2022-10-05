@@ -1,32 +1,62 @@
 ﻿"use strict";
 
 
-// Add section
-function AddSection() {
-    SavePosition();
-    var name = document.getElementById("AddSectionName").value;
-    var quizId = document.getElementById("HiddenQuizId").value;
+//// Add section
+//function AddSection() {
+//    SavePosition();
+//    var name = document.getElementById("AddSectionName").value;
+//    var quizId = document.getElementById("HiddenQuizId").value;
 
-    var dataPost = { sectionName: name, quizId: quizId };
+//    var dataPost = { sectionName: name, quizId: quizId };
 
-    $.ajax({
-        type: "POST",
-        data: dataPost,
-        url: "/Quiz/AddSectionDB",
-        dataType: "json",
-        success: function (response) {
-            if (response != null) {
-                console.log("Sent okay", response);
-            } else {
-                console.log("Something went wrong");
-            }
-        },
-        complete: function (response) {
-            $('.quiz-wrapper').html(response.responseText);
+//    $.ajax({
+//        type: "POST",
+//        data: dataPost,
+//        url: "/Quiz/AddSectionDB",
+//        dataType: "json",
+//        success: function (response) {
+//            if (response != null) {
+//                console.log("Sent okay", response);
+//            } else {
+//                console.log("Something went wrong");
+//            }
+//        },
+//        complete: function (response) {
+//            $('.quiz-wrapper').html(response.responseText);
+//            location.reload(true);
+//        }
+//    });
+//}
+
+// Add New Section
+$(function () {
+    var placeholder = $('#modal-zone');
+
+    $('button[data-toggle="add-section-modal"]').click(function (event) {
+        var url = $(this).data('url');
+
+        $.get(url).done(function (data) {
+            placeholder.html(data);
+            placeholder.find('.modal').modal('show');
+        })
+    })
+
+    placeholder.on('click', '[data-bs-dismiss="modal"]', function (event) {
+        placeholder.find('.modal').modal('hide');
+        $('#modal-zone').html("");
+    })
+
+    placeholder.on('click', '[data-new-section="modal"]', function (event) {
+        SavePosition();
+        var form = $(this).parents('.modal').find('form');
+        var actionUrl = form.attr('action');
+        var dataPost = form.serialize();
+
+        $.post(actionUrl, dataPost).done(function (data) {
             location.reload(true);
-        }
+        })
     });
-}
+})
 
 
 // Saves question positions

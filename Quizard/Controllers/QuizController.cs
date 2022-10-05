@@ -97,29 +97,57 @@ namespace Quizard.Controllers
             return PartialView("_Section", quizViewModel);
         }
 
-
-        /// <summary>
-        /// Adds a new section to the quiz
-        /// </summary>
-        /// <param name="sectionName"></param>
-        /// <param name="quizId"></param>
-        [HttpPost]
-        public async Task<IActionResult> AddSectionDB(string sectionName, int quizId)
+        [HttpGet]
+        public async Task<IActionResult> ShowAddSectionModal(int id)
         {
-            if(sectionName != null)
+            Quiz quiz = await _quizRepository.GetQuizById(id);
+            var addSectionViewModel = new AddSectionViewModel()
+            {
+                QuizId = id,
+            };
+            return PartialView("_AddSectionModalPartial", addSectionViewModel);
+        }
+
+        public async Task<IActionResult> AddSection(Section newSection)
+        {
+            if (newSection.SectionName != null)
             {
                 var section = new Section()
                 {
-                    SectionName = sectionName,
-                    QuizId = quizId
+                    SectionName = newSection.SectionName,
+                    RequiredQuestions = newSection.RequiredQuestions,
+                    QuizId = newSection.QuizId
                 };
                 _quizRepository.Add(section);
             }
 
-            var quizViewModel = await _quizParserService.GenerateQuizViewModel(quizId);
-
+            var quizViewModel = await _quizParserService.GenerateQuizViewModel(newSection.QuizId);
             return PartialView("_Section", quizViewModel);
         }
+
+
+        ///// <summary>
+        ///// Adds a new section to the quiz
+        ///// </summary>
+        ///// <param name="sectionName"></param>
+        ///// <param name="quizId"></param>
+        //[HttpPost]
+        //public async Task<IActionResult> AddSectionDB(string sectionName, int quizId)
+        //{
+        //    if(sectionName != null)
+        //    {
+        //        var section = new Section()
+        //        {
+        //            SectionName = sectionName,
+        //            QuizId = quizId
+        //        };
+        //        _quizRepository.Add(section);
+        //    }
+
+        //    var quizViewModel = await _quizParserService.GenerateQuizViewModel(quizId);
+
+        //    return PartialView("_Section", quizViewModel);
+        //}
 
 
         /// <summary>
