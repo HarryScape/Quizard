@@ -9,7 +9,7 @@ namespace Quizard
         /// </summary>
         /// <param name="user"></param>
         /// <returns>string user Id</returns>
-        public static string GetUserId(this ClaimsPrincipal user)
+        public  static string GetUserId(this ClaimsPrincipal user)
         {
             return user.FindFirst(ClaimTypes.NameIdentifier).Value;
         }

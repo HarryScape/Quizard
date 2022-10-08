@@ -113,10 +113,13 @@ namespace Quizard.Controllers
                     await _userManager.AddToRoleAsync(newUser, "student");
                 }
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
-                return RedirectToAction("Index", "Dashboard");
+
+                return RedirectToAction("Index", "Home");
+
             }
             else if (!newUserResponse.Succeeded)
                 TempData["Error"] = "Enter a more secure password";
+
             return View(registerViewModel);
         }
 

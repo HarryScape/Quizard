@@ -38,7 +38,7 @@ namespace Quizard.Controllers
         /// </summary>
         public async Task<IActionResult> Index()
         {
-            var currentUser = _contextAccessor.HttpContext.User.GetUserId();
+            //var currentUser = _contextAccessor.HttpContext.User.GetUserId();
 
             var userQuizes = new List<Quiz>();
             if (User.IsInRole("teacher"))
@@ -53,8 +53,9 @@ namespace Quizard.Controllers
                 var dashboardViewModel = new DashboardViewModel()
             {
                 Quizzes = userQuizes,
-                UserId = currentUser,
-            };
+                //UserId = currentUser,
+                UserId = _contextAccessor.HttpContext.User.GetUserId()
+        };
 
             foreach(var item in dashboardViewModel.Quizzes)
             {
