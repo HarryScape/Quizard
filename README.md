@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://i.imgur.com/Qr96RUu.png" alt="Markdownify" width="200"></a>
+  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://i.imgur.com/8GZyzsy.png" alt="Markdownify" width="200"></a>
   <br>
   Quizard
   <br>
@@ -29,18 +29,30 @@
   </a>
 </p>
 
-  ![screenshot](https://i.imgur.com/rymwYA1.png)
+  ![screenshot](https://i.imgur.com/qNxebvL.png)
 
+<p align="center">
+Quizard is a web application prototype that seeks to extend the functionality of Blackboard and other Learning Management Systems (LMS). By offering new features that give education professionals more control over the structure of their quizzes, teachers can create challenging summative assessments or a fun pop quiz in minutes! These new features aim to elevate student learning and allow educators to provide more engaging and exciting course content. 
+  </p>
   
   ## Key Features
   
-  * Structure and organise [Blackboard](https://www.blackboard.com/en-uk) quizzes
-  * Create question parts and sections
-  * Structure optional question parts
+  * Upload [Blackboard](https://help.blackboard.com/Learn/Instructor/Original/Tests_Pools_Surveys/Orig_Reuse_Questions/Upload_Questions#:~:text=The%20format%20consists%20of%20a%20list%20of%20choices%2Danswers.,end%20of%20a%20choice%20answer.) quizzes.
+  * Create sections and set the required amount of questions to be answered, allowing optional question sets in a section.
+  * Create case studies with multiple question parts.
+  * Upload supplimentary content to case studies such as images.
+  * Export quizzes to .docx to print out or upload to any LMS that supports .docx. 
+  * Use drag and drop on questions to speed up structuring quizzes.
+  * LaTeX support for the more advanced questions!
+  * Enroll students in a module and deploy a quiz for students to take.
+
+  ![screenshot](https://i.imgur.com/dR1wvrC.png)
+
 
 ## Credits
-  * Dr Sylvia Wong (dissertation tutor)
+  * Dr Sylvia Wong (Dissertation Supervisor)
   * Harry Newman (programming/graphics)
+  * Icon Library - [HumbleIcons](https://humbleicons.com/)
 
 
 ## 
