@@ -38,8 +38,6 @@ namespace Quizard.Controllers
         /// </summary>
         public async Task<IActionResult> Index()
         {
-            //var currentUser = _contextAccessor.HttpContext.User.GetUserId();
-
             var userQuizes = new List<Quiz>();
             if (User.IsInRole("teacher"))
             {
@@ -53,7 +51,6 @@ namespace Quizard.Controllers
                 var dashboardViewModel = new DashboardViewModel()
             {
                 Quizzes = userQuizes,
-                //UserId = currentUser,
                 UserId = _contextAccessor.HttpContext.User.GetUserId()
         };
 
@@ -97,7 +94,6 @@ namespace Quizard.Controllers
             }
             else
             {
-                //return View("Error");
                 return RedirectToAction("Index", "Dashboard");
             }
             
@@ -159,8 +155,6 @@ namespace Quizard.Controllers
                 quiz.ExtraTime = updatedQuiz.ExtraTime;
                 quiz.Shuffled = updatedQuiz.Shuffled;
                 quiz.Deployed = updatedQuiz.Deployed;
-                //quiz.ModuleId = updatedQuiz.ModuleId;
-                //quiz.Module = await _moduleRepository.GetModuleById(modId);
                 if(updatedQuiz.ModuleId == null)
                 {
                     quiz.Module = null;
@@ -191,7 +185,6 @@ namespace Quizard.Controllers
 
             return RedirectToAction("Index", "Dashboard");
         }
-
 
 
         /// <summary>

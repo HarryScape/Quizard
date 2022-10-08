@@ -13,7 +13,6 @@
                 <form action="AddQuestion">
 
                     <input type="hidden" asp-for="@Model.QuizId" name="Id" value="@Model.QuizId">
-                    @*<input type="hidden" asp-for="@Model.SectionId" name="secId" value="@Model.SectionId">*@
                     @Html.HiddenFor(x => x.SectionId, new { id = "HiddenSectionId" })
 
                     <div class="form-group">
@@ -58,7 +57,6 @@
                             <div id="add-container">
                                 <label class="check-container">
                                     @Html.CheckBoxFor(model => model.Correct, new { id="ansCheck"})
-                                    @*<label asp-for="@Model.Quiz.Shuffled" class="col-form-label" name="Shuffled">Shuffle Questions</label>*@
                                     <div class="checkmark"></div>
                                 </label>
                                 <input asp-for="@Model.Answer.QuestionAnswer" name="Answers[0]" type="text" id="ans-txt" class="form-control" aria-label="Text input with checkbox" placeholder="Answer Text" autocomplete="off">

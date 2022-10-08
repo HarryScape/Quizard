@@ -64,14 +64,6 @@
 
                     <br />
 
-                    @*<div class="form-group">
-                    <label asp-for="RoleSelected" class="col-md-2"></label>
-                    <div class="col-md-10">
-                    <select asp-for="RoleSelected" asp-items="@Model.RoleList" class="form-control">
-                    <option disabled selected>--Select Role--</option>
-                    </select>
-                    </div>
-                    </div>*@
 
                     <div class="form-group">
                         <label asp-for="RoleSelected" class="col-md-2">* I'm a:</label>
@@ -94,8 +86,6 @@
                     <br />
 
                     <div class="form-group">
-                        @*<input class="btn btn-outline-success float-right" type="submit" value="Sign up" />
-                        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Cancel</a>*@
                         <input class="button-table" type="submit" value="Sign up" />
                         <button class="button-table" asp-controller="Home" asp-action="Index">Cancel</button>
                     </div>
@@ -104,12 +94,4 @@
         </div>
     </div>
 </div>
-
-<br />
-@*<div class="form-group" id="role-menu">
-    <input asp-for="RoleSelected" asp-items="@Model.RoleList" id="toggle-on" class="toggle toggle-left" name="toggle" value="Teacher" type="radio" checked>
-    <label asp-for="RoleSelected" for="toggle-on" class="btn">Teacher</label>
-    <input asp-for="RoleSelected" asp-items="@Model.RoleList" id="toggle-off" class="toggle toggle-right" name="toggle" value="Student" type="radio">
-    <label asp-for="RoleSelected" for="toggle-off" class="btn">Student</label>
-</div>*@
 

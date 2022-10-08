@@ -1,6 +1,4 @@
-﻿@*@model IEnumerable<Question>*@
-@model Quizard.ViewModels.TakeQuestionViewModel
-@*@model TakeQuestionPartial*@
+﻿@model Quizard.ViewModels.TakeQuestionViewModel
 
 @{
     int index = 0;
@@ -38,7 +36,6 @@
         else if (question.QuestionType == Quizard.Data.Enum.QuestionType.FIB || question.QuestionType == Quizard.Data.Enum.QuestionType.NUM)
         {
             <div class="form-group">
-                @*<label for="@question.QuestionAnswers" class="col-form-label">Answer:</label>*@
                 @if (exists)
                 {
                     <input for="@question.QuestionAnswers" type="text" class="form-control" value="@Model.QuestionResponses.First(i => i.QuestionId == question.Id).AnswerResponse" autocomplete="off" question="@question.Id">
@@ -59,7 +56,6 @@
                     <div id="custom-add-box">
                         <div id="choice-container">
                             <label class="check-container">
-                                @*<input value="1" type="checkbox">*@
                                 @if (userChecked == true)
                                 {
                                     <input value="1" type="checkbox" id="check-single" no="@ans.Id" checked>
@@ -86,7 +82,6 @@
                     <div id="custom-add-box">
                         <div id="choice-container">
                             <label class="check-container">
-                                @*<input value="1" type="checkbox">*@
                                 @if (userChecked == true)
                                 {
                                     <input value="1" type="checkbox" no="@ans.Id" checked>

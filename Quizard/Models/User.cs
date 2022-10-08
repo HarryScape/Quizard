@@ -7,7 +7,6 @@ namespace Quizard.Models
     {
         public string Name { get; set; }
         public DateTime DateRegistered { get; set; }
-
         public ICollection<Quiz>? UserQuizzes { get; set; }
         public ICollection<UserModule>? Modules { get; set; }
         public ICollection<UserQuizAttempt>? UserQuizAttempts { get; set; }

@@ -1,5 +1,4 @@
-﻿@*@model Quiz*@
-@using Quizard.ViewModels
+﻿@using Quizard.ViewModels
 @model EditQuizViewModel
 
 <!-- Large modal -->
@@ -19,10 +18,6 @@
 
                     <input type="hidden" asp-for="@Model.Quiz.Id" name="Id" value="@Model.Quiz.Id">
 
-                    @*<div class="form-group">
-                        <label for="Module" class="col-form-label">Module:</label>
-                        <input for="Module" type="text" class="form-control" id="inlineFormInputName" placeholder="CS101">
-                    </div>*@
                     <div class="form-group">
                         <label asp-for="@Model.Quiz.TimeLimit" class="col-form-label">Quiz Duration: (Minutes)</label>
                         <input asp-for="@Model.Quiz.TimeLimit" type="text" name="TimeLimit" class="form-control" id="inlineFormInputName" placeholder="45" value="@Model.Quiz.TimeLimit" autocomplete="off">
@@ -60,14 +55,6 @@
                             <div class="checkmark"></div>
                         </label>
                     </div>
-
-                   @* <div class="form-group">
-                        <label class="check-container">
-                             <input type="checkbox" name="Deployed" asp-for="@Model.Quiz.Deployed" value="@Model.Quiz.Deployed" checked="@Model.Quiz.Deployed"/>
-                            <label asp-for="@Model.Quiz.Deployed" class="col-form-label">Quiz Deployed</label>
-                            <div class="checkmark"></div>
-                        </label>
-                    </div>*@
 
                 </form>
             </div>

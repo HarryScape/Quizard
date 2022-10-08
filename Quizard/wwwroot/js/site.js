@@ -1,34 +1,7 @@
 ﻿"use strict";
 
 
-//// Add section
-//function AddSection() {
-//    SavePosition();
-//    var name = document.getElementById("AddSectionName").value;
-//    var quizId = document.getElementById("HiddenQuizId").value;
-
-//    var dataPost = { sectionName: name, quizId: quizId };
-
-//    $.ajax({
-//        type: "POST",
-//        data: dataPost,
-//        url: "/Quiz/AddSectionDB",
-//        dataType: "json",
-//        success: function (response) {
-//            if (response != null) {
-//                console.log("Sent okay", response);
-//            } else {
-//                console.log("Something went wrong");
-//            }
-//        },
-//        complete: function (response) {
-//            $('.quiz-wrapper').html(response.responseText);
-//            location.reload(true);
-//        }
-//    });
-//}
-
-// Add New Section
+// Add Section
 $(function () {
     var placeholder = $('#modal-zone');
 
@@ -209,7 +182,7 @@ $('#containers .object').draggable({
 });
 
 
-// Autosave before editting a question
+// Autosave before editing a question
 $('a').click(function (event) {
     SavePosition();
 });
@@ -270,7 +243,6 @@ $(function () {
             SavePosition();
             placeholder.find('.modal').modal('hide');
             $('#modal-zone').html("");
-            //$('.quiz-wrapper').html(data);
             location.reload(true);
         })
     });
@@ -371,7 +343,7 @@ $(function () {
 })
 
 
-//Edit Module
+// Edit Module
 $(function () {
     var placeholder = $('#modal-zone');
 
@@ -415,7 +387,7 @@ function DeleteModule(id) {
 }
 
 
-// Enroll Students
+// Enrol Students
 $(function () {
     var placeholder = $('#modal-zone');
 
@@ -512,7 +484,6 @@ $(document).on('click', '#del-ans', function (e) {
 
 // Begin Quiz
 function BeginQuiz() {
-    //Countdown();
     if (time != 0) {
         Countdown();
     } else {
@@ -781,28 +752,6 @@ $(function () {
         })
     });
 })
-
-
-
-//// about us
-//$(function () {
-//    //const sections = document.querySelectorAll('.about-box');
-//    //console.log(sections.length);
-
-//    const observer = new IntersectionObserver((entries) => {
-//        entries.forEach((entry) => {
-//            if (entry.isIntersecting) {
-//                entry.target.classList.add('show');
-//            } else {
-//                entry.target.classList.remove('show');
-//            }
-//        });
-//    });
-
-//    const sections = document.querySelectorAll('.about-box');
-//    sections.forEach((el) => observer.observe(el));
-
-//})
 
 
 // About Us top button

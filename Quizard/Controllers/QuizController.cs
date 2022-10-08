@@ -14,8 +14,6 @@ namespace Quizard.Controllers
         private readonly ITakeQuizRepository _takeQuizRepository;
         private readonly IImageService _imageService;
 
-
-
         public QuizController(IQuizRepository quizRepository, IQuizParserService quizParserService, ITakeQuizRepository takeQuizRepository, IImageService imageService)
         {
             _quizRepository = quizRepository;
@@ -108,6 +106,11 @@ namespace Quizard.Controllers
             return PartialView("_AddSectionModalPartial", addSectionViewModel);
         }
 
+
+        /// <summary>
+        /// Adds a new section to the quiz
+        /// </summary>
+        /// <param name="newSection"></param>
         public async Task<IActionResult> AddSection(Section newSection)
         {
             if (newSection.SectionName != null)
@@ -124,30 +127,6 @@ namespace Quizard.Controllers
             var quizViewModel = await _quizParserService.GenerateQuizViewModel(newSection.QuizId);
             return PartialView("_Section", quizViewModel);
         }
-
-
-        ///// <summary>
-        ///// Adds a new section to the quiz
-        ///// </summary>
-        ///// <param name="sectionName"></param>
-        ///// <param name="quizId"></param>
-        //[HttpPost]
-        //public async Task<IActionResult> AddSectionDB(string sectionName, int quizId)
-        //{
-        //    if(sectionName != null)
-        //    {
-        //        var section = new Section()
-        //        {
-        //            SectionName = sectionName,
-        //            QuizId = quizId
-        //        };
-        //        _quizRepository.Add(section);
-        //    }
-
-        //    var quizViewModel = await _quizParserService.GenerateQuizViewModel(quizId);
-
-        //    return PartialView("_Section", quizViewModel);
-        //}
 
 
         /// <summary>
@@ -337,9 +316,7 @@ namespace Quizard.Controllers
             Question question = await _quizRepository.GetQuestionById(id);
             UpdateQuestionViewModel update = new UpdateQuestionViewModel();
             update.Question = question;
-            //return PartialView("_EditModalPartial", question);
             return PartialView("_EditModalPartial", update);
-
         }
 
 
@@ -482,7 +459,6 @@ namespace Quizard.Controllers
                     _quizRepository.Add(answer);
                 }
             }
-
             var quizViewModel = await _quizParserService.GenerateQuizViewModel(Int32.Parse(questionBody[4]));
             return PartialView("_Section", quizViewModel);
         }
