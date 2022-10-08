@@ -9,6 +9,11 @@ namespace Quizard.Services
         private readonly Cloudinary _cloundinary;
         private readonly IConfiguration _configuration;
 
+
+        /// <summary>
+        /// Connection to Cloudinary API via User Secrets
+        /// </summary>
+        /// <param name="configuration"></param>
         public ImageService(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -21,6 +26,12 @@ namespace Quizard.Services
             _cloundinary = new Cloudinary(account);
         }
 
+
+        /// <summary>
+        /// Uploads image to Cloudinary cloud storage
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns>Upload Url</returns>
         public async Task<ImageUploadResult> AddImage(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();
@@ -35,6 +46,11 @@ namespace Quizard.Services
             return uploadResult;
         }
 
+
+        /// <summary>
+        /// Deletes image from Cloudinary cloud storage
+        /// </summary>
+        /// <param name="contentUrl"></param>
         public async Task<DeletionResult> DeleteImage(string contentUrl)
         {
             var publicId = contentUrl.Split('/').Last().Split('.')[0];

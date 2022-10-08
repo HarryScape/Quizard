@@ -54,18 +54,35 @@
                             {
                                 @if (User.IsInRole("teacher"))
                                 {
-                                    <button type="submit" class="button-table" onclick="DeleteQuiz(@item.Id)">Delete</button>
-                                    @*<button type="submit" class="button-table">Publish</button>*@
-                                    <button type="submit" class="button-table" onclick="location.href='@Url.Action("Create", "Quiz", new { QuizId = item.Id })'">Structure Quiz</button>
-                                    <button type="submit" class="button-table" data-toggle="quiz-options-modal" data-url="@Url.Action("ShowOptionsModal", "Dashboard", new { id = @item.Id  })">Settings</button>
-                                    <button type="submit" class="button-table" onclick="location.href='@Url.Action("ExportQuiz", "Dashboard", new { QuizId = item.Id })'">Export</button>
+                                    <button type="submit" class="button-table" onclick="DeleteQuiz(@item.Id)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="dash-icons"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l.934 13.071A1 1 0 007.93 20h8.138a1 1 0 00.997-.929L18 6m-6 5v4m8-9H4m4.5 0l.544-1.632A2 2 0 0110.941 3h2.117a2 2 0 011.898 1.368L15.5 6"/></svg>
+                                        Delete
+                                        </button>
+                                    <button type="submit" class="button-table" onclick="location.href='@Url.Action("Create", "Quiz", new { QuizId = item.Id })'">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="dash-icons"><g xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><path stroke-linejoin="round" d="M9.5 10V4h5v6l4.743 5.174A2.88 2.88 0 0117.12 20H6.88a2.88 2.88 0 01-2.123-4.826L9.5 10z"/><path stroke-linecap="round" d="M8.5 4h7"/><path d="M6 14c3.5 2 4 0 6 0s2.5 2 6 0"/></g></svg>
+                                        Structure Quiz
+                                        </button>
+                                    <button type="submit" class="button-table" data-toggle="quiz-options-modal" data-url="@Url.Action("ShowOptionsModal", "Dashboard", new { id = @item.Id  })">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="dash-icons"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10.47 4.32c.602-1.306 2.458-1.306 3.06 0l.218.473a1.684 1.684 0 002.112.875l.49-.18c1.348-.498 2.66.814 2.162 2.163l-.18.489a1.684 1.684 0 00.875 2.112l.474.218c1.305.602 1.305 2.458 0 3.06l-.474.218a1.684 1.684 0 00-.875 2.112l.18.49c.498 1.348-.814 2.66-2.163 2.162l-.489-.18a1.684 1.684 0 00-2.112.875l-.218.473c-.602 1.306-2.458 1.306-3.06 0l-.218-.473a1.684 1.684 0 00-2.112-.875l-.49.18c-1.348.498-2.66-.814-2.163-2.163l.181-.489a1.684 1.684 0 00-.875-2.112l-.474-.218c-1.305-.602-1.305-2.458 0-3.06l.474-.218a1.684 1.684 0 00.875-2.112l-.18-.49c-.498-1.348.814-2.66 2.163-2.163l.489.181a1.684 1.684 0 002.112-.875l.218-.474z"/></svg>
+                                        Settings
+                                        </button>
+                                    <button type="submit" class="button-table" onclick="location.href='@Url.Action("ExportQuiz", "Dashboard", new { QuizId = item.Id })'">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="dash-icons"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v8.5m0 0l3-3m-3 3l-3-3M5 15v2a2 2 0 002 2h10a2 2 0 002-2v-2"/></svg>
+                                        Export
+                                        </button>
                                     @if (item.Deployed)
                                     {
-                                        <button type="submit" class="button-table" onclick="location.href='@Url.Action("QuizDeployment", "Dashboard", new { QuizId = item.Id })'">Undeploy</button>
+                                        <button type="submit" class="button-table" onclick="location.href='@Url.Action("QuizDeployment", "Dashboard", new { QuizId = item.Id })'">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="dash-icons"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 19v-6.5a3 3 0 00-3-3H5M7.5 6L4 9.5 7.5 13"/></svg>
+                                            Undeploy
+                                            </button>
                                     }
                                     else
                                     {
-                                        <button type="submit" class="button-table" onclick="location.href='@Url.Action("QuizDeployment", "Dashboard", new { QuizId = item.Id })'">Deploy</button>
+                                        <button type="submit" class="button-table" onclick="location.href='@Url.Action("QuizDeployment", "Dashboard", new { QuizId = item.Id })'">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="dash-icons"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19v-6.5a3 3 0 013-3h12M16.5 6L20 9.5 16.5 13"/></svg>
+                                            Deploy
+                                            </button>
                                     }
                                 }
                                 else if (User.IsInRole("student"))
@@ -83,7 +100,7 @@
 
 <br />
 <div class="upload-container">
-    <label class="form-label"><strong> Upload a .txt Quiz! </strong></label>
+    <label class="form-label" id="upload-text"><strong> Upload a .txt Quiz! </strong></label>
     <div class="mb-3 mt-3">
         <form method="post" enctype="multipart/form-data" asp-controller="Dashboard" asp-action="UploadQuiz">
             <input type="hidden" id="UserId" name="UserId" asp-for="UserId" />

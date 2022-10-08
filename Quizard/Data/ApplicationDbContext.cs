@@ -10,7 +10,7 @@ namespace Quizard.Data
         {
 
         }
-        // Which entities to map into the DB
+        // Entities to map into the DB
         public DbSet<Quiz> Quizzes { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<Question> Questions { get; set; }
@@ -21,7 +21,6 @@ namespace Quizard.Data
         public DbSet<UserQuizAttempt> UserQuizAttempts { get; set; }
         public DbSet<UserQuestionResponse> UserQuestionResponses { get; set; }
 
-        //public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

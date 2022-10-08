@@ -24,10 +24,22 @@
                         <td>@item.ModuleCode</td>
                         <td>@item.Description <br /></td>
                         <td>
-                            <button type="submit" class="button-table" onclick="DeleteModule(@item.Id)">Delete</button>
-                            <button type="submit" class="button-table" data-toggle="module-edit-modal" data-url="@Url.Action("ShowEditModuleModal", "Module", new { id = @item.Id  })">Edit</button>
-                            <button type="submit" class="button-table" data-toggle="student-enroll-modal" data-url="@Url.Action("ShowEnrollModuleModal", "Module", new { id = @item.Id })">Enroll Students</button>
-                            <button type="submit" class="button-table" data-toggle="student-remove-modal" data-url="@Url.Action("ShowRemoveStudentModal", "Module", new { id = @item.Id })">View and Remove Students</button>
+                            <button type="submit" class="button-table" onclick="DeleteModule(@item.Id)">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="dash-icons"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l.934 13.071A1 1 0 007.93 20h8.138a1 1 0 00.997-.929L18 6m-6 5v4m8-9H4m4.5 0l.544-1.632A2 2 0 0110.941 3h2.117a2 2 0 011.898 1.368L15.5 6" /></svg>
+                                Delete
+                            </button>
+                            <button type="submit" class="button-table" data-toggle="module-edit-modal" data-url="@Url.Action("ShowEditModuleModal", "Module", new { id = @item.Id  })">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="dash-icons"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 7.5l3 3M4 20v-3.5L15.293 5.207a1 1 0 011.414 0l2.086 2.086a1 1 0 010 1.414L7.5 20H4z"/></svg>
+                                Edit
+                            </button>
+                            <button type="submit" class="button-table" data-toggle="student-enroll-modal" data-url="@Url.Action("ShowEnrollModuleModal", "Module", new { id = @item.Id })">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="dash-icons"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11h3m0 0h3m-3 0v3m0-3V8m-3 11v-1.25c0-2.071-1.919-3.75-4.286-3.75H7.286C4.919 14 3 15.679 3 17.75V19m9-11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                Enroll Students
+                            </button>
+                            <button type="submit" class="button-table" data-toggle="student-remove-modal" data-url="@Url.Action("ShowRemoveStudentModal", "Module", new { id = @item.Id })">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="dash-icons"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11h6m-6 8v-1.25c0-2.071-1.919-3.75-4.286-3.75H8.286C5.919 14 4 15.679 4 17.75V19m9-11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                View and Remove Students
+                            </button>
                         </td>
                     </tr>
                 }

@@ -97,6 +97,10 @@ namespace Quizard.Controllers
         }
 
 
+        /// <summary>
+        /// Deletes a module, removes users and quizzes from this module
+        /// </summary>
+        /// <param name="id"></param>
         public async Task<IActionResult> DeleteModule(int id)
         {
             Module module = await _moduleRepository.GetModuleById(id);
@@ -140,7 +144,6 @@ namespace Quizard.Controllers
         [HttpPost]
         public async Task<IActionResult> EnrollStudents(string studentForm, int moduleId)
         {
-            // harry@student.edu, leo@student.edu, bob@bob.com, cat@cat.cat, random@goblin.com, student@student.com
             Module module = await _moduleRepository.GetModuleById(moduleId);
             List<string> studentList = studentForm.Split(',').ToList<string>();
 

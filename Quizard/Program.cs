@@ -32,8 +32,6 @@ builder.Services.AddSession();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 builder.Services.AddHttpClient();
 var cloudinaryConfig = builder.Configuration.GetSection("CloudinaryAcc").Get<CloudinaryConfig>();
-////cloudinaryConfig.CloudName = builder.Configuration["CloudinaryAcc:CloudName"];
-////builder.Services.AddSingleton<CloudinaryConfig>(cloudinaryConfig);
 builder.Services.AddScoped<IImageService, ImageService>();
 
 var app = builder.Build();

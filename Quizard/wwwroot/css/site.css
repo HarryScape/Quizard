@@ -9,10 +9,6 @@ body {
     background-size: cover;
 }
 
-header {
-    background-image: transparent;
-}
-
 .navbar-brand {
     font-weight: bold;
 }
@@ -21,10 +17,6 @@ header {
     font-weight: bold;
     color: #5e4dcd;
 }
-
-/*.nav-item:active {
-    text-shadow: 0 0 20px #5e4dcd;
-}*/
 
 .head-logo{
     width: 35px;
@@ -43,7 +35,6 @@ header {
     font-size: 24px;
 }
 
-
 h1,
 h2,
 h3 {
@@ -58,30 +49,14 @@ h3 {
     background-image: none;
 }
 
-/*QUIZ EDIT*/
-
-/*.humbleicons {
+.dash-icons {
     width: 1.5em;
     height: 1.5em;
-    display: inline-block;
-    align-self: center;
-    vertical-align: middle;
-    margin-top: -0.1em;
-    padding: 0;
-    border: none;
-    position: absolute;*/
-/*position: relative;*/
-/*right: 20px;*/
-/*left: 95%;*/
-/*background: transparent;
-    cursor: pointer;
-    color: black;
-}*/
-
+}
 
 .hi-pencil {
-    width: 1.5em;
-    height: 1.5em;
+    width: 2em;
+    height: 2em;
     display: inline-block;
     align-self: center;
     vertical-align: middle;
@@ -96,8 +71,8 @@ h3 {
 }
 
 .hi-trash {
-    width: 1.5em;
-    height: 1.5em;
+    width: 2em;
+    height: 2em;
     display: inline-block;
     align-self: center;
     vertical-align: middle;
@@ -105,15 +80,15 @@ h3 {
     padding: 0;
     border: none;
     position: absolute;
-    right: 30px;
+    right: 35px;
     background: transparent;
     cursor: pointer;
     color: #5e5dcd;
 }
 
 .hi-plus-circle {
-    width: 1.5em;
-    height: 1.5em;
+    width: 2em;
+    height: 2em;
     display: inline-block;
     align-self: center;
     vertical-align: middle;
@@ -121,76 +96,11 @@ h3 {
     padding: 0;
     border: none;
     position: absolute;
-    right: 55px;
+    right: 65px;
     background: transparent;
     cursor: pointer;
     color: #5e5dcd;
 }
-
-/*.humbleicons {
-    width: 1.5em;
-    height: 1.5em;
-    color: black;
-    align-self: center;
-    position: absolute;
-    right: 50px;
-}*/
-
-
-
-/*.flex-container {*/
-/*    display: flex;*/
-/*flex-direction: row;*/
-/*justify-content: flex-start;
-    flex-wrap: nowrap;
-    align-items: flex-start;*/
-
-/*display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;*/
-/*justify-content: flex-start;*/
-/*justify-content: space-between;
-    align-content: stretch;
-    align-items: flex-start;
-    height: auto;*/
-/*box-sizing: border-box;*/
-/*}
-
-
-.controls {
-    margin-top: 50px;
-    background-color: rgb(217, 217, 245);
-    border: solid 2px #5e4dcd;
-    border-radius: 0.5rem;*/
-/*flex-basis: auto;
-    flex: 1 1 auto;*/
-/*max-width: 400px;
-    min-width: 300px;
-    order: 2;*/
-/*flex: 1 1 auto;*/
-/*align-self: auto;
-    padding: 20px;
-    flex-flow: row wrap;*/
-/*overide flex*/
-/*display: flex;
-    position: fixed;*/
-/*right: 50px;*/
-/*right: 8%;
-    width: 25%;
-}
-
-
-.quiz-wrapper {*/
-/* background-color: blue; */
-/*padding: 20px;
-    border-radius: 0.5rem;
-    display: flex;
-    width: 75%;
-    order: 1;*/
-/*flex: 3 0 auto;*/
-/*align-self: flex-start;*/
-/*max-width: 1100px;*/
-/*}*/
 
 .flex-container {
     display: flex;
@@ -224,7 +134,6 @@ h3 {
         margin-left: 5px;
     }
 
-    /*QUIZ CONTROLS*/
     .input-group {
         display: flex;
         align-items: center;
@@ -282,11 +191,13 @@ h3 {
 
 .quizName {
     text-align: center;
-    margin-bottom: 40px;
 }
 
 
-/*DASHBOARD*/
+/* Dashboard */
+#upload-text{
+    margin-bottom: 60px;
+}
 
 #UploadAlt {
     cursor: pointer;
@@ -302,15 +213,13 @@ h3 {
 }
 
 ::-webkit-file-upload-button {
-    /*display: none;*/
     cursor: pointer;
-    /*Styling position*/
     border: none;
     border-radius: 6px;
     background-color: #5e4dcd;
     min-height: 50px;
     position: absolute;
-    top: 100%;
+    bottom: 115%;
     left: 0px;
     color: #fff;
     font-size: 15px;
@@ -321,14 +230,7 @@ h3 {
         background-color: #5e5dcd;
     }
 
-
-    /*.table-row:hover {
-    background-color: #edeef7;
-    border-radius: 6rem;
-}*/
-
     .button-table {
-    /*margin-top: 20px;*/
     min-height: 40px;
     padding: .5em 1em;
     border: none;
@@ -338,6 +240,8 @@ h3 {
     font-size: 15px;
     cursor: pointer;
     transition: background-color .3s ease-in-out;
+    margin-right: 5px;
+    margin-top: 5px;
 }
 
     .button-table:hover {
@@ -348,22 +252,13 @@ h3 {
     background-color: rgb(217, 217, 245);
     border-radius: 6px;
     margin: 20px;
-    /*border: solid white 2px;*/
     border: 2px solid rgba(255,255,255,.5);
 }
-
-/*table td:nth-child(1) {
-    text-align: left;
-}
-table th:nth-child(1) {
-    text-align: left;
-}*/
 
 .quiz-table table td:nth-child(4) {
     text-align: left;
     padding-left: 9%;
 }
-
 
 .quiz-table table {
     text-align: center;
@@ -386,116 +281,52 @@ ol {
 .close {
     border: none;
     border-radius: 6px;
-    /*color: #fff;*/
-    /*background-color: #5e4dcd;*/
     background-color: transparent;
     background-image: none;
 }
 
-
-
-
-/* DRAG AND DROP */
-
-
+/* Drag and Drop */
 .tool, .object, .popup, .drop {
-    /*border: 1px solid #888;*/
-    /*margin: 10px;*/
     padding: 3px;
     border-radius: 6px;
-    /*margin-left: 20px;*/
-    /*box-shadow: 1px 2px 4px #aaa;*/
 }
-
-#tools .tool, #tools .frame {
-    /*    height: 50px;
-    width: 50px;*/
-    /*float: left;*/
-    /*background-color: #fee;*/
-}
-
-.tools {
-    /*width: 200px;*/
-    /*position: relative;*/
-}
-
-.drop {
-    /*max-width: 100%;*/
-}
-
 
 #containers {
     clear: both;
-    /*width: 850px;*/
     width: auto;
     min-width: 850px;
     height: auto;
-    /*height:400px;*/
     position: relative;
-    /*flex*/
-    /*    order: 1;
-    flex: 3 0 auto;
-    align-self: flex-start;*/
     padding-bottom: 70px;
 }
 
-    #containers .frame {
-        /*        min-height: 100%;
-        height: fit-content;
-        width: 900px;*/
-        /*background-color: red;*/
-    }
-
-
     #containers .popup {
-        /*min-height: 20px;*/
-        /*float: left;*/
-        /*position: absolute;*/
-        /*min-width: 100px;*/
         width: 100%;
         background-color: rgb(217, 217, 245);
         border-left: 15px solid #5e4dcd;
         padding-left: 50px;
         margin-top: 30px;
         min-height: 200px;
-        /*position: absolute;*/
     }
 
     #containers .drop {
-        /*min-height: 20px;*/
         width: 90%;
     }
 
 
     #containers .tool {
-        /*background-color: #fee;*/
         background-color: red;
         height: 100%;
-        /*min-height: auto;*/
     }
 
     #containers .object {
-        /*background-color: green;*/
-        /*background-color: #5e5dcd;*/
-        /*height: auto;*/
-        /*        min-height: auto;
-        min-width: 50px;*/
-        /*color: #fff;*/
-        /*float: left;*/
         border: 2px dotted #5e5dcd;
-        /*background: linear-gradient(to left, rgba(255,255,255,0) 0%, rgb(177, 178, 250, 70%) 100%);*/
         top: -1px;
-        max-width: 90%;
+        max-width: 89%;
         margin: 10px;
         margin-left: 20px;
         cursor: pointer;
         margin-bottom: 20px;
-        /*border-left: 2px solid #5e5dcd;*/
-        /* border-left-width: 2px;
-        border-left-style: solid;
-        border-image: linear-gradient( to bottom, #5e5dcd, rgba(0, 0, 0, 0) ) 1 100%;*/
-        /*position: relative;*/
-        /*DRAG BOX SIZE*/
         width: auto;
         min-width: 70%;
     }
@@ -509,20 +340,17 @@ ol {
     }
 
 .ui-state-hover {
-    /*background: #07f !important;*/
     background: rgb(177, 178, 250, 70%) !important;
     width: 300px;
     height: 100%;
 }
 
 .insidePopup {
-    /*border: 2px solid #0ff;*/
     height: auto;
     width: 10px;
 }
 
-
-/*ACCORDION*/
+/* Accordion */
 
 .panel {
     padding: 0 18px;
@@ -534,9 +362,7 @@ ol {
         list-style: none;
     }
 
-
-
-/*checkbox*/
+/* Checkbox */
 .check-container input {
     position: absolute;
     opacity: 0;
@@ -552,7 +378,7 @@ ol {
     user-select: none;
 }
 
-/* Create a custom checkbox */
+/* Custom checkbox style */
 .checkmark {
     position: relative;
     top: 0;
@@ -565,24 +391,20 @@ ol {
     box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.30), 0px 1px 1px rgba(0,5);
 }
 
-/* When the checkbox is checked, add a blue background */
 .check-container input:checked ~ .checkmark {
     background-color: #5e5dcd;
 }
 
-/* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
     content: "";
     position: absolute;
     display: none;
 }
 
-/* Show the checkmark when checked */
 .check-container input:checked ~ .checkmark:after {
     display: block;
 }
 
-/* Style the checkmark/indicator */
 .check-container .checkmark:after {
     left: 0.45em;
     top: 0.20em;
@@ -600,16 +422,10 @@ ol {
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(94, 93, 205,.6);
 }
 
-
 .module-classroom {
     margin-top: 20px;
 }
 
-/*#ans-txt{
-    width: 90%;
-}*/
-
-/*#custom-add-box {*/
 #add-container {
     display: flex;
     justify-content: space-evenly;
@@ -663,17 +479,15 @@ ol {
 #new-question-attributes {
     display: flex;
     justify-content: space-evenly;
-    /*width: 50px;*/
 }
 
 #attributes {
     width: 30%;
 }
 
-/*Landing Page*/
+/* Landing Page */
 .home-container {
     display: flex;
-    /*position: relative;*/
 }
 
 .home-panel {
@@ -685,12 +499,10 @@ ol {
 }
 
 #left-panel {
-    /*background-color: red;*/
     padding: 0 0;
 }
 
 #right-panel {
-    /*background-color: red;*/
     padding: 0 0;
     min-height: 600px;
     min-width: 600px;
@@ -735,10 +547,7 @@ ol {
         margin-top: 50px;
     }
 
-
-
-
-/*TAKE QUIZ*/
+/* Take Quiz */
 .countdown-outer {
     width: 100%;
     display: flex;
@@ -806,10 +615,7 @@ ol {
         margin-right: 20px;
     }
 
-
-
-
-    /*Registration Toggle*/
+    /* Registration Toggle */
 .radio-toggle-container {
     overflow: hidden;
     width: 200px;
@@ -856,18 +662,12 @@ ol {
     margin-left: -2px;
 }
 
-
-
 .about-container section {
     display: grid;
     place-items: center;
     align-content: center;
-    /*min-height: 100vh;*/
-    /*width: 100%;*/
     margin-bottom: 200px;
     margin-top: 40px;
-/*    background-color: rgba(94, 77, 205, .3);
-    border-radius: 30px;*/
 }
 
 .about-title {
@@ -879,7 +679,6 @@ ol {
 .about-text{
     font-size: 25px;
 }
-
 
 .about-box {
     opacity: 0;
@@ -894,13 +693,6 @@ ol {
     transform: translateX(0);
     color: black;
 }
-
-
-/*@media(prefers-reduced-motion){
-    #about-section {
-        transition: none;
-    }
-}*/
 
 .drag-img{
     width: 800px;
@@ -935,7 +727,7 @@ ol {
 
 .case-image {
     object-fit: cover;
-    width: 600px;
+    max-width: 600px;
     height: 50px;
     margin-top: 15px;
     background-position: 0px -200px;
@@ -953,13 +745,12 @@ ol {
     }
 
 .case-image-zoom {
-    width: 600px;
+    max-width: 600px;
     height: auto;
     background-position: 0px 0px;
     cursor: -moz-zoom-out;
     cursor: zoom-out;
 }
-
 
 .edit-case-image{
     width: 150px;
@@ -970,3 +761,5 @@ ol {
     width: 600px;
     height: auto;
 }
+
+

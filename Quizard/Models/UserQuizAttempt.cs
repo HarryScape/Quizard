@@ -13,13 +13,11 @@ namespace Quizard.Models
         [ForeignKey("Quiz")]
         public int? QuizId { get; set; }
         public Quiz? Quiz { get; set; }
-
         public double? Score { get; set; }
         public DateTime TimeStarted { get; set; }
         public DateTime? TimeCompleted { get; set; }
         public bool IsMarked { get; set; }
         public bool ReleaseFeedback { get; set; }
         public ICollection<UserQuestionResponse>? QuestionResponses { get; set; }
-
     }
 }

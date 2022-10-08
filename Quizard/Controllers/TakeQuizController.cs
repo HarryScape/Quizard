@@ -7,12 +7,10 @@ namespace Quizard.Controllers
 {
     public class TakeQuizController : Controller
     {
-
         private readonly IQuizRepository _quizRepository;
         private readonly ITakeQuizRepository _takeQuizRepository;
         private readonly IQuizParserService _quizParserService;
         private readonly IHttpContextAccessor _contextAccessor;
-
 
         public TakeQuizController(IQuizRepository quizRepository, IQuizParserService quizParserService,
             IHttpContextAccessor contextAccessor, ITakeQuizRepository takeQuizRepository)
@@ -136,6 +134,7 @@ namespace Quizard.Controllers
                 }
             }
 
+
             // Clear Checkbox answers
             for (int i = 0; i < ansText.Count; i++)
             {
@@ -146,6 +145,7 @@ namespace Quizard.Controllers
                     _takeQuizRepository.Delete(response);
                 }
             }
+
 
             // Adds new checkbox answers
             if (ansText.Any())

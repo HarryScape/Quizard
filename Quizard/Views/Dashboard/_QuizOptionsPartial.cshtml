@@ -1,5 +1,4 @@
-﻿@*@model Quiz*@
-@using Quizard.ViewModels
+﻿@using Quizard.ViewModels
 @model EditQuizViewModel
 
 <!-- Large modal -->
@@ -13,19 +12,20 @@
             <div class="modal-body">
                 <form action="UpdateQuiz">
                     <div class="form-group">
-                        <label asp-for="@Model.Quiz.QuizName" class="col-form-label">Edit Text:</label>
+                        <label asp-for="@Model.Quiz.QuizName" class="col-form-label">Edit Quiz Name:</label>
                         <textarea asp-for="@Model.Quiz.QuizName" name="QuizName" class="form-control" id="quiz-text" placeholder="@Model.Quiz.QuizName"> @Model.Quiz.QuizName </textarea>
                     </div>
 
                     <input type="hidden" asp-for="@Model.Quiz.Id" name="Id" value="@Model.Quiz.Id">
 
-                    @*<div class="form-group">
-                        <label for="Module" class="col-form-label">Module:</label>
-                        <input for="Module" type="text" class="form-control" id="inlineFormInputName" placeholder="CS101">
-                    </div>*@
                     <div class="form-group">
                         <label asp-for="@Model.Quiz.TimeLimit" class="col-form-label">Quiz Duration: (Minutes)</label>
-                        <input asp-for="@Model.Quiz.TimeLimit" type="text" name="TimeLimit" class="form-control" id="inlineFormInputName" placeholder="45" value="@Model.Quiz.TimeLimit">
+                        <input asp-for="@Model.Quiz.TimeLimit" type="text" name="TimeLimit" class="form-control" id="inlineFormInputName" placeholder="45" value="@Model.Quiz.TimeLimit" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="@Model.Quiz.ExtraTime" class="col-form-label">Extra Time Allowance: (Minutes)</label>
+                        <input asp-for="@Model.Quiz.ExtraTime" type="text" name="ExtraTime" class="form-control" id="inlineFormInputName" placeholder="10" value="@Model.Quiz.ExtraTime" autocomplete="off">
                     </div>
 
                     <div class="form-group">
@@ -55,14 +55,6 @@
                             <div class="checkmark"></div>
                         </label>
                     </div>
-
-                   @* <div class="form-group">
-                        <label class="check-container">
-                             <input type="checkbox" name="Deployed" asp-for="@Model.Quiz.Deployed" value="@Model.Quiz.Deployed" checked="@Model.Quiz.Deployed"/>
-                            <label asp-for="@Model.Quiz.Deployed" class="col-form-label">Quiz Deployed</label>
-                            <div class="checkmark"></div>
-                        </label>
-                    </div>*@
 
                 </form>
             </div>

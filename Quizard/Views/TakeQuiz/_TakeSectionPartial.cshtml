@@ -58,7 +58,6 @@
                         {
                             <input for="@question.QuestionAnswers" type="text" class="form-control" placeholder="Answer Here:" autocomplete="off" question="@question.Id">
                         }
-                        @*<input for="@question.QuestionAnswers" type="text" class="form-control" placeholder="Answer Here:" autocomplete="off" question="@question.Id">*@
                     </div>
                 }
                 else if (question.QuestionType == Quizard.Data.Enum.QuestionType.MC || question.QuestionType == Quizard.Data.Enum.QuestionType.TF)
@@ -78,7 +77,6 @@
                                         {
                                             <input value="0" type="checkbox" id="check-single" no="@ans.Id">
                                         }
-                                        @*@Html.CheckBoxFor(model => model.Checked, new { id="check-single"})*@
                                         <div class="checkmark" id="check-single"></div>
                                     </label>
                                     <label for="answer" class="col-form-label" id="ans-txt" value="@question.Id">@ans.QuestionAnswer</label>
@@ -97,8 +95,6 @@
                             <div id="custom-add-box">
                                 <div id="choice-container">
                                     <label class="check-container">
-                                        @*<input value="1" type="checkbox">*@
-                                        @*@Html.CheckBoxFor(model => model.Checked, new { id="ansCheck"})*@
                                         @if (userChecked == true)
                                         {
                                             <input value="1" type="checkbox" no="@ans.Id" checked>

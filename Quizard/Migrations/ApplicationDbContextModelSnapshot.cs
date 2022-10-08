@@ -264,6 +264,9 @@ namespace Quizard.Migrations
                     b.Property<bool>("Deployed")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("ExtraTime")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ModuleId")
                         .HasColumnType("int");
 

@@ -28,6 +28,11 @@ namespace Quizard.Controllers
             return View(loginVM);
         }
 
+
+        /// <summary>
+        /// Logs a user in and redirects to Dashboard
+        /// </summary>
+        /// <param name="loginViewModel"></param>
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
@@ -62,23 +67,15 @@ namespace Quizard.Controllers
         /// </summary>
         public IActionResult Register()
         {
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems.Add(new SelectListItem()
-            {
-                Value = "teacher",
-                Text = "Teacher"
-            });
-            listItems.Add(new SelectListItem()
-            {
-                Value = "student",
-                Text = "Student"
-            });
-
             var registerVM = new RegisterViewModel();
-            //registerVM.RoleList = listItems;
             return View(registerVM);
         }
 
+
+        /// <summary>
+        /// Registers a new user
+        /// </summary>
+        /// <param name="registerViewModel"></param>
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
@@ -113,10 +110,13 @@ namespace Quizard.Controllers
                     await _userManager.AddToRoleAsync(newUser, "student");
                 }
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
-                return RedirectToAction("Index", "Dashboard");
+
+                return RedirectToAction("Index", "Home");
+
             }
             else if (!newUserResponse.Succeeded)
                 TempData["Error"] = "Enter a more secure password";
+
             return View(registerViewModel);
         }
 
