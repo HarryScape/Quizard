@@ -46,7 +46,7 @@ Quizard is a web application prototype that seeks to extend the functionality of
   * LaTeX support for the more advanced questions!
   * Enroll students in a module and deploy a quiz for students to take.
 
-  ![screenshot](https://i.imgur.com/KU6lH1C.gifv)
+  ![screenshot](https://i.imgur.com/dR1wvrC.png)
 
 
 ## Credits
